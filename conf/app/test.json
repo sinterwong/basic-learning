@@ -1,0 +1,110 @@
+{
+  "Pipelines": [
+    {
+      "Pipeline": [
+        {
+          "type": "stream",
+          "sub_type": "web-stream",
+          "name": "1e35f60f-3347-46a7-8061-e00c36ea06eb",
+          "recvName": "",
+          "sendName": "handDet",
+          "Id": 29,
+          "width": 1920,
+          "height": 1080,
+          "cameraIp": "rtsp://admin:zkfd123.com@192.168.31.41:554/Streaming/Channels/101",
+          "videoCode": "h264",
+          "flowType": "rtsp"
+        },
+        {
+          "type": "algorithm",
+          "sub_type": "detection",
+          "name": "handDet",
+          "recvName": "stream",
+          "sendName": "phoneCls",
+          "modelPath": "/home/wangxt/workspace/projects/flowengine/tests/data/handdetn.engine",
+          "inputNames": [
+            "images"
+          ],
+          "outputNames": [
+            "output"
+          ],
+          "inputShape": [
+            640,
+            640,
+            3
+          ],
+          "numClasses": 1,
+          "numAnchors": 25200,
+          "region": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "cond_thr": 0.4,
+          "nms_thr": 0.45,
+          "alpha": 255,
+          "beta": 0,
+          "isScale": true,
+          "batchSize": 1,
+          "attentionClasses": [
+            0
+          ]
+        },
+        {
+          "type": "algorithm",
+          "sub_type": "classifier",
+          "name": "phoneCls",
+          "recvName": "handDet",
+          "sendName": "calling",
+          "modelPath": "/home/wangxt/workspace/projects/flowengine/tests/data/smoke_phone.engine",
+          "inputNames": [
+            "data"
+          ],
+          "outputNames": [
+            "softmax"
+          ],
+          "inputShape": [
+            128,
+            128,
+            3
+          ],
+          "numClasses": 3,
+          "numAnchors": 0,
+          "region": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "cond_thr": 0,
+          "nms_thr": 0,
+          "alpha": 0,
+          "beta": 0,
+          "isScale": false,
+          "batchSize": 1,
+          "attentionClasses": [
+            0
+          ]
+        },
+        {
+          "type": "logic",
+          "sub_type": "calling",
+          "name": "calling_29",
+          "recvName": "phoneCls",
+          "sendName": "output",
+          "video_duration": 10,
+          "alarm_output_dir": "/public/alarm/data"
+        },
+        {
+          "type": "output",
+          "sub_type": "alarm",
+          "name": "alarm_01",
+          "recvName": "calling",
+          "sendName": "",
+          "url": "http://localhost:9876/v1/flow/alarm"
+        }
+      ]
+    }
+  ]
+}
