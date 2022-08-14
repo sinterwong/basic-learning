@@ -2,7 +2,9 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.10)
 
 # submodule
 ADD_SUBDIRECTORY(logger)
-ADD_SUBDIRECTORY(safe_vector)
+ADD_SUBDIRECTORY(concurrent)
+ADD_SUBDIRECTORY(design_pattern)
+
 
 # transfer all headers to the include directory 
 FILE(MAKE_DIRECTORY ${PROJECT_INCLUDE_DIR})

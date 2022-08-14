@@ -5,14 +5,14 @@ INCLUDE_DIRECTORIES(
     ${PROJECT_INCLUDE_DIR}
 )
 
-LINK_DIRECTORIES(
-    ${COMMON_LIBRARY_DIR}
-)
+# LINK_DIRECTORIES(
+#     ${COMMON_LIBRARY_DIR}
+# )
 
 LINK_LIBRARIES(
     gflags::gflags
     pthread
-    spdlog
+    module_logger
 )
 
 FILE(GLOB APP_SOURCES *.cpp)
