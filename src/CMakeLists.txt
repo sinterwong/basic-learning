@@ -4,6 +4,7 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.10)
 ADD_SUBDIRECTORY(logger)
 ADD_SUBDIRECTORY(concurrent)
 ADD_SUBDIRECTORY(design_pattern)
+ADD_SUBDIRECTORY(features)
 
 
 # transfer all headers to the include directory 

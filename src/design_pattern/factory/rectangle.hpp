@@ -1,13 +1,13 @@
 #ifndef __DESIGIN_PATTERN_RECTANGLE_HPP_
 #define __DESIGIN_PATTERN_RECTANGLE_HPP_
-#include "shape.hpp"
 #include "reflection.h"
+#include "shape.hpp"
 
 class Rectangle : public Shape {
 public:
-  // Rectangle(int height_, int width_)
-  //     : height(height_), width(width_), Shape() {}
-  Rectangle() : Shape(){}
+  Rectangle(int height_, int width_, int *k, std::string const &temp)
+      : height(height_), width(width_), Shape() {}
+  // Rectangle() : Shape(){}
   ~Rectangle() {}
 
   virtual void print() override {
@@ -19,6 +19,8 @@ private:
   int width;
 };
 
-ModuleRegister(Rectangle);
+// static int __typeModuleClass = ObjFactory::regCreateObjFunc(
+//     "Rectangle", (void *)(&__createObjFunc<Rectangle, int, int>));
 
+FlowEngineModuleRegister(Rectangle, int, int, int *, std::string const &);
 #endif

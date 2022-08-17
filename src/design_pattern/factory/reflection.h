@@ -12,23 +12,26 @@
 #ifndef __DESIGN_PATTERN_REFLECTION_H_
 #define __DESIGN_PATTERN_REFLECTION_H_
 #include <map>
+#include <memory>
 #include <string>
 
-template <class YourClass, typename... ArgType>
-void *__createObjFunc(ArgType... arg) {
-  return new YourClass(arg...);
-}
-
-#ifndef ModuleRegister
-#define ModuleRegister (YourClass, ...) \
-  static int __type##YourClass = ObjFactory::regCreateObjFunc(#YourClass, (void *)&__createObjFunc<YourClass, ##__VA_ARGS__>);
+#ifndef FlowEngineModuleRegister
+#define FlowEngineModuleRegister(X, ...)                                       \
+  static int __type##X = ObjFactory::regCreateObjFunc(                         \
+      #X, (void *)(&__createObjFunc<X, __VA_ARGS__>));
 #endif
+
+template <typename YourClass, typename... ArgType>
+std::shared_ptr<YourClass> __createObjFunc(ArgType... arg) {
+  return std::make_shared<YourClass>(arg...);
+}
 
 class ObjFactory {
 public:
   template <class BaseClass, typename... ArgType>
-  static BaseClass *createObj(std::string const &className, ArgType... args) {
-    typedef BaseClass *(*_CreateFactory)(ArgType...);
+  static std::shared_ptr<BaseClass> createObj(std::string const &className,
+                                              ArgType... args) {
+    typedef std::shared_ptr<BaseClass> (*_CreateFactory)(ArgType...);
 
     auto &_funcMap = _GetStaticFuncMap();
     auto iFind = _funcMap.find(className);
