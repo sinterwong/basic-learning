@@ -15,6 +15,8 @@
 #include <memory>
 #include <string>
 
+namespace design_pattern {
+namespace factory {
 #ifndef FlowEngineModuleRegister
 #define FlowEngineModuleRegister(X, ...)                                       \
   static int __type##X = ObjFactory::regCreateObjFunc(                         \
@@ -31,7 +33,9 @@ public:
   template <class BaseClass, typename... ArgType>
   static std::shared_ptr<BaseClass> createObj(std::string const &className,
                                               ArgType... args) {
-    typedef std::shared_ptr<BaseClass> (*_CreateFactory)(ArgType...);
+    // typedef std::shared_ptr<BaseClass> (*_CreateFactory)(ArgType...);
+    using _CreateFactory =
+        std::shared_ptr<BaseClass> (*)(ArgType...); // type alias
 
     auto &_funcMap = _GetStaticFuncMap();
     auto iFind = _funcMap.find(className);
@@ -53,5 +57,6 @@ private:
     return _classMap;
   }
 };
-
+} // namespace factory
+} // namespace design_pattern
 #endif

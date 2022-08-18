@@ -2,7 +2,8 @@
 #define __DESIGIN_PATTERN_RECTANGLE_HPP_
 #include "reflection.h"
 #include "shape.hpp"
-
+namespace design_pattern {
+namespace factory {
 class Rectangle : public Shape {
 public:
   Rectangle(int height_, int width_, int *k, std::string const &temp)
@@ -23,4 +24,6 @@ private:
 //     "Rectangle", (void *)(&__createObjFunc<Rectangle, int, int>));
 
 FlowEngineModuleRegister(Rectangle, int, int, int *, std::string const &);
+} // namespace factory
+} // namespace design_pattern
 #endif

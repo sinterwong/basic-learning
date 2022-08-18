@@ -5,6 +5,8 @@
 #include <memory>
 #include <unordered_map>
 
+using namespace design_pattern::factory;
+
 template <typename... Args> int func(std::string const &a, Args... args) {
   std::cout << a << std::endl;
   return 10;
