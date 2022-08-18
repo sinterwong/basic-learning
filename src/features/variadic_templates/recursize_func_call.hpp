@@ -9,6 +9,9 @@
  *
  */
 
+#ifndef __FEATURES_RECURIVE_FUNC_CALL_HPP_
+#define __FEATURES_RECURIVE_FUNC_CALL_HPP_
+
 #include <cstddef>
 #include <functional>
 #include <iostream>
@@ -68,3 +71,5 @@ template <typename T> inline void hash_combine(size_t &seed, T const &val) {
 
 } // namespace variadic_templates
 } // namespace features
+
+#endif

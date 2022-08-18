@@ -1,3 +1,6 @@
+#ifndef __FEATURES_RECURIVE_PRINT_HPP_
+#define __FEATURES_RECURIVE_PRINT_HPP_
+
 #include <iostream>
 
 namespace features {
@@ -18,3 +21,5 @@ void print(T const &firstArg, Args const &...args) {
 
 } // namespace variadic_templates
 } // namespace features
+
+#endif

@@ -1,3 +1,5 @@
+#ifndef __FEATURES_RECURIVE_INHERITANCE_HPP_
+#define __FEATURES_RECURIVE_INHERITANCE_HPP_
 #include <iostream>
 
 namespace features {
@@ -23,3 +25,5 @@ protected:
 
 } // namespace variadic_templates
 } // namespace features
+
+#endif
