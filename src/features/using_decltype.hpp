@@ -40,9 +40,9 @@ template <typename T1, typename T2> auto add(T1 a, T2 b) -> decltype(a + b) {
  * @param vec 
  */
 template <typename T> void getValTypeByObj(std::vector<T> const &vec) {
-  // typename decltype(vec)::value_type elem;
-  // T a{};
-  // elem.push_back(a);
+  typename decltype(vec)::value_type elem;  // 等于T
+  typename decltype(vec)::iterator ielem;   // 
+  decltype(vec) containerType;              // 总之可以各种获取类型
 }
 
 } // namespace using_decltype
