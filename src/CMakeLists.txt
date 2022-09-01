@@ -5,6 +5,7 @@ ADD_SUBDIRECTORY(logger)
 ADD_SUBDIRECTORY(concurrent)
 ADD_SUBDIRECTORY(design_pattern)
 ADD_SUBDIRECTORY(features)
+ADD_SUBDIRECTORY(practice)
 
 
 # transfer all headers to the include directory 
