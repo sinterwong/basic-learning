@@ -1,17 +1,19 @@
 #include "features/recursive_print.hpp"
-// #include "features/recursize_func_call.hpp"
-#include "features/recursive_inheritance.hpp"
+#include "features/recursize_func_call.hpp"
+#include "features/my_printf.hpp"
+#include <cstddef>
 #include <iostream>
 
-using namespace features;
+using namespace features::variadic_templates;
 
 int main(int argc, char **argv) {
   // std::cout << "CPP version: " << __cplusplus << std::endl;
 
-  // variadic_templates::print("hello", 5.2, 5, 'a'); // test recursive_print
+  print("hello", 5.2, 5, 'a'); // test recursive_print
 
-  // variadic_templates::hash_val("hi", "hello", "world");
+  CustomerHash a("hello", "hi", 97);
 
-  // variadic_templates::tuple<int, float, std::string> t(1, 0.5, "hello");
+  myPrintf("{} hello to {}.\n", "A", 10);
+
   return 0;
 }

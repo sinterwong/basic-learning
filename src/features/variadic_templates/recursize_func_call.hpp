@@ -20,16 +20,25 @@ namespace features {
 namespace variadic_templates {
 
 /**
- * @brief hash_val 泛化模板（可以接收任何类型的参数，因此匹配优先级最低）
+ * @brief hash_combine
  *
- * @tparam Types
- * @param args
- * @return size_t
+ * @tparam T
+ * @param seed
+ * @param val
  */
-template <typename... Types> inline size_t hash_val(Types const &...args) {
-  size_t seed = 0;
-  hash_val(seed, args...);
-  return seed;
+template <typename T> inline void hash_combine(size_t &seed, T const &val) {
+  seed ^= std::hash<T>()(val) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
+}
+
+/**
+ * @brief hash_val 更大部分特化模板
+ *
+ * @tparam T
+ * @param seed
+ * @param val
+ */
+template <typename T> inline void hash_val(size_t &seed, T const &val) {
+  hash_combine(seed, val);
 }
 
 /**
@@ -48,26 +57,30 @@ inline void hash_val(size_t &seed, T const &val, Types const &...args) {
 }
 
 /**
- * @brief hash_val 更大部分特化模板
+ * @brief hash_val 泛化模板（可以接收任何类型的参数，因此匹配优先级最低）
  *
- * @tparam T
- * @param seed
- * @param val
+ * @tparam Types
+ * @param args
+ * @return size_t
  */
-template <typename T> inline void hash_val(size_t &seed, T const &val) {
-  hash_combine(seed, val);
+template <typename... Types> inline size_t hash_val(Types const &...args) {
+  size_t seed = 0;
+  hash_val(seed, args...);
+  return seed;
 }
 
-/**
- * @brief hash_combine
- *
- * @tparam T
- * @param seed
- * @param val
- */
-template <typename T> inline void hash_combine(size_t &seed, T const &val) {
-  seed ^= std::hash<T>()(val) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
-}
+class CustomerHash {
+  std::string fname;
+  std::string lname;
+  int no;
+
+public:
+  CustomerHash(std::string const &fname_, std::string const &lname_, int no_)
+      : fname(fname_), lname(lname_), no(no_) {}
+  size_t operator()(CustomerHash const &c) const {
+    return hash_val(c.fname, c.lname, c.no);
+  }
+};
 
 } // namespace variadic_templates
 } // namespace features
