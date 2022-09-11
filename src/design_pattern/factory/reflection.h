@@ -17,8 +17,8 @@
 
 namespace design_pattern {
 namespace factory {
-#ifndef FlowEngineModuleRegister
-#define FlowEngineModuleRegister(X, ...)                                       \
+#ifndef BasicLearningModuleRegister
+#define BasicLearningModuleRegister(X, ...)                                       \
   static int __type##X = ObjFactory::regCreateObjFunc(                         \
       #X, (void *)(&__createObjFunc<X, __VA_ARGS__>));
 #endif

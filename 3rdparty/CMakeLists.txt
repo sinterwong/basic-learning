@@ -1,5 +1,5 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.10)
-PROJECT(FlowEngine3rdparty)
+PROJECT(BasicLearning3rdparty)
 
 # NOTE: build with source
 SET(SPDLOG_BUILD_SHARED ON)

@@ -7,7 +7,7 @@
       "request": "launch",
       "program": "/home/wangxt/workspace/projects/basic-learning/build/x86_64/bin/test_variadic_templates",
       "args": [
-        //  "--config_path=/home/wangxt/workspace/projects/flowengine/conf/app/config.json",
+        //  "--config_path=/home/wangxt/workspace/projects/basic/conf/app/config.json",
       ],
       "stopAtEntry": false,
       "cwd": "${workspaceFolder}",

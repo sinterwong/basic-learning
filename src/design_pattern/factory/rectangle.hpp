@@ -23,7 +23,7 @@ private:
 // static int __typeModuleClass = ObjFactory::regCreateObjFunc(
 //     "Rectangle", (void *)(&__createObjFunc<Rectangle, int, int>));
 
-FlowEngineModuleRegister(Rectangle, int, int, int *, std::string const &);
+BasicLearningModuleRegister(Rectangle, int, int, int *, std::string const &);
 } // namespace factory
 } // namespace design_pattern
 #endif

@@ -9,17 +9,17 @@ DEFINE_string(configs, "",
 
 int main(int argc, char **argv) {
 
-  FlowEngineLoggerInit(true, true, true, true);
+  BasicLearningLoggerInit(true, true, true, true);
   gflags::SetUsageMessage("some usage message");
   gflags::SetVersionString("1.0.0");
   gflags::ParseCommandLineFlags(&argc, &argv, true);
 //   if (FLAGS_help)
-//     FLOWENGINE_LOGGER_INFO(gflags::ProgramInvocationShortName());
-  FLOWENGINE_LOGGER_INFO(FLAGS_id);
-  FLOWENGINE_LOGGER_INFO(FLAGS_name);
+//     BASIC_LOGGER_INFO(gflags::ProgramInvocationShortName());
+  BASIC_LOGGER_INFO(FLAGS_id);
+  BASIC_LOGGER_INFO(FLAGS_name);
   gflags::ShutDownCommandLineFlags();
 
-  FlowEngineLoggerDrop();
+  BasicLearningLoggerDrop();
 
   return 0;
 }

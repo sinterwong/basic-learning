@@ -12,12 +12,12 @@
 #pragma once
 
 // for cmake
-#define FLOWENGINE_VER_MAJOR 0
-#define FLOWENGINE_VER_MINOR 1
-#define FLOWENGINE_VER_PATCH 0
+#define BASIC_VER_MAJOR 0
+#define BASIC_VER_MINOR 1
+#define BASIC_VER_PATCH 0
 
-#define FLOWENGINE_VERSION (FLOWENGINE_VER_MAJOR * 10000 + FLOWENGINE_VER_MINOR * 100 + FLOWENGINE_VER_PATCH)
+#define BASIC_VERSION (BASIC_VER_MAJOR * 10000 + BASIC_VER_MINOR * 100 + BASIC_VER_PATCH)
 
 // for source code
-#define _FLOWENGINE_STR(s) #s
-#define FLOWENGINE_PROJECT_VERSION(major, minor, patch) "v" _FLOWENGINE_STR(major.minor.patch)
+#define _BASIC_STR(s) #s
+#define BASIC_PROJECT_VERSION(major, minor, patch) "v" _BASIC_STR(major.minor.patch)
