@@ -18,8 +18,7 @@
 
 namespace algo_and_ds {
 namespace sort {
-template <typename Container>
-void select_sort(Container &arr) {
+template <typename Container> void select_sort(Container &arr) {
   for (int i = 0; i < arr.size(); ++i) {
     // 剩余元素中最小的元素索引
     int minindex = i; // 对于T类型，不知如何表示最大值
@@ -29,10 +28,9 @@ void select_sort(Container &arr) {
         minindex = j;
       }
     }
-    if (i == minindex) {
-      continue;
+    if (i != minindex) {
+      std::swap(arr[i], arr[minindex]);
     }
-    std::swap(arr[i], arr[minindex]);
   }
 }
 
