@@ -12,18 +12,17 @@
 #ifndef __AADS_SELECT_SORT_HPP_
 #define __AADS_SELECT_SORT_HPP_
 #include <iostream>
+#include <iterator>
 #include <memory>
 #include <vector>
 
 namespace algo_and_ds {
 namespace sort {
-template <typename T>
-
-void select_sort(std::vector<T> &arr) {
+template <typename Container>
+void select_sort(Container &arr) {
   for (int i = 0; i < arr.size(); ++i) {
-
     // 剩余元素中最小的元素索引
-    T minindex = i; // 对于T类型，不知如何表示最大值
+    int minindex = i; // 对于T类型，不知如何表示最大值
     // j从i开始（i以前的已经有序）
     for (int j = i; j < arr.size(); ++j) {
       if (arr[j] < arr[minindex]) {

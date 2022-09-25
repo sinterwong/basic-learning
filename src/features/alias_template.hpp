@@ -29,7 +29,7 @@ template <typename Container> void test_func(Container container) {
    * 在给一个typedef
    *
    */
-  typedef typename std::iterator_traits<typename Container::iterator>::val_type
+  typedef typename std::iterator_traits<typename Container::iterator>::value_type
       Valtype;
   for (int i = 0; i < 10; i++) {
     container.insert(container.end(), Valtype());
