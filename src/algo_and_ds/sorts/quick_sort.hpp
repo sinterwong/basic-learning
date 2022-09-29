@@ -21,24 +21,23 @@
 namespace algo_and_ds {
 namespace sort {
 
-template <typename Container>
-int __partition(Container &arr, int l, int r) {
+template <typename Container> int __partition(Container &arr, int l, int r) {
   using valType =
       typename std::iterator_traits<typename Container::iterator>::value_type;
-  // 取第一个元素作为基点
-  valType v = arr[l];
-  
+
+  std::swap(arr[l], arr[rand() % (r - l + 1) + l]); // 交换一下第一个位置和随机元素
+
+  valType v = arr[l]; // 取第一个元素作为基点
+
   // j用来维护arr[l..p-1], i维护arr[p+1....r)
   int j = l;
-  for (int i = l + 1; i <= r; i ++) {
-    if (arr[i] < v) {  // 需要放到v的右侧，然后更新j
+  for (int i = l + 1; i <= r; i++) {
+    if (arr[i] < v) { // 需要放到v的右侧，然后更新j
       std::swap(arr[i], arr[++j]);
     }
   }
-  std::swap(arr[j], arr[l]);  // 此时j的位置指向最后一个小于v的元素
+  std::swap(arr[j], arr[l]); // 此时j的位置指向最后一个小于v的元素
   return j;
-
-
 }
 
 template <typename Container> void __quickSort(Container &arr, int l, int r) {
@@ -46,12 +45,57 @@ template <typename Container> void __quickSort(Container &arr, int l, int r) {
     return;
   }
   int pid = __partition(arr, l, r);
-  __quickSort(arr, l, pid-1);
-  __quickSort(arr, pid+1, r);
+  __quickSort(arr, l, pid - 1);
+  __quickSort(arr, pid + 1, r);
 }
 
 template <typename Container> void quick_sort(Container &arr) {
   __quickSort(arr, 0, arr.size());
+}
+
+template <typename Container>
+int __partition2way(Container &arr, int l, int r) {
+  /**
+   * @brief
+   * 之前的快排对于重复元素极多的情况将会有非常大的概率两边不平衡，导致最坏回退化成O(n^2)
+   * 双路快排通过尽可能均分两路，来实现一个期望平衡的左右子树。
+   * 左右各自维护一个索引，左边向右遍历查找直到找到>v的元素交换，右边向左查找直到找到<v的进行交换，
+   * 如此往复直到维护的两个索引重合
+   */
+  using valType =
+      typename std::iterator_traits<typename Container::iterator>::value_type;
+
+  std::swap(arr[l], arr[rand() % (r - l + 1) + l]); // 交换一下第一个位置和随机元素
+
+  valType v = arr[l]; // 取第一个元素作为基点
+
+  int i = l + 1; // arr[l+1...i)
+  int j = r;     // arr(j...r]
+
+  while (true) {
+    while (i <= r && arr[i] < v) i++;  // 小于v时循环继续直到 >=v时停止
+    while (j >= l + 1 && arr[j] > v) j--;
+    if (i >= j) break;
+    std::swap(arr[j], arr[i]);
+    i++;
+    j--;
+  }
+  std::swap(arr[l], arr[j]);
+  return j;
+}
+
+template <typename Container>
+void __quickSort2way(Container &arr, int l, int r) {
+  if (l >= r) {
+    return;
+  }
+  int pid = __partition2way(arr, l, r);
+  __quickSort2way(arr, l, pid - 1);
+  __quickSort2way(arr, pid + 1, r);
+}
+
+template <typename Container> void quick_sort_2way(Container &arr) {
+  __quickSort2way(arr, 0, arr.size());
 }
 
 } // namespace sort
