@@ -25,7 +25,8 @@ template <typename Container> int __partition(Container &arr, int l, int r) {
   using valType =
       typename std::iterator_traits<typename Container::iterator>::value_type;
 
-  std::swap(arr[l], arr[rand() % (r - l + 1) + l]); // 交换一下第一个位置和随机元素
+  std::swap(arr[l],
+            arr[rand() % (r - l + 1) + l]); // 交换一下第一个位置和随机元素
 
   valType v = arr[l]; // 取第一个元素作为基点
 
@@ -65,7 +66,8 @@ int __partition2way(Container &arr, int l, int r) {
   using valType =
       typename std::iterator_traits<typename Container::iterator>::value_type;
 
-  std::swap(arr[l], arr[rand() % (r - l + 1) + l]); // 交换一下第一个位置和随机元素
+  std::swap(arr[l],
+            arr[rand() % (r - l + 1) + l]); // 交换一下第一个位置和随机元素
 
   valType v = arr[l]; // 取第一个元素作为基点
 
@@ -73,9 +75,12 @@ int __partition2way(Container &arr, int l, int r) {
   int j = r;     // arr(j...r]
 
   while (true) {
-    while (i <= r && arr[i] < v) i++;  // 小于v时循环继续直到 >=v时停止
-    while (j >= l + 1 && arr[j] > v) j--;
-    if (i >= j) break;
+    while (i <= r && arr[i] < v)
+      i++; // 小于v时循环继续直到 >=v时停止
+    while (j >= l + 1 && arr[j] > v)
+      j--;
+    if (i >= j)
+      break;
     std::swap(arr[j], arr[i]);
     i++;
     j--;
@@ -96,6 +101,39 @@ void __quickSort2way(Container &arr, int l, int r) {
 
 template <typename Container> void quick_sort_2way(Container &arr) {
   __quickSort2way(arr, 0, arr.size());
+}
+
+template <typename Container>
+void __quickSort3way(Container &arr, int l, int r) {
+  if (l >= r) {
+    return;
+  }
+  using valType =
+      typename std::iterator_traits<typename Container::iterator>::value_type;
+  // 分别维护小于v的部分，等于v的部分和大于v的部分，因此两个点就可以将数组划分成三段，所以需要维护两个索引
+  // 初始化两个索引
+  std::swap(arr[l], arr[rand() % (r - l + 1) + l]);
+  valType v = arr[l];
+  int lt = l;     // [l....lt]
+  int gt = r + 1; // [gt....r]
+  int i = l + 1;  // 前进索引
+  while (i < gt) {
+    if (arr[i] < v) {
+      std::swap(arr[++lt], arr[i++]);
+    } else if (arr[i] > v) {
+      std::swap(arr[--gt], arr[i]);
+    } else { // arr[i] == v
+      i++;
+    }
+  }
+  std::swap(arr[l], arr[lt]);
+
+  __quickSort3way(arr, l, lt - 1);
+  __quickSort3way(arr, gt, r);
+}
+
+template <typename Container> void quick_sort_3way(Container &arr) {
+  __quickSort3way(arr, 0, arr.size());
 }
 
 } // namespace sort
