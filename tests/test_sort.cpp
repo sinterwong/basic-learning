@@ -8,13 +8,14 @@
 #include "algo_and_ds/insert_sort.hpp"
 #include "algo_and_ds/merge_sort.hpp"
 #include "algo_and_ds/quick_sort.hpp"
+#include "algo_and_ds/heap_sort.hpp"
 
 using namespace algo_and_ds::sort;
 
 int main(int argc, char *argv[]) {
 
   // const int numElements = 209399;
-  const int numElements = 150000;
+  const int numElements = 100000;
   using citer = std::array<int, numElements>::const_iterator;
   using iter = std::array<int, numElements>::iterator;
   using myArray = std::array<int, numElements>;
@@ -28,9 +29,11 @@ int main(int argc, char *argv[]) {
   // testSort<myArray>("Insert sort", insert_sort, randomArr14);
   // testSort<myArray>("Merge sort", merge_sort, randomArr2);
   testSort<myArray>("Merge bu sort", merge_sort_bu, randomArr1);
-  testSort<myArray>("Quick sort", quick_sort, randomArr2);
-  testSort<myArray>("Quick sort 2 way", quick_sort_2way, randomArr3);
+  // testSort<myArray>("Quick sort", quick_sort, randomArr2);
+  // testSort<myArray>("Quick sort 2 way", quick_sort_2way, randomArr3);
   testSort<myArray>("Quick sort 3 way", quick_sort_3way, randomArr4);
+  testSort<myArray>("Heap sort", heap_sort, randomArr2);
+  // testSort<myArray>("Heapify sort", heapify_sort, randomArr3);
 
   myArray nearlyOrderArray1;
   generateNearlyOrderedArray<myArray>(nearlyOrderArray1, 10);
@@ -38,19 +41,23 @@ int main(int argc, char *argv[]) {
   myArray nearlyOrderArray3 = nearlyOrderArray1;
   myArray nearlyOrderArray4 = nearlyOrderArray1;
   testSort<myArray>("Merge bu sort", merge_sort_bu, nearlyOrderArray1);
-  testSort<myArray>("Quick sort", quick_sort, nearlyOrderArray2);
-  testSort<myArray>("Quick sort 2 way", quick_sort_2way, nearlyOrderArray3);
+  // testSort<myArray>("Quick sort", quick_sort, nearlyOrderArray2);
+  // testSort<myArray>("Quick sort 2 way", quick_sort_2way, nearlyOrderArray3);
   testSort<myArray>("Quick sort 3 way", quick_sort_3way, nearlyOrderArray4);
+  testSort<myArray>("Heap sort", heap_sort, nearlyOrderArray2);
+  // testSort<myArray>("Heapify sort", heapify_sort, nearlyOrderArray3);
 
   myArray repeatArr1;
   generateRandomArray<myArray>(repeatArr1, 10);
-  // myArray repeatArr2 = repeatArr1;
+  myArray repeatArr2 = repeatArr1;
   myArray repeatArr3 = repeatArr1;
   myArray repeatArr4 = repeatArr1;
   testSort<myArray>("Merge bu sort", merge_sort_bu, repeatArr1);
   // testSort<myArray>("Quick sort", quick_sort, repeatArr2);
-  testSort<myArray>("Quick sort 2 way", quick_sort_2way, repeatArr3);
+  // testSort<myArray>("Quick sort 2 way", quick_sort_2way, repeatArr3);
   testSort<myArray>("Quick sort 3 way", quick_sort_3way, repeatArr4);
+  testSort<myArray>("Heap sort", heap_sort, repeatArr2);
+  // testSort<myArray>("Heapify sort", heapify_sort, repeatArr3);
 
   return 0;
 }
