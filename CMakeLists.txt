@@ -21,6 +21,7 @@ IF (NOT CMAKE_TOOLCHAIN_FILE)
     MESSAGE(STATUS "CMAKE_TOOLCHAIN_FILE: ${CMAKE_TOOLCHAIN_FILE}")
 ENDIF()
 
+
 #--------------------------------------------
 # Set default build to debug
 #--------------------------------------------
@@ -37,7 +38,7 @@ IF(NOT TARGET_ARCH)
 ENDIF()
 
 IF(NOT TARGET_HARDWARE)
-    SET(TARGET_HARDWARE none)  # [none/rv1126/jetson]
+    SET(TARGET_HARDWARE none)  # [none/X3/Jetson]
 ENDIF()
 
 MESSAGE(STATUS "Your target os : ${TARGET_OS}")
@@ -51,6 +52,17 @@ MESSAGE(STATUS "Build type: " ${CMAKE_BUILD_TYPE})
 MESSAGE(INFO "--------------------------------")
 INCLUDE(cmake/toolchain_options.cmake)
 INCLUDE(cmake/load_3rdparty.cmake)
+MESSAGE(INFO "Loading 3rdparty libraries")
+
+IF(TARGET_HARDWARE STREQUAL "X3")
+    MESSAGE(STATUS "Loading X3 dependent libraries")
+    LOAD_X3()
+ELSEIF(TARGET_HARDWARE EQUAL "Jetson")
+    MESSAGE(STATUS "Loading Jetson dependent libraries")
+    LOAD_Jetson()
+ELSE()
+    MESSAGE(STATUS "No TARGET_HARDWARE specified!")
+ENDIF()
 MESSAGE(INFO "--------------------------------")
 
 SET(PROJECT_OUTPUT_DIR  ${PROJECT_BINARY_DIR}/${TARGET_ARCH})
