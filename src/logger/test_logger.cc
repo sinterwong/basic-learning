@@ -1,4 +1,6 @@
-#include "logger/logger.hpp"
+#include "logger.hpp"
+#include "spdlog/logger.h"
+#include "spdlog/spdlog.h"
 
 int main() {
   BasicLearningLoggerInit(true, true, true, true);

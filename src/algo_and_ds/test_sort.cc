@@ -1,14 +1,14 @@
+#include "algo_and_ds/heap_sort.hpp"
+#include "algo_and_ds/insert_sort.hpp"
+#include "algo_and_ds/merge_sort.hpp"
+#include "algo_and_ds/quick_sort.hpp"
+#include "algo_and_ds/select_sort.hpp"
+#include "algo_and_ds/sort_helper.hpp"
 #include <algorithm>
 #include <cstdlib>
 #include <iostream>
 #include <memory>
 #include <vector>
-#include "algo_and_ds/sort_helper.hpp"
-#include "algo_and_ds/select_sort.hpp"
-#include "algo_and_ds/insert_sort.hpp"
-#include "algo_and_ds/merge_sort.hpp"
-#include "algo_and_ds/quick_sort.hpp"
-#include "algo_and_ds/heap_sort.hpp"
 
 using namespace algo_and_ds::sort;
 

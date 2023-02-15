@@ -1,6 +1,6 @@
-#include "desigin_pattern/rectangle.hpp"
-#include "desigin_pattern/reflection.h"
-#include "desigin_pattern/shape.hpp"
+#include "rectangle.hpp"
+#include "reflection.h"
+#include "shape.hpp"
 #include <iostream>
 #include <memory>
 #include <unordered_map>

@@ -4,6 +4,7 @@ PROJECT(BasicLearning3rdparty)
 # NOTE: build with source
 SET(SPDLOG_BUILD_SHARED ON)
 ADD_SUBDIRECTORY(spdlog)
+FILE(COPY spdlog/include/spdlog DESTINATION ${PROJECT_INCLUDE_DIR})
 
 SET(SPDLOG_BUILD_SHARED ON)
 ADD_SUBDIRECTORY(gflags)
@@ -16,6 +17,9 @@ FILE(MAKE_DIRECTORY ${PROJECT_INCLUDE_DIR})
 
 # Copy rapidjson to ${PROJECT_INCLUDE_DIR}
 FILE(COPY rapidjson DESTINATION ${PROJECT_INCLUDE_DIR})
+
+# Copy taskflow to ${PROJECT_INCLUDE_DIR}
+FILE(COPY taskflow DESTINATION ${PROJECT_INCLUDE_DIR})
 
 #MESSAGE(INFO "--------------------------------")
 #SET(NN_STATIC_LIB ON CACHE BOOL "enable static library building of nanomsg")
