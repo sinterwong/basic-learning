@@ -2,7 +2,7 @@
 #define __DESIGIN_PATTERN_RECTANGLE_HPP_
 #include "reflection.h"
 #include "shape.hpp"
-namespace design_pattern {
+namespace oop {
 namespace factory {
 class Rectangle : public Shape {
 public:

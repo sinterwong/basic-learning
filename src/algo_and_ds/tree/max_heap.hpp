@@ -17,8 +17,7 @@
 #include <utility>
 #include <vector>
 
-namespace algo_and_ds {
-namespace tree {
+namespace algo_and_ds::tree {
 
 template <typename Item> class MaxHeap {
 private:
@@ -73,7 +72,6 @@ public:
   }
 };
 
-} // namespace tree
-} // namespace algo_and_ds
+} // namespace algo_and_ds::tree
 
 #endif

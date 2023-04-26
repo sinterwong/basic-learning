@@ -15,7 +15,7 @@
 #include <memory>
 #include <string>
 
-namespace design_pattern {
+namespace oop {
 namespace factory {
 #ifndef BasicLearningModuleRegister
 #define BasicLearningModuleRegister(X, ...)                                       \

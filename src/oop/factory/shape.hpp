@@ -2,7 +2,7 @@
 
 #ifndef __DESIGIN_PATTERN_SHAPE_HPP_
 #define __DESIGIN_PATTERN_SHAPE_HPP_
-namespace design_pattern {
+namespace oop {
 namespace factory {
 class Shape {
 public:

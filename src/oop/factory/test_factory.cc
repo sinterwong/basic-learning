@@ -5,7 +5,7 @@
 #include <memory>
 #include <unordered_map>
 
-using namespace design_pattern::factory;
+using namespace oop::factory;
 
 template <typename... Args> int func(std::string const &a, Args... args) {
   std::cout << a << std::endl;
