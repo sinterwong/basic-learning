@@ -17,21 +17,13 @@ INSTALL(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
     PATTERN "CMakeLists.txt" EXCLUDE
     )
 
-# INSTALL(TARGETS features
-#     ARCHIVE DESTINATION lib
-#     LIBRARY DESTINATION lib
-#     RUNTIME DESTINATION bin)
-
+FILE(MAKE_DIRECTORY ${PROJECT_OUTPUT_DIR}/bin/features)
+SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_OUTPUT_DIR}/bin/features)
 FILE(GLOB APP_SOURCES *.cc)
 MESSAGE(STATUS "APP SOURCES: ${APP_SOURCES}")
 FOREACH(sourcefile ${APP_SOURCES})
     STRING(REGEX MATCH "[^/]+$" sourcefilewithoutpath ${sourcefile})
     STRING(REPLACE ".cc" "" testname ${sourcefilewithoutpath})
     ADD_EXECUTABLE( ${testname} ${sourcefile})
-    SET(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin/tests)
 
-    INSTALL(TARGETS ${testname}
-        ARCHIVE DESTINATION lib
-        LIBRARY DESTINATION lib
-        RUNTIME DESTINATION bin)
 ENDFOREACH(sourcefile ${APP_SOURCES})

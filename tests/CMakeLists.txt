@@ -15,16 +15,12 @@ LINK_LIBRARIES(
     module_logger
 )
 
-FILE(GLOB APP_SOURCES *.cpp)
+FILE(MAKE_DIRECTORY ${PROJECT_OUTPUT_DIR}/bin/tests)
+SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_OUTPUT_DIR}/bin/tests)
+FILE(GLOB_RECURSE APP_SOURCES *.cpp)
 MESSAGE(STATUS "APP SOURCES: ${APP_SOURCES}")
 FOREACH(sourcefile ${APP_SOURCES})
     STRING(REGEX MATCH "[^/]+$" sourcefilewithoutpath ${sourcefile})
     STRING(REPLACE ".cpp" "" testname ${sourcefilewithoutpath})
     ADD_EXECUTABLE( ${testname} ${sourcefile})
-    SET(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin/tests)
-
-    INSTALL(TARGETS ${testname}
-        ARCHIVE DESTINATION lib
-        LIBRARY DESTINATION lib
-        RUNTIME DESTINATION bin)
 ENDFOREACH(sourcefile ${APP_SOURCES})

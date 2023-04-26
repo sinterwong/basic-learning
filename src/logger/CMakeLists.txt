@@ -28,6 +28,9 @@ INSTALL(TARGETS module_logger
 LINK_LIBRARIES(
     gflags::gflags
 )
+
+FILE(MAKE_DIRECTORY ${PROJECT_OUTPUT_DIR}/bin/logger)
+SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_OUTPUT_DIR}/bin/logger)
 FILE(GLOB APP_SOURCES *.cc)
 MESSAGE(STATUS "APP SOURCES: ${APP_SOURCES}")
 FOREACH(sourcefile ${APP_SOURCES})
@@ -35,10 +38,4 @@ FOREACH(sourcefile ${APP_SOURCES})
     STRING(REPLACE ".cc" "" testname ${sourcefilewithoutpath})
     ADD_EXECUTABLE( ${testname} ${sourcefile})
     TARGET_LINK_LIBRARIES(${testname} module_logger)
-    SET(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin/tests)
-
-    INSTALL(TARGETS ${testname}
-        ARCHIVE DESTINATION lib
-        LIBRARY DESTINATION lib
-        RUNTIME DESTINATION bin)
 ENDFOREACH(sourcefile ${APP_SOURCES})

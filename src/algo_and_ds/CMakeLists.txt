@@ -17,21 +17,12 @@ INSTALL(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
     PATTERN "CMakeLists.txt" EXCLUDE
     )
 
-# INSTALL(TARGETS algo_and_ds
-#     ARCHIVE DESTINATION lib
-#     LIBRARY DESTINATION lib
-#     RUNTIME DESTINATION bin)
-
-FILE(GLOB APP_SOURCES *.cc)
+FILE(MAKE_DIRECTORY ${PROJECT_OUTPUT_DIR}/bin/algo_and_ds)
+SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_OUTPUT_DIR}/bin/algo_and_ds)
+FILE(GLOB_RECURSE APP_SOURCES *.cc)
 MESSAGE(STATUS "APP SOURCES: ${APP_SOURCES}")
 FOREACH(sourcefile ${APP_SOURCES})
     STRING(REGEX MATCH "[^/]+$" sourcefilewithoutpath ${sourcefile})
     STRING(REPLACE ".cc" "" testname ${sourcefilewithoutpath})
     ADD_EXECUTABLE( ${testname} ${sourcefile})
-    SET(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin/tests)
-
-    INSTALL(TARGETS ${testname}
-        ARCHIVE DESTINATION lib
-        LIBRARY DESTINATION lib
-        RUNTIME DESTINATION bin)
 ENDFOREACH(sourcefile ${APP_SOURCES})
