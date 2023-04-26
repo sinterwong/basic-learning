@@ -2,12 +2,13 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.10)
 
 # submodule
 ADD_SUBDIRECTORY(logger)
-ADD_SUBDIRECTORY(concurrent)
-ADD_SUBDIRECTORY(design_pattern)
-ADD_SUBDIRECTORY(features)
-ADD_SUBDIRECTORY(practice)
-ADD_SUBDIRECTORY(algo_and_ds)
-ADD_SUBDIRECTORY(use_taskflow)
+ADD_SUBDIRECTORY(concurrency)
+ADD_SUBDIRECTORY(utils)
+# ADD_SUBDIRECTORY(design_pattern)
+# ADD_SUBDIRECTORY(features)
+# ADD_SUBDIRECTORY(practice)
+# ADD_SUBDIRECTORY(algo_and_ds)
+# ADD_SUBDIRECTORY(use_taskflow)
 
 
 # transfer all headers to the include directory 

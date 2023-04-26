@@ -6,24 +6,17 @@ SET(SPDLOG_BUILD_SHARED ON)
 ADD_SUBDIRECTORY(spdlog)
 FILE(COPY spdlog/include/spdlog DESTINATION ${PROJECT_INCLUDE_DIR})
 
-SET(SPDLOG_BUILD_SHARED ON)
 ADD_SUBDIRECTORY(gflags)
 
-IF(TARGET_HARDWARE STREQUAL jetson)
-  ADD_SUBDIRECTORY(jetson-utils)
-ENDIF()
+# ADD_SUBDIRECTORY(eigen)
 
-FILE(MAKE_DIRECTORY ${PROJECT_INCLUDE_DIR})
+# FILE(MAKE_DIRECTORY ${PROJECT_INCLUDE_DIR})
 
-# Copy rapidjson to ${PROJECT_INCLUDE_DIR}
-FILE(COPY rapidjson DESTINATION ${PROJECT_INCLUDE_DIR})
+# # Copy taskflow to ${PROJECT_INCLUDE_DIR}
+# FILE(COPY taskflow DESTINATION ${PROJECT_INCLUDE_DIR})
 
-# Copy taskflow to ${PROJECT_INCLUDE_DIR}
-FILE(COPY taskflow DESTINATION ${PROJECT_INCLUDE_DIR})
+# # Copy nlohmann to ${PROJECT_INCLUDE_DIR}
+# FILE(COPY nlohmann DESTINATION ${PROJECT_INCLUDE_DIR})
 
-#MESSAGE(INFO "--------------------------------")
-#SET(NN_STATIC_LIB ON CACHE BOOL "enable static library building of nanomsg")
-#SET(NN_TESTS OFF CACHE BOOL "disable test building of nanomsg")
-#SET(NN_TOOLS OFF CACHE BOOL "disable tool building of nanomsg")
-#SET(NN_ENABLE_DOC OFF CACHE BOOL "disable doc building of nanomsg")
-#ADD_SUBDIRECTORY(nanomsg)
+# # Copy crow to ${PROJECT_INCLUDE_DIR}
+# FILE(COPY crow DESTINATION ${PROJECT_INCLUDE_DIR})

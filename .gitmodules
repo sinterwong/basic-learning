@@ -5,3 +5,7 @@
 [submodule "3rdparty/gflags"]
 	path = 3rdparty/gflags
 	url = https://github.com/gflags/gflags.git
+
+[submodule "3rdparty/eigen"]
+	path = 3rdparty/eigen
+	url = https://gitlab.com/libeigen/eigen.git
