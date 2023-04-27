@@ -207,9 +207,9 @@ public:
   void push(T new_value) {
     std::shared_ptr<T> new_data = std::make_shared<T>(std::move(new_value));
     std::unique_ptr<node> p = std::make_unique<node>(); // new dummy node
+    node *const new_tail = p.get();
     {
       std::lock_guard<std::mutex> tail_lock(tail_mutex);
-      node *const new_tail = p.get();
       tail->data = new_data;
       tail->next = std::move(p);
       tail = new_tail;
