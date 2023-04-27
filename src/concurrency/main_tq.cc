@@ -27,7 +27,7 @@ int main() {
   });
 
   std::thread t2([&myQueue]() {
-    for (size_t i = 0; i < 50; ++i) {
+    for (size_t i = 0; i < 10; ++i) {
       BASIC_LOGGER_INFO("waitPopData: {}", *myQueue.wait_and_pop());
     }
   });
