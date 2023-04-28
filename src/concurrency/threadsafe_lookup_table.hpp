@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <functional>
 #include <list>
+#include <map>
 #include <memory>
 #include <mutex>
 #include <shared_mutex>
@@ -12,14 +13,14 @@
 namespace concurrency {
 template <typename Key, typename Value, typename Hash = std::hash<Key>>
 class threadsafe_lookup_table {
+  using bucket_value = std::pair<Key, Value>;
+  using bucket_data = std::list<bucket_value>;
+  using bucket_iterator = typename std::list<bucket_value>::iterator;
+
 private:
   class bucket_type {
-    using bucket_value = std::pair<Key, Value>;
-    using bucket_data = std::list<bucket_value>;
-    using bucket_iterator = typename std::list<bucket_value>::iterator;
-
     bucket_data data; // 桶
-    std::shared_mutex mutex;
+    mutable std::shared_mutex mutex;
 
     bucket_iterator find_entry_for(Key const &key) const {
       return std::find_if(
@@ -83,6 +84,22 @@ public:
   }
 
   void remove_mapping(Key const &key) { get_bucket(key).remove_mapping(key); }
+
+  std::map<Key, Value> get_map() const {
+    std::vector<std::unique_lock<std::shared_mutex>> bucket_locks;
+    for (size_t i = 0; i < buckets.size(); ++i) {
+      bucket_locks.push_back(
+          std::unique_lock<std::shared_mutex>{buckets.at(i).mutex});
+    }
+    std::map<Key, Value> ret;
+    for (auto &bucket : buckets) {
+      for (bucket_iterator it = bucket.data.begin(); it != bucket.data.end();
+           ++it) {
+        ret.insert(*it);
+      }
+    }
+    return ret;
+  }
 };
 
 } // namespace concurrency

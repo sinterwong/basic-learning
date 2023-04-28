@@ -1,5 +1,7 @@
 #include "logger/logger.hpp"
 // #include "threadsafe_queue.hpp"
+#include "threadsafe_list.hpp"
+#include "threadsafe_lookup_table.hpp"
 #include "threadsafe_queue_fg.hpp"
 #include <iostream>
 #include <thread>
