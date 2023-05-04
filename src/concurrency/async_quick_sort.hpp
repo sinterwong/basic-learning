@@ -32,7 +32,8 @@ template <typename T> std::list<T> sequential_quick_sort(std::list<T> input) {
   return result;
 }
 
-template <typename T> std::list<T> parallel_quick_sort(std::list<T> input) {
+template <typename T>
+std::list<T> async_parallel_quick_sort(std::list<T> input) {
   if (input.empty()) {
     return input;
   }

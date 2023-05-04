@@ -32,7 +32,7 @@ public:
   std::shared_ptr<T> pop() {
     std::lock_guard<std::mutex> lk(m);
     if (data.empty()) {
-      throw empty_stack();
+      return std::shared_ptr<T>();
     }
     std::shared_ptr<T> const ret(std::make_shared<T>(std::move(data.top())));
     data.pop();

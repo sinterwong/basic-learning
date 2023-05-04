@@ -1,13 +1,14 @@
 #include <deque>
 #include <future>
+#include <iostream>
 #include <mutex>
 
 std::deque<std::packaged_task<void()>> tasks;
 std::mutex m;
 
-bool gui_shutdown_message_received();
+bool gui_shutdown_message_received() { return false; }
 
-void get_and_process_gui_message();
+void get_and_process_gui_message() { std::cout << "Hello gui" << std::endl; }
 
 void gui_thread() {
 
