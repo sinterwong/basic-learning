@@ -18,6 +18,21 @@ template <typename T> struct quick_sorter {
   struct chunk_to_sort {
     std::list<T> data;
     std::promise<std::list<T>> promise;
+
+    chunk_to_sort() = default;
+
+    chunk_to_sort(const chunk_to_sort &) = delete;
+    chunk_to_sort &operator=(const chunk_to_sort &) = delete;
+
+    chunk_to_sort(chunk_to_sort &&other) // move constructor
+        : data(std::move(other.data)), promise(std::move(other.promise)) {}
+
+    chunk_to_sort &
+    operator=(chunk_to_sort &&other) { // move assignment operator
+      data = std::move(other.data);
+      promise = std::move(other.promise);
+      return *this;
+    }
   };
 
   threadsafe_stack<chunk_to_sort> chunks;
@@ -35,8 +50,7 @@ template <typename T> struct quick_sorter {
   }
 
   void try_sort_chunk() {
-    std::shared_ptr<chunk_to_sort> chunk =
-        std::make_shared<chunk_to_sort>(chunks.pop());
+    std::shared_ptr<chunk_to_sort> chunk = chunks.pop();
     if (chunk) {
       sort_chunk(chunk);
     }

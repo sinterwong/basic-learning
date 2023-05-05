@@ -4,6 +4,7 @@
 #include <memory>
 #include <mutex>
 #include <stack>
+#include <utility>
 
 namespace concurrency {
 struct empty_stack : std::exception {
@@ -24,9 +25,9 @@ public:
 
   threadsafe_stack &operator=(threadsafe_stack const &other) = delete;
 
-  void push(T new_value) {
+  void push(T &&new_value) {
     std::lock_guard<std::mutex> lk(m);
-    data.push(new_value);
+    data.push(std::forward<T>(new_value));
   }
 
   std::shared_ptr<T> pop() {
