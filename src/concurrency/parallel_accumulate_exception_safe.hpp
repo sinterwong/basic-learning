@@ -1,6 +1,7 @@
 #ifndef _BASIC_CONCUNNENCY_PARALLEL_ACCUMULATE_EXCEPTION_SAFE_HPP_
 #define _BASIC_CONCUNNENCY_PARALLEL_ACCUMULATE_EXCEPTION_SAFE_HPP_
 
+#include "utils.hpp"
 #include <future>
 #include <iterator>
 #include <numeric>
@@ -14,26 +15,14 @@ template <typename Iterator, typename T> struct accumulate_block {
   }
 };
 
-class join_threads {
-  std::vector<std::thread> threads;
-
-public:
-  explicit join_threads(std::vector<std::thread> const &threads_)
-      : threads(threads_) {}
-  ~join_threads() {
-    for (unsigned long i = 0; i < threads.size(); ++i) {
-      if (threads[i].joinable()) {
-        threads[i].join();
-      }
-    }
-  }
-};
-
 template <typename Iterator, typename T>
 T parallel_accumulate_exception_safe(Iterator first, Iterator last, T init) {
 
   // 数据总量
   unsigned long const length = std::distance(first, last);
+  if (!length) {
+    return init;
+  }
 
   // 每个线程至少执行的任务数量
   unsigned long const min_per_thread = 25;
@@ -79,8 +68,8 @@ T parallel_accumulate_exception_safe2(Iterator first, Iterator last, T init) {
     Iterator mid_point = first;
     std::advance(mid_point, length / 2);
     std::future<T> first_half_result =
-        std::async(parallel_accumulate_exception_safe2<Iterator, T>(
-            first, mid_point, init));
+        std::async(&parallel_accumulate_exception_safe2<Iterator, T>, first,
+                   mid_point, init);
 
     T second_half_result =
         parallel_accumulate_exception_safe2(mid_point, last, T());
