@@ -1,5 +1,5 @@
+#include "factory.hpp"
 #include "rectangle.hpp"
-#include "reflection.h"
 #include "shape.hpp"
 #include <iostream>
 #include <memory>

@@ -1,6 +1,6 @@
 #ifndef __DESIGIN_PATTERN_RECTANGLE_HPP_
 #define __DESIGIN_PATTERN_RECTANGLE_HPP_
-#include "reflection.h"
+#include "factory.hpp"
 #include "shape.hpp"
 namespace oop {
 namespace factory {
@@ -25,5 +25,5 @@ private:
 
 BasicLearningModuleRegister(Rectangle, int, int, int *, std::string const &);
 } // namespace factory
-} // namespace design_pattern
+} // namespace oop
 #endif
