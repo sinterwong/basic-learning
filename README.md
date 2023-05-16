@@ -1,7 +1,7 @@
 # basic-learning
 
 ## 项目介绍
-主要为了便捷地进行cpp的学习（花了比较大的功夫搭建了项目结构），项目中将会包含语法、数据结构、设计模式、并发等代码的练习与实现。
+主要为了便捷地进行cpp的学习，项目中将会包含语法、数据结构、设计模式、并发等代码的练习与实现。
 
 ## 主要项目结构
 - src: 代码实现（包含单元测试，只要文件以.cc结尾就可以被编译成可执行程序并存储到build/${arch}/同名目录）
@@ -31,3 +31,9 @@ make
 
 ## TODO
 - [x] gtest单元测试
+
+## 参考
+- [CMakeCppProjectTemplate](https://github.com/yicm/CMakeCppProjectTemplate)
+- [C++并发编程实战](https://book.douban.com/subject/35653912/)
+- [Effective Modern C++](https://book.douban.com/subject/25923597/)
+- [慕课网部分课程](https://www.imooc.com/)
