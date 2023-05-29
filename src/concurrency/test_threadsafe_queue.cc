@@ -17,30 +17,39 @@ int main() {
   threadsafe_queue_fg_done<int> myQueue;
 
   std::thread t0([&myQueue]() {
-    for (size_t i = 10000; i < 10050; ++i) {
-      myQueue.push(i);
+    while (true) {
+      myQueue.push(rand());
+      std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
   });
 
   std::thread t1([&myQueue]() {
-    for (size_t i = 0; i < 50; ++i) {
-      myQueue.push(i);
+    while (true) {
+      int temp = rand();
+      myQueue.push(temp);
+      std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
   });
 
   std::thread t2([&myQueue]() {
-    for (size_t i = 0; i < 10; ++i) {
-      BASIC_LOGGER_INFO("waitPopData: {}", *myQueue.wait_and_pop());
+    for (;;) {
+      auto v_ptr = myQueue.wait_and_pop();
+      if (v_ptr) {
+        BASIC_LOGGER_INFO("waitPopData: {}", *v_ptr);
+      } else {
+        std::this_thread::sleep_for(std::chrono::milliseconds(30));
+      }
     }
   });
 
   std::thread t3([&myQueue]() {
-    for (size_t i = 0; i < 500; ++i) {
-      auto v = myQueue.try_pop();
-      if (!v) {
-        continue;
+    for (;;) {
+      auto v_ptr = myQueue.try_pop();
+      if (v_ptr) {
+        BASIC_LOGGER_INFO("tryPopData: {}", *v_ptr);
+      } else {
+        std::this_thread::sleep_for(std::chrono::milliseconds(30));
       }
-      BASIC_LOGGER_INFO("tryPopData: {}", *v);
     }
   });
 
