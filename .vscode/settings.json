@@ -1,0 +1,14 @@
+{
+  "cmake.installPrefix": "/open_explorer/workspace/softwares/flowengine",
+  "cmake.environment": {},
+  // "cmake.configureArgs": [
+  //   "-DCMAKE_C_COMPILER=/usr/bin/gcc",
+  //   "-DCMAKE_CXX_COMPILER=/usr/bin/g++",
+  //   "-DCMAKE_C_COMPILE_OBJECT=gcc -c",
+  //   "-DCMAKE_C_LINK_EXECUTABLE=gcc -o"
+  // ],
+  // "cmake.cacheInit": "null",
+  "cmake.buildDirectory": "${workspaceFolder}/build",
+  "git.terminalAuthentication": true,
+  "cmake.configureOnOpen": true
+}
