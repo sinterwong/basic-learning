@@ -3,15 +3,16 @@
 #include <array>
 #include <cassert>
 #include <chrono>
+#include <functional>
 #include <iostream>
 #include <iterator>
 
 namespace algo_and_ds {
 namespace sort {
 
-template <typename Container> void printArray(Container const &container) {
-  for (auto &i : container) {
-    std::cout << i << ", ";
+template <typename Iter> void printArray(Iter begin, Iter end) {
+  for (auto iter = begin; iter != end; iter++) {
+    std::cout << *iter << " ";
   }
   std::cout << std::endl;
 }
@@ -26,42 +27,25 @@ bool isSorted(ForwardIterator first, ForwardIterator last) {
   return true;
 }
 
-template <typename Container>
-void generateRandomArray(Container &container, int range) {
-  using valType =
-      typename std::iterator_traits<typename Container::iterator>::value_type;
+template <typename Iter>
+void generateRandomArray(Iter begin, Iter end, int leftRange, int rightRange) {
   srand(time(nullptr));
-  for (auto &i : container) {
-    i = static_cast<valType>(rand() % range);
+  for (auto iter = begin; iter != end; iter++) {
+    *iter = static_cast<typename std::iterator_traits<Iter>::value_type>(
+        rand() % (rightRange - leftRange) + leftRange);
   }
 }
 
-template <typename Container>
-void generateNearlyOrderedArray(Container &container, int num) {
-  using valType =
-      typename std::iterator_traits<typename Container::iterator>::value_type;
-  for (size_t i = 0; i < container.size(); i++) {
-    container[i] = static_cast<valType>(i);
-  }
-  srand(time(nullptr));
-  for (int i = 0; i < num; i++) {
-    int posx = rand() % container.size();
-    int posy = rand() % container.size();
-    std::swap(container[posx], container[posy]);
-  }
-}
+template <typename Iter, typename Func>
+void testSort(std::string name, Iter first, Iter last, Func &&func) {
+  auto start = std::chrono::steady_clock::now();
+  func(first, last);
+  auto end = std::chrono::steady_clock::now();
+  assert(isSorted(first, last));
+  auto time = std::chrono::duration_cast<std::chrono::microseconds>(end - start)
+                  .count();
 
-template <typename Container>
-void testSort(std::string const &name, void (*sort)(Container &),
-              Container &container) {
-  using namespace std::chrono;
-  auto start = steady_clock::now();
-  sort(container);
-  auto end = steady_clock::now();
-  assert(isSorted(container.cbegin(), container.cend()));
-  float micro_s = duration_cast<microseconds>(end - start).count();
-  std::cout << name << ": " << micro_s / 1000 / 1000
-            << "s" << std::endl;
+  std::cout << name << static_cast<double>(time) / 1000 << "ms" << std::endl;
 }
 
 } // namespace sort

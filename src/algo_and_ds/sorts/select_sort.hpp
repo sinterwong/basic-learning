@@ -16,8 +16,7 @@
 #include <memory>
 #include <vector>
 
-namespace algo_and_ds {
-namespace sort {
+namespace algo_and_ds::sort {
 template <typename Container> void select_sort(Container &arr) {
   for (int i = 0; i < arr.size(); ++i) {
     // 剩余元素中最小的元素索引
@@ -34,7 +33,19 @@ template <typename Container> void select_sort(Container &arr) {
   }
 }
 
-} // namespace sort
-} // namespace algo_and_ds
+template <typename Iter> void select_sort(Iter begin, Iter end) {
+  for (auto i = begin; i != end; ++i) {
+    auto minIndex = i;
+    for (auto j = i; j != end; ++j) {
+      if (*j < *minIndex) {
+        minIndex = j;
+      }
+    }
+    if (i != minIndex) {
+      std::swap(*i, *minIndex);
+    }
+  }
+}
+} // namespace algo_and_ds::sort
 
 #endif
