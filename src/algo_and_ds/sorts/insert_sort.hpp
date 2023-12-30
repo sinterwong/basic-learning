@@ -14,8 +14,7 @@
 #include <iterator>
 #include <memory>
 
-namespace algo_and_ds {
-namespace sort {
+namespace algo_and_ds::sort {
 
 template <typename Container> void insert_sort(Container &arr, int l, int r) {
   using valType =
@@ -43,7 +42,19 @@ template <typename Container> void insert_sort(Container &arr) {
   }
 }
 
-} // namespace sort
-} // namespace algo_and_ds
+template <typename Iter> void insert_sort(Iter first, Iter last) {
+  using valType = typename std::iterator_traits<Iter>::value_type;
+  // [first, i) 有序，因此从i开始遍历
+  for (auto i = first + 1; i != last; ++i) {
+    valType temp = *i;
+    Iter j;
+    for (j = i; j != first && *(j - 1) > temp; --j) {
+      *j = *(j - 1);
+    }
+    *j = temp;
+  }
+}
+
+} // namespace algo_and_ds::sort
 
 #endif
