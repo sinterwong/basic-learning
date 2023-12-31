@@ -40,11 +40,11 @@ int main(int argc, char *argv[]) {
 
   testSort("Insertion sort(rand data): ", arr_insertion_rand.begin(),
            arr_insertion_rand.end(),
-           [](auto first, auto last) { insert_sort(first, last); });
+           [](auto first, auto last) { insert_sort_recursive(first, last); });
 
   testSort("Selection sort(rand data): ", arr_selection_rand.begin(),
            arr_selection_rand.end(),
-           [](auto first, auto last) { select_sort(first, last); });
+           [](auto first, auto last) { select_sort_recursive(first, last); });
 
   testSort("Insertion sort(nearly ordered data): ",
            arr_insertion_nearly_ordered.begin(),

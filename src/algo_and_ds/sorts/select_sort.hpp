@@ -46,6 +46,22 @@ template <typename Iter> void select_sort(Iter begin, Iter end) {
     }
   }
 }
+
+template <typename Iter> void select_sort_recursive(Iter begin, Iter end) {
+  if (begin == end) {
+    return;
+  }
+  auto minIndex = begin;
+  for (auto i = begin; i != end; ++i) {
+    if (*i < *minIndex) {
+      minIndex = i;
+    }
+  }
+  if (begin != minIndex) {
+    std::swap(*begin, *minIndex);
+  }
+  select_sort_recursive(begin + 1, end);
+}
 } // namespace algo_and_ds::sort
 
 #endif

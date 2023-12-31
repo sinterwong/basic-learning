@@ -55,6 +55,24 @@ template <typename Iter> void insert_sort(Iter first, Iter last) {
   }
 }
 
+// 所有的迭代任务都可以用递归来完成，反之亦然
+template <typename Iter> void insert_sort_recursive(Iter first, Iter last) {
+  last--; // 令last指向最后一个元素
+  using valType = typename std::iterator_traits<Iter>::value_type;
+  // first == last 时，只有一个元素，不需要排序
+  if (first == last) {
+    return;
+  }
+
+  insert_sort_recursive(first, last);
+
+  valType temp = *(last);
+  Iter j;
+  for (j = last; j != first && *(j - 1) > temp; --j) {
+    *j = *(j - 1);
+  }
+  *j = temp;
+}
 } // namespace algo_and_ds::sort
 
 #endif

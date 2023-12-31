@@ -18,8 +18,7 @@
 #include <memory>
 #include <vector>
 
-namespace algo_and_ds {
-namespace sort {
+namespace algo_and_ds::sort {
 
 template <typename Container>
 void __merge(Container &arr, int l, int mid, int r) {
@@ -79,14 +78,55 @@ template <typename Container> void merge_sort_bu(Container &arr) {
   int n = arr.size();
   for (int sz = 1; sz <= n; sz += sz) {
     for (int i = 0; i + sz < n; i += sz + sz) {
-      if (arr[i+sz-1] > arr[i+sz]) {
+      if (arr[i + sz - 1] > arr[i + sz]) {
         __merge(arr, i, i + sz - 1, std::min(i + sz + sz - 1, n - 1));
       }
     }
   }
 }
 
-} // namespace sort
-} // namespace algo_and_ds
+template <typename Iter> void __merge(Iter first, Iter mid, Iter last) {
+
+  // 辅助数组，用于存放合并后的数组，因此空间复杂度为O(n)
+  std::vector<typename Iter::value_type> aux(first, last + 1);
+
+  int mid_index = mid - first;
+
+  auto i = aux.begin();
+  auto j = aux.begin() + mid_index + 1;
+
+  // k为当前元素的索引
+  for (auto k = first; k <= last; ++k) {
+    if (i > aux.begin() + mid_index) {
+      *k = *j;
+      ++j;
+    } else if (j == aux.end()) {
+      *k = *i;
+      ++i;
+    } else if (*i < *j) {
+      *k = *i;
+      ++i;
+    } else {
+      *k = *j;
+      ++j;
+    }
+  }
+}
+
+template <typename Iter> void __merge_sort(Iter first, Iter last) {
+  if (first >= last) {
+    return;
+  }
+  auto mid = first + (last - first) / 2;
+  __merge_sort(first, mid);
+  __merge_sort(mid + 1, last);
+  __merge(first, mid, last);
+}
+
+template <typename Iter> void merge_sort(Iter first, Iter last) {
+  // 递归使用归并排序，对arr[l...r]的范围进行排序
+  __merge_sort(first, last - 1); // last是最后一个元素的下一个位置，需要-1
+}
+} // namespace algo_and_ds::sort
 
 #endif
