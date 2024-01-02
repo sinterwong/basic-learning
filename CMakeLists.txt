@@ -38,7 +38,7 @@ IF(NOT TARGET_ARCH)
 ENDIF()
 
 IF(NOT TARGET_HARDWARE)
-    SET(TARGET_HARDWARE none)  # [none/X3/Jetson]
+    SET(TARGET_HARDWARE generic)
 ENDIF()
 
 MESSAGE(STATUS "Your target os : ${TARGET_OS}")

@@ -1,5 +1,5 @@
 {
-  "cmake.installPrefix": "/open_explorer/workspace/softwares/flowengine",
+  "cmake.installPrefix": "~/workspace/softwares/basic_learning",
   "cmake.environment": {},
   // "cmake.configureArgs": [
   //   "-DCMAKE_C_COMPILER=/usr/bin/gcc",

@@ -1,16 +1,15 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.10)
 PROJECT(Tests)
 
+LOAD_SPDLOG()
+LOAD_GFLAGS()
+
 INCLUDE_DIRECTORIES(
     ${PROJECT_INCLUDE_DIR}
 )
 
-# LINK_DIRECTORIES(
-#     ${COMMON_LIBRARY_DIR}
-# )
-
 LINK_LIBRARIES(
-    gflags::gflags
+    gflags
     pthread
     module_logger
 )
