@@ -38,4 +38,3 @@ make
 - [CMakeCppProjectTemplate](https://github.com/yicm/CMakeCppProjectTemplate)
 - [C++并发编程实战](https://book.douban.com/subject/35653912/)
 - [Effective Modern C++](https://book.douban.com/subject/25923597/)
-- [慕课网部分课程](https://www.imooc.com/)
