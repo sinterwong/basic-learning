@@ -1,4 +1,5 @@
-
+#ifndef ALGO_AND_DS_SORT_HELPER_HPP
+#define ALGO_AND_DS_SORT_HELPER_HPP
 
 #include <array>
 #include <cassert>
@@ -7,8 +8,7 @@
 #include <iostream>
 #include <iterator>
 
-namespace algo_and_ds {
-namespace sort {
+namespace algo_and_ds::sort {
 
 template <typename Iter> void printArray(Iter begin, Iter end) {
   for (auto iter = begin; iter != end; iter++) {
@@ -67,5 +67,6 @@ void testSort(std::string name, Iter first, Iter last, Func &&func) {
   std::cout << name << static_cast<double>(time) / 1000000 << "s" << std::endl;
 }
 
-} // namespace sort
-} // namespace algo_and_ds
+} // namespace algo_and_ds::sort
+
+#endif
