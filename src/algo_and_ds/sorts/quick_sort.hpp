@@ -13,130 +13,143 @@
 #ifndef __AADS_QUICK_SORT_HPP_
 #define __AADS_QUICK_SORT_HPP_
 #include "insert_sort.hpp"
+#include "sort_helper.hpp"
 #include <algorithm>
 #include <iterator>
 #include <memory>
 #include <tuple>
 
-namespace algo_and_ds {
-namespace sort {
+namespace algo_and_ds::sort {
 
-template <typename Container> int __partition(Container &arr, int l, int r) {
-  using valType =
-      typename std::iterator_traits<typename Container::iterator>::value_type;
+template <typename Iter> Iter __partition(Iter first, Iter last) {
 
-  std::swap(arr[l],
-            arr[rand() % (r - l + 1) + l]); // 交换一下第一个位置和随机元素
+  // 选取第一个元素作为基点索引
+  Iter p = first;
 
-  valType v = arr[l]; // 取第一个元素作为基点
+  // 随机化基点
+  std::swap(*first, *(rand() % (last - first + 1) + first));
 
-  // j用来维护arr[l..p-1], i维护arr[p+1....r)
-  int j = l;
-  for (int i = l + 1; i <= r; i++) {
-    if (arr[i] < v) { // 需要放到v的右侧，然后更新j
-      std::swap(arr[i], arr[++j]);
+  // arr[l+1...j] < v; arr[j+1...i) > v
+  Iter j = first;
+
+  for (Iter i = first + 1; i != last + 1; i++) {
+    if (*i < *p) {
+      std::swap(*i, *(++j));
     }
   }
-  std::swap(arr[j], arr[l]); // 此时j的位置指向最后一个小于v的元素
+  std::swap(*j, *p);
   return j;
 }
 
-template <typename Container> void __quickSort(Container &arr, int l, int r) {
-  if (l >= r) {
-    return;
-  }
-  int pid = __partition(arr, l, r);
-  __quickSort(arr, l, pid - 1);
-  __quickSort(arr, pid + 1, r);
-}
+template <typename Iter> Iter __partition2way(Iter first, Iter last) {
+  // 选取第一个元素作为基点索引
+  Iter p = first;
 
-template <typename Container> void quick_sort(Container &arr) {
-  __quickSort(arr, 0, arr.size());
-}
+  // 随机化基点
+  std::swap(*first, *(rand() % (last - first + 1) + first));
 
-template <typename Container>
-int __partition2way(Container &arr, int l, int r) {
-  /**
-   * @brief
-   * 之前的快排对于重复元素极多的情况将会有非常大的概率两边不平衡，导致最坏回退化成O(n^2)
-   * 双路快排通过尽可能均分两路，来实现一个期望平衡的左右子树。
-   * 左右各自维护一个索引，左边向右遍历查找直到找到>v的元素交换，右边向左查找直到找到<v的进行交换，
-   * 如此往复直到维护的两个索引重合
-   */
-  using valType =
-      typename std::iterator_traits<typename Container::iterator>::value_type;
-
-  std::swap(arr[l],
-            arr[rand() % (r - l + 1) + l]); // 交换一下第一个位置和随机元素
-
-  valType v = arr[l]; // 取第一个元素作为基点
-
-  int i = l + 1; // arr[l+1...i)
-  int j = r;     // arr(j...r]
+  // arr[l+1...i) < v; arr(j...r] > v
+  Iter i = first + 1;
+  Iter j = last;
 
   while (true) {
-    while (i <= r && arr[i] < v)
-      i++; // 小于v时循环继续直到 >=v时停止
-    while (j >= l + 1 && arr[j] > v)
+    while (i <= last && *i < *p) {
+      i++;
+    }
+    while (j >= first + 1 && *j > *p) {
       j--;
-    if (i >= j)
+    }
+    if (i > j) {
       break;
-    std::swap(arr[j], arr[i]);
+    }
+    std::swap(*i, *j);
     i++;
     j--;
   }
-  std::swap(arr[l], arr[j]);
+
+  std::swap(*j, *p);
   return j;
 }
 
-template <typename Container>
-void __quickSort2way(Container &arr, int l, int r) {
-  if (l >= r) {
+template <typename Iter> void __quick_sort(Iter first, Iter last) {
+  // 当元素数量小于15时就不在往下2分了，直接用插入排序，因为此时更容易有序
+  if (last - first <= 15) {
+    if (first < last) { // 可能会出现first > last的情况
+      insert_sort(first, last + 1);
+    }
     return;
   }
-  int pid = __partition2way(arr, l, r);
-  __quickSort2way(arr, l, pid - 1);
-  __quickSort2way(arr, pid + 1, r);
+
+  Iter p = __partition(first, last);
+  __quick_sort(first, p - 1);
+  __quick_sort(p + 1, last);
 }
 
-template <typename Container> void quick_sort_2way(Container &arr) {
-  __quickSort2way(arr, 0, arr.size());
-}
-
-template <typename Container>
-void __quickSort3way(Container &arr, int l, int r) {
-  if (l >= r) {
+template <typename Iter> void __quick_sort2way(Iter first, Iter last) {
+  // 当元素数量小于15时就不在往下2分了，直接用插入排序，因为此时更容易有序
+  if (last - first <= 15) {
+    if (first < last) { // 可能会出现first > last的情况
+      insert_sort(first, last + 1);
+    }
     return;
   }
-  using valType =
-      typename std::iterator_traits<typename Container::iterator>::value_type;
-  // 分别维护小于v的部分，等于v的部分和大于v的部分，因此两个点就可以将数组划分成三段，所以需要维护两个索引
-  // 初始化两个索引
-  std::swap(arr[l], arr[rand() % (r - l + 1) + l]);
-  valType v = arr[l];
-  int lt = l;     // [l....lt]
-  int gt = r + 1; // [gt....r]
-  int i = l + 1;  // 前进索引
-  while (i < gt) {
-    if (arr[i] < v) {
-      std::swap(arr[++lt], arr[i++]);
-    } else if (arr[i] > v) {
-      std::swap(arr[--gt], arr[i]);
-    } else { // arr[i] == v
+
+  Iter p = __partition2way(first, last);
+  __quick_sort2way(first, p - 1);
+  __quick_sort2way(p + 1, last);
+}
+
+template <typename Iter> void __quick_sort3way(Iter first, Iter last) {
+  // 当元素数量小于15时就不在往下2分了，直接用插入排序，因为此时更容易有序
+  if (last - first <= 15) {
+    if (first < last) { // 可能会出现first > last的情况
+      insert_sort(first, last + 1);
+    }
+    return;
+  }
+
+  // 选取第一个元素作为基点索引
+  Iter p = first;
+
+  // 随机化基点
+  std::swap(*first, *(rand() % (last - first + 1) + first));
+
+  Iter lt = first;    // arr[l+1...lt] < v
+  Iter gt = last + 1; // arr[gt...r] > v
+  Iter i = first + 1; // arr[lt+1...i) == v
+
+  while (i < gt) { // 当i和gt相遇时，说明已经遍历完了
+    if (*i < *p) {
+      std::swap(*i, *(++lt));
+      i++;
+    } else if (*i > *p) {
+      std::swap(*i, *(--gt));
+    } else {
       i++;
     }
   }
-  std::swap(arr[l], arr[lt]);
 
-  __quickSort3way(arr, l, lt - 1);
-  __quickSort3way(arr, gt, r);
+  std::swap(*p, *lt);
+
+  __quick_sort3way(first, lt - 1);
+  __quick_sort3way(gt, last);
 }
 
-template <typename Container> void quick_sort_3way(Container &arr) {
-  __quickSort3way(arr, 0, arr.size());
+template <typename Iter> void quick_sort(Iter first, Iter last) {
+  srand(time(nullptr));
+  __quick_sort(first, last - 1);
 }
 
-} // namespace sort
-} // namespace algo_and_ds
+template <typename Iter> void quick_sort2way(Iter first, Iter last) {
+  srand(time(nullptr));
+  __quick_sort2way(first, last - 1);
+}
+
+template <typename Iter> void quick_sort3way(Iter first, Iter last) {
+  srand(time(nullptr));
+  __quick_sort3way(first, last - 1);
+}
+
+} // namespace algo_and_ds::sort
 
 #endif

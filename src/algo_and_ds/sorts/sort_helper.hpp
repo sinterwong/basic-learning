@@ -1,3 +1,14 @@
+/**
+ * @file sort_helper.hpp
+ * @author Sinter Wong (sintercver@gmail.com)
+ * @brief
+ * @version 0.1
+ * @date 2022-09-10
+ *
+ * @copyright Copyright (c) 2024
+ *
+ */
+
 #ifndef ALGO_AND_DS_SORT_HELPER_HPP
 #define ALGO_AND_DS_SORT_HELPER_HPP
 
