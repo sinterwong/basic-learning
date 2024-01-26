@@ -14,6 +14,7 @@
  */
 #ifndef __AADS_MAX_HEAP_HPP_
 #define __AADS_MAX_HEAP_HPP_
+#include <iostream>
 #include <utility>
 #include <vector>
 
@@ -23,7 +24,7 @@ template <typename Item> class MaxHeap {
 private:
   std::vector<Item> data;
 
-  void shiftUp(size_t k) {
+  void shiftUp(std::size_t k) {
     // 向上和父节点比较，如果大于父节点就交换位置，父节点计算方式为 int(子节点 /
     // 2)
     while (k > 1 && data[k] > data[k / 2]) {
@@ -32,7 +33,7 @@ private:
     }
   }
 
-  void shiftDown(size_t k) {
+  void shiftDown(std::size_t k) {
     // 向下和最大的子节点比较，直到子节点都小于自己为止
     // 左子节点 = 2 * 父节点，右子节点 = 2 * 父节点 + 1
     while (2 * k <= data.size() - 1) {

@@ -2,7 +2,7 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.10)
 
 # submodule
 ADD_SUBDIRECTORY(logger)
-# ADD_SUBDIRECTORY(algo_and_ds)
+ADD_SUBDIRECTORY(algo_and_ds)
 # ADD_SUBDIRECTORY(utils)
 # ADD_SUBDIRECTORY(mysocket)
 # ADD_SUBDIRECTORY(concurrency)
@@ -10,7 +10,7 @@ ADD_SUBDIRECTORY(logger)
 # ADD_SUBDIRECTORY(features)
 # ADD_SUBDIRECTORY(use_taskflow)
 # ADD_SUBDIRECTORY(cuda_demo)
-ADD_SUBDIRECTORY(dynamic_load)
+# ADD_SUBDIRECTORY(dynamic_load)
 
 
 # transfer all headers to the include directory 
