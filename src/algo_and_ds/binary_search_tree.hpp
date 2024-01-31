@@ -16,6 +16,9 @@
 #include <iostream>
 #include <queue>
 
+#ifndef __AADS_BINARY_SEARCH_TREE_HPP_
+#define __AADS_BINARY_SEARCH_TREE_HPP_
+
 namespace algo_and_ds::tree {
 
 template <typename Key, typename Value> class BinarySearchTree {
@@ -283,3 +286,4 @@ private:
 };
 
 } // namespace algo_and_ds::tree
+#endif
