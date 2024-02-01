@@ -12,6 +12,7 @@
 #define __AADS_DENSE_GRAPH_HPP_
 
 #include <cassert>
+#include <iostream>
 #include <vector>
 
 namespace algo_and_ds::graph {
@@ -53,6 +54,16 @@ public:
   }
 
   void removeAllParallelEdges() {}
+
+  void show() {
+    std::cout << "adjacent matrix: " << std::endl;
+    for (int i = 0; i < V(); i++) {
+      for (int j = 0; j < V(); j++) {
+        std::cout << graph[i][j] << ", ";
+      }
+      std::cout << std::endl;
+    }
+  }
 
 public:
   class adjIterator {

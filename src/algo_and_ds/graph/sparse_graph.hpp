@@ -13,6 +13,7 @@
 #define __AADS_SPARSE_GRAPH_HPP_
 
 #include <cassert>
+#include <iostream>
 #include <vector>
 
 namespace algo_and_ds::graph {
@@ -61,6 +62,16 @@ public:
       }
     }
     return false;
+  }
+
+  void show() {
+    for (int i = 0; i < V(); i++) {
+      std::cout << "vertex " << i << ": ";
+      for (int j = 0; j < graph[i].size(); j++) {
+        std::cout << graph[i][j] << ", ";
+      }
+      std::cout << std::endl;
+    }
   }
 
 public:
