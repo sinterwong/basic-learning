@@ -62,6 +62,31 @@ public:
     }
     return false;
   }
+
+public:
+  class adjIterator {
+    SparseGraph &G;
+    int v;     // 关注的顶点
+    int index; // 需要维护的索引
+
+  public:
+    adjIterator(SparseGraph &g, int _v) : G(g), v(_v), index(0) {}
+
+    int begin() {
+      index = 0;
+      return G.graph[v][index];
+    }
+
+    int next() {
+      index++;
+      if (index < G.graph[v].size()) {
+        return G.graph[v][index];
+      }
+      return -1;
+    }
+
+    bool end() { return index >= G.graph[v].size(); }
+  };
 };
 } // namespace algo_and_ds::graph
 

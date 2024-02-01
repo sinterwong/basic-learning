@@ -53,6 +53,32 @@ public:
   }
 
   void removeAllParallelEdges() {}
+
+public:
+  class adjIterator {
+    DenseGraph &G;
+    int v;
+    int index;
+
+  public:
+    adjIterator(DenseGraph &g, int _v) : G(g), v(_v), index(-1) {}
+
+    int begin() {
+      index = -1;
+      return next();
+    }
+
+    int next() {
+      for (index += 1; index < G.V(); index++) {
+        if (G.graph[v][index]) {
+          return index;
+        }
+      }
+      return -1;
+    }
+
+    bool end() { return index >= G.V(); }
+  };
 };
 } // namespace algo_and_ds::graph
 
