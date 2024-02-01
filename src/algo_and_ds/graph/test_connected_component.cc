@@ -26,7 +26,7 @@ int main() {
 
   std::string filename2 = "/home/wangxt/workspace/projects/basic-learning/src/"
                           "algo_and_ds/graph/testG2.txt";
-  DenseGraph g2(6, false);
+  DenseGraph g2(7, false);
   ReadGraph<DenseGraph> readGraph02(g2, filename2);
   ConnectedComponent<DenseGraph> component2(g2);
   std::cout << "TestG2.txt, Connected Component Count: " << component2.count()
