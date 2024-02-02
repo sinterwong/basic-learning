@@ -56,7 +56,10 @@ private:
         break;
       }
 
-      std::swap(data.at(k), data.at(j));
+      // std::swap(data.at(k), data.at(j));
+      auto temp = data.at(k);
+      data.at(k) = data.at(j);
+      data.at(j) = temp;
       k = j;
     }
   }
@@ -87,6 +90,10 @@ public:
     }
     std::cout << std::endl;
   }
+
+  bool empty() { return data.size() == 1; }
+
+  int size() { return data.size() - 1; }
 };
 
 } // namespace algo_and_ds::tree

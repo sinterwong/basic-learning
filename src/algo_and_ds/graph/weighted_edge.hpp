@@ -10,6 +10,7 @@
  */
 #ifndef __AADS_WEIGHT_EDGE_HPP_
 #define __AADS_WEIGHT_EDGE_HPP_
+#include <cassert>
 #include <ostream>
 namespace algo_and_ds::graph {
 
@@ -20,9 +21,7 @@ template <typename Weight> class Edge {
 public:
   Edge(int a, int b, Weight weight) : _a(a), _b(b), _weight(weight) {}
 
-  Edge() {}
-
-  ~Edge() {}
+  Edge(){};
 
   int v() { return _a; }
 
@@ -31,6 +30,7 @@ public:
   Weight wt() { return _weight; }
 
   int other(int x) {
+    assert(x == _a || x == _b);
     // 根据其中一个定点获取另外的一个定点
     return x == _a ? _b : _a;
   }
@@ -41,8 +41,6 @@ public:
   }
 
   bool operator<(Edge<Weight> &e) { return _weight < e.wt(); }
-
-  bool operator=(Edge<Weight> &e) { return _weight = e.wt(); }
 
   bool operator>(Edge<Weight> &e) { return _weight > e.wt(); }
 

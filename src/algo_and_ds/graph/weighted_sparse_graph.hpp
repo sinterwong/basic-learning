@@ -53,7 +53,7 @@ public:
     graph[v].push_back(std::make_shared<weight_edge>(v, w, wt));
     // v != w 解决环边问题（简单图不考虑环边和平行边）
     if (v != w && !isDirected) {
-      graph[w].push_back(std::make_shared<weight_edge>(v, w, wt));
+      graph[w].push_back(std::make_shared<weight_edge>(w, v, wt));
     }
     m++;
   }
