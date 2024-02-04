@@ -26,9 +26,7 @@ private:
 public:
   DenseGraph(int n, bool isDirected) : n(n), isDirected(isDirected) {
     // 初始化邻接矩阵
-    for (int i = 0; i < n; i++) {
-      graph.push_back(std::vector<bool>(n, false));
-    }
+    graph = std::vector<std::vector<bool>>(n, std::vector<bool>(n, false));
   }
 
   int V() { return n; }
@@ -52,8 +50,6 @@ public:
     assert(w >= 0 && w < n);
     return graph[v][w];
   }
-
-  void removeAllParallelEdges() {}
 
   void show() {
     std::cout << "adjacent matrix: " << std::endl;
@@ -81,6 +77,7 @@ public:
 
     int next() {
       for (index += 1; index < G.V(); index++) {
+        // 直到找到有效边为止
         if (G.graph[v][index]) {
           return index;
         }

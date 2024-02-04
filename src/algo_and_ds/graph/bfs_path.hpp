@@ -8,16 +8,7 @@
  * @copyright Copyright (c) 2024
  *
  */
-/**
- * @file graph_path.hpp
- * @author Sinter Wong (sintercver@gmail.com)
- * @brief
- * @version 0.1
- * @date 2024-02-01
- *
- * @copyright Copyright (c) 2024
- *
- */
+
 #ifndef __AADS_BFS_PATH_HPP_
 #define __AADS_BFS_PATH_HPP_
 

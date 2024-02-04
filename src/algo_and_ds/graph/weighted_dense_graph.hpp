@@ -31,10 +31,9 @@ template <typename Weight> class DenseGraph {
 
 public:
   DenseGraph(int n, bool isDirected) : n(n), isDirected(isDirected) {
-    // 初始化邻接矩阵
-    for (int i = 0; i < n; i++) {
-      graph.push_back(std::vector<weight_edge_ptr>(n, nullptr));
-    }
+    // 初始化邻接矩阵（N x N），边中
+    graph = std::vector<std::vector<int>>(
+        n, std::vector<weight_edge_ptr>(n, nullptr));
   }
 
   ~DenseGraph() {}
@@ -66,8 +65,6 @@ public:
     assert(w >= 0 && w < n);
     return graph[v][w] != nullptr;
   }
-
-  void removeAllParallelEdges() {}
 
   void show() {
     std::cout << "adjacent matrix: " << std::endl;

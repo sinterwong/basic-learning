@@ -28,9 +28,7 @@ private:
 public:
   SparseGraph(int n, bool isDirected) : n(n), isDirected(isDirected) {
     // 初始化邻接矩阵
-    for (int i = 0; i < n; i++) {
-      graph.push_back(std::vector<int>());
-    }
+    graph = std::vector<std::vector<int>>(n, std::vector<int>());
   }
 
   int V() { return n; }
@@ -74,6 +72,8 @@ public:
     }
   }
 
+  void removeAllParallelEdges() {}
+
 public:
   class adjIterator {
     SparseGraph &G;
@@ -90,6 +90,7 @@ public:
 
     int next() {
       index++;
+      // 只存了有效边，所以直接往下遍历就可以
       if (index < G.graph[v].size()) {
         return G.graph[v][index];
       }

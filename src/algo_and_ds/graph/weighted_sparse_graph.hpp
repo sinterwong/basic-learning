@@ -28,6 +28,7 @@ template <typename Weight> class SparseGraph {
 
   bool isDirected; // 是否是有向图
 
+  // 节点在图中是一个抽象的概念。邻接表的实现中，节点之间的关系需要通过edge来描述
   std::vector<std::vector<weight_edge_ptr>> graph;
 
 public:
@@ -80,6 +81,8 @@ public:
       std::cout << std::endl;
     }
   }
+
+  void removeAllParallelEdges() {}
 
 public:
   class adjIterator {
