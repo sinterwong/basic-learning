@@ -63,6 +63,10 @@ public:
     // Lazy Prim
     visit(0); // init
 
+    /* 时间复杂度计算时，要具体问题具体分析，这里的visit看似是和主循环嵌套，但是其实和循环顺序执行的而不是嵌套执行（即相加而不是相乘），
+    最终所有的visit调用的时间复杂度总和是O(ElogE)，主循环的时间复杂度是O(ElogE)，因此整个算法的时间复杂度是O(ElogE)
+     */
+
     while (!pq.empty()) {
       auto e = pq.extractMin();
 

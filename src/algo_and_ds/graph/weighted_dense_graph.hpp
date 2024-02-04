@@ -32,7 +32,7 @@ template <typename Weight> class DenseGraph {
 public:
   DenseGraph(int n, bool isDirected) : n(n), isDirected(isDirected) {
     // 初始化邻接矩阵（N x N），边中
-    graph = std::vector<std::vector<int>>(
+    graph = std::vector<std::vector<weight_edge_ptr>>(
         n, std::vector<weight_edge_ptr>(n, nullptr));
   }
 

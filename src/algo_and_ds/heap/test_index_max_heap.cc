@@ -18,14 +18,25 @@ int main(int argc, char **argv) {
 
   srand(time(nullptr));
 
-  IndexMaxHeap<int> indexMaxHeap(500);
+  IndexMaxHeap<int> indexMaxHeap(10);
 
+  std::cout << "Original data: ";
   for (int i = 0; i < 10; ++i) {
-    indexMaxHeap.insert(i, rand() % 100);
+    int d = rand() % 100;
+    std::cout << d << ", ";
+    indexMaxHeap.insert(i, d);
   }
+  std::cout << std::endl;
 
   indexMaxHeap.change(2, 1000);
 
+  std::cout << "Test get item by index: ";
+  for (int i = 0; i < 10; ++i) {
+    std::cout << indexMaxHeap.getItemByIndex(i) << ", ";
+  }
+  std::cout << std::endl;
+
+  std::cout << "Test extract max element: ";
   while (!indexMaxHeap.isEmpty()) {
     std::cout << indexMaxHeap.extractMax() << ", ";
   }

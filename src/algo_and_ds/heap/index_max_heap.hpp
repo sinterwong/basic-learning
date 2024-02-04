@@ -75,8 +75,8 @@ private:
 public:
   IndexMaxHeap(int capacity) {
     datas.resize(capacity + 1);
-    indexes.resize(capacity);
-    reverse.resize(capacity);
+    indexes.resize(capacity + 1);
+    reverse.resize(capacity + 1);
   }
 
   size_t size() { return count; }
@@ -84,8 +84,8 @@ public:
   bool isEmpty() { return count == 0; }
 
   void insert(int i, Item d) {
-    assert(count + 1 <= indexes.size());
-    assert(i >= 0 && i + 1 < indexes.size() - 1);
+    assert(count + 1 <= indexes.size() - 1);
+    assert(i >= 0 && i + 1 <= indexes.size() - 1);
     // 该数据结构维护的索引是从1开始的
     i += 1;
     datas[i] = d;
@@ -107,13 +107,13 @@ public:
   Item extractMax() { return datas.at(extractIndex()); }
 
   bool contain(int i) {
-    assert(i >= 0 && i + 1 < indexes.size() - 1);
+    assert(i >= 0 && i + 1 <= indexes.size() - 1);
     return reverse[i + 1] != 0;
   }
 
   Item getItemByIndex(int i) {
     assert(contain(i));
-    return datas.at(indexes.at(++i));
+    return datas.at(++i);
   }
 
   void change(int i, Item newItem) {
