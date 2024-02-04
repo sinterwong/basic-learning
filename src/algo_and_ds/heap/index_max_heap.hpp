@@ -94,17 +94,17 @@ public:
     shiftUp(count);
   }
 
-  int extractIndex() {
+  int extractMaxIndex() {
     int retIndex = indexes.at(1);
     std::swap(indexes.at(1), indexes.at(count));
     reverse[indexes[1]] = 1;
     reverse[indexes[count]] = 0; // 归位
     count--;
     shiftDown(1);
-    return retIndex;
+    return retIndex - 1;
   }
 
-  Item extractMax() { return datas.at(extractIndex()); }
+  Item extractMax() { return datas.at(extractMaxIndex() + 1); }
 
   bool contain(int i) {
     assert(i >= 0 && i + 1 <= indexes.size() - 1);

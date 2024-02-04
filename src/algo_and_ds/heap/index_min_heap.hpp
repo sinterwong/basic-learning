@@ -57,10 +57,10 @@ public:
     reverse[indexes[count]] = 0;
     count--;
     shiftDown(1);
-    return retIndex;
+    return retIndex - 1;
   }
 
-  Item extractMin() { return datas.at(extractMinIndex()); }
+  Item extractMin() { return datas.at(extractMinIndex() + 1); }
 
   bool contain(int i) {
     assert(i >= 0 && i + 1 <= indexes.size() - 1);
