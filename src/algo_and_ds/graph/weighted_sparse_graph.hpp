@@ -95,7 +95,10 @@ public:
 
     weight_edge_ptr begin() {
       index = 0;
-      return G.graph[v][index];
+      if (G.graph[v].size()) {
+        return G.graph[v][index];
+      }
+      return nullptr;
     }
 
     weight_edge_ptr next() {
