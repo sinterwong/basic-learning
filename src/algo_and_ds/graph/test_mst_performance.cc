@@ -1,13 +1,14 @@
 /**
- * @file test_prim_mst_performance.cc
+ * @file test_mst_performance.cc
  * @author Sinter Wong (sintercver@gmail.com)
  * @brief
  * @version 0.1
- * @date 2024-02-04
+ * @date 2024-02-05
  *
  * @copyright Copyright (c) 2024
  *
  */
+#include "kruskal_mst.hpp"
 #include "lazy_prim_mst.hpp"
 #include "prim_mst.hpp"
 #include "weighted_read_graph.hpp"
@@ -108,6 +109,35 @@ int main() {
 
   startTime = clock();
   PrimMST<SparseGraph<double>, double> PrimMST4(g4);
+  endTime = clock();
+  cout << "Test for G4: " << (double)(endTime - startTime) / CLOCKS_PER_SEC
+       << " s." << endl;
+
+  cout << endl;
+
+  // Test Prim MST
+  cout << "Test Kruskal MST:" << endl;
+
+  startTime = clock();
+  KruskalMST<SparseGraph<double>, double> KruskalMST1(g1);
+  endTime = clock();
+  cout << "Test for G1: " << (double)(endTime - startTime) / CLOCKS_PER_SEC
+       << " s." << endl;
+
+  startTime = clock();
+  KruskalMST<SparseGraph<double>, double> KruskalMST2(g2);
+  endTime = clock();
+  cout << "Test for G2: " << (double)(endTime - startTime) / CLOCKS_PER_SEC
+       << " s." << endl;
+
+  startTime = clock();
+  KruskalMST<SparseGraph<double>, double> KruskalMST3(g3);
+  endTime = clock();
+  cout << "Test for G3: " << (double)(endTime - startTime) / CLOCKS_PER_SEC
+       << " s." << endl;
+
+  startTime = clock();
+  KruskalMST<SparseGraph<double>, double> KruskalMST4(g4);
   endTime = clock();
   cout << "Test for G4: " << (double)(endTime - startTime) / CLOCKS_PER_SEC
        << " s." << endl;
