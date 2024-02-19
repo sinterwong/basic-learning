@@ -18,6 +18,7 @@ inline Iter binary_search(Iter begin, Iter end, T target) {
   if (begin == end)
     return end;
 
+  // 在[l....r)的范围里寻着target，这是循环不变量，后续的数据更新应该遵循
   Iter l = begin;
   Iter r = end; // Use one-past-the-end as the right boundary
 
@@ -26,10 +27,12 @@ inline Iter binary_search(Iter begin, Iter end, T target) {
 
     if (*mid == target) {
       return mid;
-    } else if (*mid < target) {
+    }
+
+    if (*mid < target) {
       l = mid + 1;
     } else {
-      r = mid;
+      r = mid; // 依然是[l...r)
     }
   }
 
