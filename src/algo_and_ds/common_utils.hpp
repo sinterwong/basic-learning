@@ -21,8 +21,7 @@
 
 using namespace std::chrono_literals;
 
-namespace utils {
-
+namespace algo_and_ds::utils {
 /**
  * @brief 执行时间衡量
  *
@@ -66,5 +65,42 @@ inline void periodicTask(std::chrono::milliseconds interval, F &&f,
     std::this_thread::sleep_for(std::chrono::milliseconds(1));
   }
 }
-} // namespace utils
+
+/**
+ * @brief
+ *
+ * @tparam F
+ * @tparam Iter
+ * @param first
+ * @param last
+ * @param func
+ * @param x
+ * @param lp
+ * @param gp
+ */
+template <typename initFunc, typename F, typename... Args>
+inline void testTimeByDataScaling(std::string des, int x, int lp, int gp,
+                                  initFunc &&initArr, F &&func, Args... args) {
+  assert(lp < gp);
+  std::cout << "Test time by data scaling for (" << des << "): " << std::endl;
+  for (int i = lp; i <= gp; i++) {
+    int n = std::pow(x, i);
+
+    // empty vector
+    std::vector<int> v;
+    v.resize(n);
+    initArr(v.begin(), v.end());
+
+    auto start = std::chrono::high_resolution_clock::now();
+    func(v.begin(), v.end(), std::forward<Args>(args)...);
+    auto stop = std::chrono::high_resolution_clock::now();
+    auto duration =
+        std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
+    std::cout << "data size " << x << "^" << i << " = " << n << "\t";
+    std::cout << "Time cost: "
+              << static_cast<double>(duration.count()) / 1000000 << "s"
+              << std::endl;
+  }
+}
+} // namespace algo_and_ds::utils
 #endif
