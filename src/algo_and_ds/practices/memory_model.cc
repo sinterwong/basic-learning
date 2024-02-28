@@ -14,6 +14,7 @@
 #include <cstdint>
 #include <cstring>
 #include <iostream>
+#include <memory>
 #include <ostream>
 #include <unordered_map>
 #include <vector>
@@ -35,7 +36,7 @@ struct MemoryBlock {
 class MyMemoryModel {
 private:
   // 简易的内存页表
-  std::unordered_map<uint64_t, MemoryBlock> memory;
+  std::unordered_map<uint64_t, std::shared_ptr<MemoryBlock>> memory;
 
 public:
   /**
@@ -58,8 +59,14 @@ public:
           std::min(static_cast<uint64_t>(len), BLOCK_SIZE - offset);
 
       // 根据内存索引获取内存页并根据偏移定位到目标起始地址
-      MemoryBlock &block = memory.at(blockIndex);
-      std::memcpy(pData, &block.data[offset], readLength);
+      auto it = memory.find(blockIndex);
+      if (it != memory.end()) {
+        auto block = it->second;
+        std::memcpy(pData, &block->data[offset], readLength);
+      } else {
+        // 对于未初始化的区域默认读出来0
+        std::memset(pData, 0x0, readLength);
+      }
 
       // 更新相关指针和剩余数据长度
       addr += readLength;
@@ -82,8 +89,12 @@ public:
       uint64_t writeLength =
           std::min(static_cast<uint64_t>(len), BLOCK_SIZE - offset);
 
-      MemoryBlock &block = memory[blockIndex];
-      std::memcpy(&block.data[offset], pData, writeLength);
+      auto &block = memory[blockIndex];
+      if (!block) {
+        block = std::make_shared<MemoryBlock>();
+      }
+
+      std::memcpy(&block->data[offset], pData, writeLength);
 
       addr += writeLength;
       pData += writeLength;
