@@ -8,10 +8,13 @@ INCLUDE_DIRECTORIES(
     ${PROJECT_INCLUDE_DIR}
 )
 
+LINK_DIRECTORIES(
+    ${GFLAGS_LIB_DIR}
+)
+
 LINK_LIBRARIES(
-    gflags
+    ${GFLAGS_LIBS}
     pthread
-    module_logger
 )
 
 FILE(MAKE_DIRECTORY ${PROJECT_OUTPUT_DIR}/bin/tests)

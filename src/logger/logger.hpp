@@ -5,7 +5,7 @@
 
 // You can define SPDLOG_ACTIVE_LEVEL to the desired log level before including
 // "spdlog.h". This will turn on/off logging statements at compile time
-#include "spdlog/spdlog.h"
+#include <spdlog/spdlog.h>
 
 // logger setting
 #define BASIC_LOGGER_NAME "basic"
@@ -24,17 +24,17 @@
 #define _OFF 6
 
 #define BASIC_LOGGER_TRACE(...)                                                \
-  BasicLearningLoggerOut(_TRACE, __FILE__, __LINE__, __VA_ARGS__)
+  BasicLearningLoggerOut(_TRACE, __FILE__, __LINE__, ##__VA_ARGS__)
 #define BASIC_LOGGER_DEBUG(...)                                                \
-  BasicLearningLoggerOut(_DEBUG, __FILE__, __LINE__, __VA_ARGS__)
+  BasicLearningLoggerOut(_DEBUG, __FILE__, __LINE__, ##__VA_ARGS__)
 #define BASIC_LOGGER_INFO(...)                                                 \
-  BasicLearningLoggerOut(_INFO, __FILE__, __LINE__, __VA_ARGS__)
+  BasicLearningLoggerOut(_INFO, __FILE__, __LINE__, ##__VA_ARGS__)
 #define BASIC_LOGGER_WARN(...)                                                 \
-  BasicLearningLoggerOut(_WARN, __FILE__, __LINE__, __VA_ARGS__)
+  BasicLearningLoggerOut(_WARN, __FILE__, __LINE__, ##__VA_ARGS__)
 #define BASIC_LOGGER_ERROR(...)                                                \
-  BasicLearningLoggerOut(_ERROR, __FILE__, __LINE__, __VA_ARGS__)
+  BasicLearningLoggerOut(_ERROR, __FILE__, __LINE__, ##__VA_ARGS__)
 #define BASIC_LOGGER_CRITICAL(...)                                             \
-  BasicLearningLoggerOut(_CRITI, __FILE__, __LINE__, __VA_ARGS__)
+  BasicLearningLoggerOut(_CRITI, __FILE__, __LINE__, ##__VA_ARGS__)
 
 #ifdef __cplusplus
 extern "C" {
@@ -58,14 +58,16 @@ void BasicLearningLoggerDrop();
 
 template <typename... T>
 void BasicLearningLoggerOut(const int level, const char *filename,
-                            const int line, const T &...msg) {
+                            const int line, T &&...args) {
   // Note: sdplog::get is a thread safe function
   std::shared_ptr<spdlog::logger> logger_ptr = spdlog::get(BASIC_LOGGER_NAME);
   if (!logger_ptr) {
     fprintf(stderr, "Failed to get logger, Please init logger firstly.\n");
+    return; // Add this to prevent potential null pointer dereference
   }
-  logger_ptr.get()->log(spdlog::source_loc{filename, line, SPDLOG_FUNCTION},
-                        static_cast<spdlog::level::level_enum>(level), msg...);
+  logger_ptr->log(spdlog::source_loc{filename, line, SPDLOG_FUNCTION},
+                  static_cast<spdlog::level::level_enum>(level),
+                  std::forward<T>(args)...);
 }
 
 #endif

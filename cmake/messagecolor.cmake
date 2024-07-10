@@ -39,5 +39,5 @@ FUNCTION(message)
     ELSE()
         _message("${ARGV}")
 ENDIF()
-                                                                                                                    endfunction()
+ENDFUNCTION()
 

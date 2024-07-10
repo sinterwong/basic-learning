@@ -7,9 +7,14 @@
 *.engine
 *.pt
 *.pth
+*.zip
+*.tar.*
+*.tgz
 
 build/
 build*/
+3rdparty/target/*
+install/
 conf/nginx
 scripts/log*
 release/
@@ -24,3 +29,5 @@ cmake-build-debug/
 cmake-build-debug-remote-host/
 tests/data
 .cache
+
+CMakeUserPresets.json

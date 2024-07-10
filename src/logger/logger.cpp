@@ -1,14 +1,13 @@
 #include "logger.hpp"
 
-#include <iostream>
 #include <memory>
 #include <vector>
 
-#include "spdlog/sinks/basic_file_sink.h"       // support for basic file logging
-#include "spdlog/sinks/rotating_file_sink.h"    // support for rotating file logging
-#include "spdlog/sinks/daily_file_sink.h"
-#include "spdlog/sinks/stdout_color_sinks.h"
-#include "spdlog/sinks/stdout_sinks.h"
+#include <spdlog/sinks/basic_file_sink.h>       // support for basic file logging
+#include <spdlog/sinks/rotating_file_sink.h>    // support for rotating file logging
+#include <spdlog/sinks/daily_file_sink.h>
+#include <spdlog/sinks/stdout_color_sinks.h>
+#include <spdlog/sinks/stdout_sinks.h>
 
 // creating loggers with multiple sinks
 void BasicLearningLoggerInit(

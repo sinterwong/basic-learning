@@ -1,14 +1,18 @@
 {
-  "cmake.installPrefix": "~/workspace/softwares/basic_learning",
-  "cmake.environment": {},
-  // "cmake.configureArgs": [
-  //   "-DCMAKE_C_COMPILER=/usr/bin/gcc",
-  //   "-DCMAKE_CXX_COMPILER=/usr/bin/g++",
-  //   "-DCMAKE_C_COMPILE_OBJECT=gcc -c",
-  //   "-DCMAKE_C_LINK_EXECUTABLE=gcc -o"
-  // ],
-  // "cmake.cacheInit": "null",
+  "cmake.installPrefix": "${workspaceFolder}/build",
+  "cmake.configureSettings": {
+    "CMAKE_BUILD_TYPE": "${buildType}",
+    "CONAN_TOOLCHAIN_PATH": "${workspaceFolder}/build/generators/conan_toolchain.cmake"
+  },
+  "cmake.generator": "Ninja",
+  "cmake.exportCompileCommandsFile": true,
+  "cmake.environment": {
+    "PATH": "${env:PATH}:/home/sinter/softwares/miniconda3/bin"
+  },
+  "cmake.configureArgs": [
+  ],
+  "cmake.options.statusBarVisibility": "compact",
   "cmake.buildDirectory": "${workspaceFolder}/build",
   "git.terminalAuthentication": true,
-  "cmake.configureOnOpen": true
+  "cmake.configureOnOpen": true,
 }
