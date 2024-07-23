@@ -2,15 +2,16 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.10)
 
 # submodule
 ADD_SUBDIRECTORY(logger)
-ADD_SUBDIRECTORY(algo_and_ds)
-# ADD_SUBDIRECTORY(utils)
+ADD_SUBDIRECTORY(utils)
+ADD_SUBDIRECTORY(oop)
+# ADD_SUBDIRECTORY(algo_and_ds)
 # ADD_SUBDIRECTORY(mysocket)
 # ADD_SUBDIRECTORY(concurrency)
-# ADD_SUBDIRECTORY(design_pattern)
 # ADD_SUBDIRECTORY(features)
-ADD_SUBDIRECTORY(use_taskflow)
+# ADD_SUBDIRECTORY(use_taskflow)
 # ADD_SUBDIRECTORY(cuda_demo)
 # ADD_SUBDIRECTORY(dynamic_load)
+ADD_SUBDIRECTORY(rule_applicator)
 
 
 # transfer all headers to the include directory 
@@ -19,5 +20,3 @@ FILE(MAKE_DIRECTORY ${PROJECT_INCLUDE_DIR})
 MESSAGE(STATUS "This is BINARY dir " ${PROJECT_BINARY_DIR})
 MESSAGE(STATUS "This is SOURCE dir " ${PROJECT_SOURCE_DIR})
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
-
-

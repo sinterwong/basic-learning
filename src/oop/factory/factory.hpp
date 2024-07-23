@@ -18,7 +18,7 @@
 namespace oop {
 namespace factory {
 #ifndef BasicLearningModuleRegister
-#define BasicLearningModuleRegister(X, ...)                                       \
+#define BasicLearningModuleRegister(X, ...)                                    \
   static int __type##X = ObjFactory::regCreateObjFunc(                         \
       #X, (void *)(&__createObjFunc<X, __VA_ARGS__>));
 #endif
@@ -33,7 +33,6 @@ public:
   template <class BaseClass, typename... ArgType>
   static std::shared_ptr<BaseClass> createObj(std::string const &className,
                                               ArgType... args) {
-    // typedef std::shared_ptr<BaseClass> (*_CreateFactory)(ArgType...);
     using _CreateFactory =
         std::shared_ptr<BaseClass> (*)(ArgType...); // type alias
 
@@ -58,5 +57,5 @@ private:
   }
 };
 } // namespace factory
-} // namespace design_pattern
+} // namespace oop
 #endif
