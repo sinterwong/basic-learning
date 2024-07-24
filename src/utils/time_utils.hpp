@@ -14,10 +14,8 @@
 #include <chrono>
 #include <cmath>
 #include <functional>
-#include <iostream>
 #include <thread>
 #include <utility>
-#include <vector>
 
 using namespace std::chrono_literals;
 

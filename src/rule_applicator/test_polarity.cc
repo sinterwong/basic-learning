@@ -9,30 +9,31 @@
  *
  */
 
+#include "base_type_convert.hpp"
 #include "mexception.hpp"
 #include "type.hpp"
 #include <iostream>
 #include <regex>
 
 using namespace rule_applicator;
-using namespace utils::exception;
+using namespace utils;
 
 static bool IsConditionMet(const DemoComponentInfo &info,
                            const Condition &cond) {
   switch (cond.field) {
   case PolarityFieldType::Position: {
-    const auto &value = get_or_throw<std::string>(cond.value);
     switch (cond.op) {
     case Operator::RegexMatch:
-      return std::regex_match(info.position, std::regex(value));
+      return std::regex_match(info.position, std::regex(cond.value));
     case Operator::RegexNotMatch:
-      return !std::regex_match(info.position, std::regex(value));
+      return !std::regex_match(info.position, std::regex(cond.value));
     default:
-      throw InvalidValueException("Unsupported op type!");
+      throw exception::InvalidValueException("Unsupported op type!");
     }
   }
   case PolarityFieldType::OCRLineCount: {
-    const auto &value = get_or_throw<int>(cond.value);
+    auto vvalue = utils::convert_string_to_number(cond.value);
+    auto value = exception::get_or_throw<int>(vvalue);
     switch (cond.op) {
     case Operator::Equals:
       return info.ocrLineCount == value;
@@ -47,7 +48,7 @@ static bool IsConditionMet(const DemoComponentInfo &info,
     case Operator::LessThanOrEqual:
       return info.ocrLineCount <= value;
     default:
-      throw InvalidValueException("Unsupported op type!");
+      throw exception::InvalidValueException("Unsupported op type!");
     }
   }
   }
@@ -98,7 +99,7 @@ int main() {
 
   // Rule 3: ocrLineCount 只有一行
   rules.push_back(
-      Rule{{Condition{PolarityFieldType::OCRLineCount, Operator::Equals, 1}},
+      Rule{{Condition{PolarityFieldType::OCRLineCount, Operator::Equals, "1"}},
            Polarity::ABSENT});
 
   for (const auto &info : components) {

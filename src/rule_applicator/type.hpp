@@ -13,7 +13,6 @@
 
 #include <cstdint>
 #include <string>
-#include <variant>
 #include <vector>
 namespace rule_applicator {
 enum class Operator {
@@ -31,11 +30,10 @@ enum class Polarity : uint8_t { NONE = 0, ABSENT, PRESENT, UNKNOWN };
 
 enum class PolarityFieldType : uint8_t { Position = 0, OCRLineCount };
 
-using ValueType = std::variant<std::string, int>;
 struct Condition {
   PolarityFieldType field;
   Operator op;
-  ValueType value;
+  std::string value;
 };
 
 struct Rule {
