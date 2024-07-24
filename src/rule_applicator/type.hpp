@@ -15,7 +15,7 @@
 #include <string>
 #include <vector>
 namespace rule_applicator {
-enum class Operator {
+enum class RuleOperator {
   Equals,             // ==
   NotEquals,          // !=
   GreaterThan,        // >
@@ -23,27 +23,28 @@ enum class Operator {
   GreaterThanOrEqual, // >=
   LessThanOrEqual,    // <=
   RegexMatch,         // regex match
-  RegexNotMatch       // regex not match
+  RegexNotMatch,      // regex not match
+  IsOdd,              // odd
+  IsEven              // even
 };
 
 enum class Polarity : uint8_t { NONE = 0, ABSENT, PRESENT, UNKNOWN };
 
-enum class PolarityFieldType : uint8_t { Position = 0, OCRLineCount };
+enum class PolarityFieldType : uint8_t {
+  Position = 0,
+  OCRLineCount,
+  PadParity
+};
 
 struct Condition {
   PolarityFieldType field;
-  Operator op;
+  RuleOperator op;
   std::string value;
 };
 
 struct Rule {
   std::vector<Condition> conditions;
   Polarity polarity;
-};
-
-struct DemoComponentInfo {
-  std::string position;
-  int ocrLineCount;
 };
 
 } // namespace rule_applicator

@@ -14,18 +14,26 @@
 #include "type.hpp"
 #include <iostream>
 #include <regex>
+#include <string>
 
 using namespace rule_applicator;
 using namespace utils;
+
+struct DemoComponentInfo {
+  std::string position;
+  int ocrLineCount;
+  int pads_count;
+  std::pair<int, int> pad_groups_pins_count;
+};
 
 static bool IsConditionMet(const DemoComponentInfo &info,
                            const Condition &cond) {
   switch (cond.field) {
   case PolarityFieldType::Position: {
     switch (cond.op) {
-    case Operator::RegexMatch:
+    case RuleOperator::RegexMatch:
       return std::regex_match(info.position, std::regex(cond.value));
-    case Operator::RegexNotMatch:
+    case RuleOperator::RegexNotMatch:
       return !std::regex_match(info.position, std::regex(cond.value));
     default:
       throw exception::InvalidValueException("Unsupported op type!");
@@ -35,18 +43,28 @@ static bool IsConditionMet(const DemoComponentInfo &info,
     auto vvalue = utils::convert_string_to_number(cond.value);
     auto value = exception::get_or_throw<int>(vvalue);
     switch (cond.op) {
-    case Operator::Equals:
+    case RuleOperator::Equals:
       return info.ocrLineCount == value;
-    case Operator::NotEquals:
+    case RuleOperator::NotEquals:
       return info.ocrLineCount != value;
-    case Operator::GreaterThan:
+    case RuleOperator::GreaterThan:
       return info.ocrLineCount > value;
-    case Operator::LessThan:
+    case RuleOperator::LessThan:
       return info.ocrLineCount < value;
-    case Operator::GreaterThanOrEqual:
+    case RuleOperator::GreaterThanOrEqual:
       return info.ocrLineCount >= value;
-    case Operator::LessThanOrEqual:
+    case RuleOperator::LessThanOrEqual:
       return info.ocrLineCount <= value;
+    default:
+      throw exception::InvalidValueException("Unsupported op type!");
+    }
+  }
+  case PolarityFieldType::PadParity: {
+    switch (cond.op) {
+    case RuleOperator::IsOdd:
+      return info.pads_count % 2 == 1;
+    case RuleOperator::IsEven:
+      return info.pads_count % 2 == 0;
     default:
       throw exception::InvalidValueException("Unsupported op type!");
     }
@@ -87,19 +105,24 @@ int main() {
 
   // Rule 1: position 以 R 开头且不是 RF 开头的无极性
   rules.push_back(Rule{
-      {Condition{PolarityFieldType::Position, Operator::RegexMatch, "^R.*"},
-       Condition{PolarityFieldType::Position, Operator::RegexNotMatch,
+      {Condition{PolarityFieldType::Position, RuleOperator::RegexMatch, "^R.*"},
+       Condition{PolarityFieldType::Position, RuleOperator::RegexNotMatch,
                  "^RF.*"}},
       Polarity::ABSENT});
 
   // Rule 2: position 以 C 开头的或 MC 开头的且无多行文字则无极性
   rules.push_back(Rule{{Condition{PolarityFieldType::Position,
-                                  Operator::RegexMatch, "^(C|MC).*"}},
+                                  RuleOperator::RegexMatch, "^(C|MC).*"}},
                        Polarity::ABSENT});
 
   // Rule 3: ocrLineCount 只有一行
+  rules.push_back(Rule{
+      {Condition{PolarityFieldType::OCRLineCount, RuleOperator::Equals, "1"}},
+      Polarity::ABSENT});
+
+  // Rule 4: pad 数量为奇数
   rules.push_back(
-      Rule{{Condition{PolarityFieldType::OCRLineCount, Operator::Equals, "1"}},
+      Rule{{Condition{PolarityFieldType::PadParity, RuleOperator::IsOdd, ""}},
            Polarity::ABSENT});
 
   for (const auto &info : components) {
