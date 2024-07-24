@@ -11,37 +11,22 @@
 #ifndef __SRC_RULE_APPLICATOR_TYPE_HPP_
 #define __SRC_RULE_APPLICATOR_TYPE_HPP_
 
+#include <any>
 #include <cstdint>
 #include <string>
+#include <unordered_map>
 #include <vector>
 namespace rule_applicator {
-enum class RuleOperator {
-  Equals,             // ==
-  NotEquals,          // !=
-  GreaterThan,        // >
-  LessThan,           // <
-  GreaterThanOrEqual, // >=
-  LessThanOrEqual,    // <=
-  RegexMatch,         // regex match
-  RegexNotMatch,      // regex not match
-  IsOdd,              // odd
-  IsEven              // even
-};
+using DataField = std::any;
+using DataMap = std::unordered_map<std::string, DataField>;
 
 enum class Polarity : uint8_t { NONE = 0, ABSENT, PRESENT, UNKNOWN };
 
-enum class PolarityFieldType : uint8_t {
-  Position = 0,
-  OCRLineCount,
-  PadParity
-};
-
 struct Condition {
-  PolarityFieldType field;
-  RuleOperator op;
+  std::string field;
+  std::string op;
   std::string value;
 };
-
 struct Rule {
   std::vector<Condition> conditions;
   Polarity polarity;

@@ -19,13 +19,24 @@ namespace oop {
 namespace factory {
 #ifndef BasicLearningModuleRegister
 #define BasicLearningModuleRegister(X, ...)                                    \
-  static int __type##X = ObjFactory::regCreateObjFunc(                         \
-      #X, (void *)(&__createObjFunc<X, __VA_ARGS__>));
+  __attribute__((used)) static int __type##X = ObjFactory::regCreateObjFunc(   \
+      #X, (void *)(&CreateObjHelper<X __VA_OPT__(, ) __VA_ARGS__>::create));
 #endif
 
+template <typename YourClass, typename... ArgType> struct CreateObjHelper {
+  static std::shared_ptr<YourClass> create(ArgType... arg) {
+    return std::make_shared<YourClass>(std::forward<ArgType>(arg)...);
+  }
+};
+
+template <typename YourClass> std::shared_ptr<YourClass> __createObjFunc() {
+  return CreateObjHelper<YourClass>::create();
+}
+
 template <typename YourClass, typename... ArgType>
-std::shared_ptr<YourClass> __createObjFunc(ArgType... arg) {
-  return std::make_shared<YourClass>(arg...);
+std::shared_ptr<YourClass> __createObjFunc(ArgType &&...arg) {
+  return CreateObjHelper<YourClass, ArgType...>::create(
+      std::forward<ArgType>(arg)...);
 }
 
 class ObjFactory {
