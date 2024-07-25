@@ -15,16 +15,12 @@
 #include "utils/mexception.hpp"
 #include <iostream>
 #include <string>
-#include <utility>
+#include <unordered_map>
+#include <vector>
 
 using namespace rule_applicator;
 
-struct DemoComponentInfo {
-  std::string position;
-  int ocrLineCount;
-  int pads_count;
-  std::pair<int, int> pad_groups_pins_count;
-};
+using DataMap = std::unordered_map<PolarityFieldType, DataField>;
 
 bool IsConditionMet(const DataMap &data, const Condition &cond) {
   auto it = data.find(cond.field);
@@ -67,19 +63,14 @@ int main() {
 
   // demo datas
   const std::vector<DemoComponentInfo> components = {
-      {"R12", 3, 4, std::make_pair(3, 4)},
-      {"C1", 0, 5, std::make_pair(4, 4)},
-      {"RF2", 2, 19, std::make_pair(2, 4)},
-      {"RD3", 2, 8, std::make_pair(3, 3)},
-      {"U1", 1, 3, std::make_pair(3, 5)}};
+      {"R12", 3, 4}, {"C1", 0, 5}, {"RF2", 2, 19}, {"RD3", 2, 8}, {"U1", 2, 3}};
 
   std::vector<DataMap> componentInfos;
   for (const auto &component : components) {
     DataMap componentInfo;
-    componentInfo["Position"] = component.position;
-    componentInfo["OcrLineCount"] = component.ocrLineCount;
-    componentInfo["PadsCount"] = component.pads_count;
-    componentInfo["PinsPair"] = component.pad_groups_pins_count;
+    componentInfo[PolarityFieldType::Position] = component.position;
+    componentInfo[PolarityFieldType::OCRLineCount] = component.ocrLineCount;
+    componentInfo[PolarityFieldType::PadsCount] = component.pads_count;
     componentInfos.push_back(componentInfo);
   }
 
@@ -87,8 +78,24 @@ int main() {
   std::vector<Rule> rules;
 
   // Rule 1: position 以 R 开头且不是 RF 开头的无极性
-  rules.push_back(Rule{{Condition{"Position", "RegexMatch", "^R.*"},
-                        Condition{"Position", "RegexNotMatch", "^RF.*"}},
+  rules.push_back(
+      Rule{{Condition{PolarityFieldType::Position, "RegexMatch", "^R.*"},
+            Condition{PolarityFieldType::Position, "RegexNotMatch", "^RF.*"}},
+           Polarity::ABSENT});
+
+  // Rule 2: position 以 C 开头的或 MC 开头的且无多行文字则无极性
+  rules.push_back(
+      Rule{{Condition{PolarityFieldType::Position, "RegexMatch", "^(C|MC).*"}},
+           Polarity::ABSENT});
+
+  // Rule 3: ocrLineCount 只有一行	  for (const auto &info :
+  // componentInfos) {
+  rules.push_back(
+      Rule{{Condition{PolarityFieldType::OCRLineCount, "Equals", "1"}},
+           Polarity::ABSENT});
+
+  // Rule 4: pad 数量为奇数
+  rules.push_back(Rule{{Condition{PolarityFieldType::PadParity, "IsOdd", ""}},
                        Polarity::ABSENT});
 
   for (const auto &info : componentInfos) {

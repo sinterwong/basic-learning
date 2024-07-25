@@ -1,7 +1,7 @@
 /**
- * @file reflection.h
+ * @file factory.hpp
  * @author Sinter Wong (sintercver@gmail.com)
- * @brief
+ * @brief object factory
  * @version 0.1
  * @date 2022-08-14
  *
@@ -15,8 +15,7 @@
 #include <memory>
 #include <string>
 
-namespace oop {
-namespace factory {
+namespace oop::factory {
 #ifndef BasicLearningModuleRegister
 #define BasicLearningModuleRegister(X, ...)                                    \
   __attribute__((used)) static int __type##X = ObjFactory::regCreateObjFunc(   \
@@ -44,8 +43,7 @@ public:
   template <class BaseClass, typename... ArgType>
   static std::shared_ptr<BaseClass> createObj(std::string const &className,
                                               ArgType... args) {
-    using _CreateFactory =
-        std::shared_ptr<BaseClass> (*)(ArgType...); // type alias
+    using _CreateFactory = std::shared_ptr<BaseClass> (*)(ArgType...);
 
     auto &_funcMap = _GetStaticFuncMap();
     auto iFind = _funcMap.find(className);
@@ -67,6 +65,5 @@ private:
     return _classMap;
   }
 };
-} // namespace factory
-} // namespace oop
+} // namespace oop::factory
 #endif

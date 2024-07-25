@@ -11,25 +11,35 @@
 #ifndef __SRC_RULE_APPLICATOR_TYPE_HPP_
 #define __SRC_RULE_APPLICATOR_TYPE_HPP_
 
-#include <any>
 #include <cstdint>
 #include <string>
-#include <unordered_map>
 #include <vector>
 namespace rule_applicator {
-using DataField = std::any;
-using DataMap = std::unordered_map<std::string, DataField>;
 
 enum class Polarity : uint8_t { NONE = 0, ABSENT, PRESENT, UNKNOWN };
 
+enum class PolarityFieldType : uint8_t {
+  Position = 0,
+  OCRLineCount,
+  PadsCount,
+  PadParity
+};
+
 struct Condition {
-  std::string field;
+  PolarityFieldType field;
   std::string op;
   std::string value;
 };
+
 struct Rule {
   std::vector<Condition> conditions;
   Polarity polarity;
+};
+
+struct DemoComponentInfo {
+  std::string position;
+  int ocrLineCount;
+  int pads_count;
 };
 
 } // namespace rule_applicator

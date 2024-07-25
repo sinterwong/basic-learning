@@ -1,9 +1,12 @@
 #ifndef __SRC_RULE_APPLICATOR_CONDITION_HPP_
 #define __SRC_RULE_APPLICATOR_CONDITION_HPP_
 
-#include "type.hpp"
-
+#include <any>
+#include <string>
 namespace rule_applicator {
+
+using DataField = std::any;
+
 class IConditionEvaluator {
 public:
   virtual ~IConditionEvaluator() = default;
