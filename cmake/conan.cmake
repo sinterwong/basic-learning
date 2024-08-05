@@ -44,7 +44,7 @@ function(conan_config_install)
     # Run Conan install
     message(STATUS "Running Conan install...")
     execute_process(
-        COMMAND ${CONAN_EXECUTABLE} install ${CMAKE_SOURCE_DIR} -b missing 
+        COMMAND ${CONAN_EXECUTABLE} install ${CMAKE_SOURCE_DIR} -b missing
         RESULT_VARIABLE CONAN_INSTALL_RESULT
         OUTPUT_VARIABLE CONAN_INSTALL_OUTPUT
         ERROR_VARIABLE CONAN_INSTALL_ERROR

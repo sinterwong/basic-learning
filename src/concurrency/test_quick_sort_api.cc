@@ -1,9 +1,5 @@
-#include "async_quick_sort.hpp"
 #include "thread_pool_quick_sort.hpp"
-#include <deque>
-#include <future>
 #include <iostream>
-#include <mutex>
 
 int main() {
   std::list<int> data = {3, 5, 1, 2, 3432, 564, 1, 23, 4, 34, 234, 2314};

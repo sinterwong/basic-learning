@@ -1,21 +1,11 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.10)
 
-INCLUDE_DIRECTORIES(${PROJECT_INCLUDE_DIR}/algo_and_ds)
-
 FILE(GLOB_RECURSE CURRENT_DIR_HEAD ${CMAKE_CURRENT_SOURCE_DIR}/*.hpp ${CMAKE_CURRENT_SOURCE_DIR}/*.h)
 FILE(MAKE_DIRECTORY ${PROJECT_INCLUDE_DIR}/algo_and_ds)
 FOREACH(include ${CURRENT_DIR_HEAD})
 	MESSAGE("-- Copying ${include}")
 	CONFIGURE_FILE(${include} ${PROJECT_INCLUDE_DIR}/algo_and_ds COPYONLY)
 ENDFOREACH()
-
-INSTALL(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-    DESTINATION ${CMAKE_INSTALL_PREFIX}/include/algo_and_ds
-    FILES_MATCHING
-    PATTERN "*.h"
-    PATTERN "*.hpp"
-    PATTERN "CMakeLists.txt" EXCLUDE
-    )
 
 FILE(MAKE_DIRECTORY ${PROJECT_OUTPUT_DIR}/bin/algo_and_ds)
 SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_OUTPUT_DIR}/bin/algo_and_ds)
@@ -25,4 +15,5 @@ FOREACH(sourcefile ${APP_SOURCES})
     STRING(REGEX MATCH "[^/]+$" sourcefilewithoutpath ${sourcefile})
     STRING(REPLACE ".cc" "" testname ${sourcefilewithoutpath})
     ADD_EXECUTABLE( ${testname} ${sourcefile})
+    TARGET_INCLUDE_DIRECTORIES(${testname} PRIVATE ${PROJECT_INCLUDE_DIR}/algo_and_ds)
 ENDFOREACH(sourcefile ${APP_SOURCES})

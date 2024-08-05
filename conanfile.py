@@ -19,17 +19,18 @@ class BasicLearnConan(ConanFile):
 
     def configure(self):
         self.settings.compiler.libcxx = "libstdc++11"
-        self.settings.compiler.cppstd = "20" 
-        self.settings.compiler.version = "13" 
-        
+        self.settings.compiler.cppstd = "20"
+        self.settings.compiler.version = "13"
+
         if self.options.shared:
             del self.options.fPIC
-            
+
         # self.options["libcurl"].system_libs = False
 
         self.options["spdlog"].use_std_fmt = True
 
     def requirements(self):
+        self.requires("pcl/1.13.1")
         self.requires("gflags/2.2.2")
         self.requires("spdlog/1.14.1")
         self.requires("taskflow/3.7.0")
