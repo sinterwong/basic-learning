@@ -5,7 +5,7 @@
       "name": "C/C++: g++ build and debug active file",
       "type": "cppdbg",
       "request": "launch",
-      "program": "${workspaceFolder}/build/x86_64/bin/rule_applicator/test_polarity",
+      "program": "${workspaceFolder}/build/x86_64/bin/point_cloud/test_heapmap",
       "args": [
         //  "--config_path=/home/wangxt/workspace/projects/basic/conf/app/config.json",
       ],
