@@ -16,7 +16,7 @@
 #include <functional>
 #include <iostream>
 
-namespace features {
+namespace template_mp {
 namespace variadic_templates {
 
 /**
@@ -83,6 +83,6 @@ public:
 };
 
 } // namespace variadic_templates
-} // namespace features
+} // namespace template_mp
 
 #endif

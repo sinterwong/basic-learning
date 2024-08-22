@@ -6,7 +6,7 @@
 #include <iostream>
 #include <stdexcept>
 
-namespace features {
+namespace template_mp {
 namespace variadic_templates {
 
 struct __Iter_less_iter {
@@ -32,7 +32,7 @@ inline _ForwardIterator __max_element(_ForwardIterator __first,
   }
   return result;
 }
- 
+
 template <typename _ForwardIterator>
 inline _ForwardIterator max_element(_ForwardIterator __first,
                                     _ForwardIterator __end) {
@@ -43,17 +43,13 @@ template <typename _Tp> inline _Tp max(std::initializer_list<_Tp> __l) {
   return *max_element(__l.begin(), __l.end());
 }
 
-template<typename T>
-T maximum(T n) {
-  return n;
-}
+template <typename T> T maximum(T n) { return n; }
 
-template<typename T, typename ...Args>
-T maximum(T n, Args ...args) {
+template <typename T, typename... Args> T maximum(T n, Args... args) {
   return std::max(n, maximum(args...));
 }
 
 } // namespace variadic_templates
-} // namespace features
+} // namespace template_mp
 
 #endif

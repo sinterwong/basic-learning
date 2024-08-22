@@ -1,7 +1,7 @@
 #ifndef __FEATURES_RECURIVE_INHERITANCE_HPP_
 #define __FEATURES_RECURIVE_INHERITANCE_HPP_
 
-namespace features {
+namespace template_mp {
 namespace variadic_templates {
 
 template <typename... Values> class tuple {};
@@ -26,6 +26,6 @@ private:
 };
 
 } // namespace variadic_templates
-} // namespace features
+} // namespace template_mp
 
 #endif

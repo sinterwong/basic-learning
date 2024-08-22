@@ -6,7 +6,7 @@
 #include <stdexcept>
 #include <tuple>
 
-namespace features {
+namespace template_mp {
 namespace variadic_templates {
 
 template <int IDX, int MAX, typename... Args> struct PRINT_TUPLE {
@@ -28,6 +28,6 @@ std::ostream &operator<<(std::ostream &os, std::tuple<Args...> const &t) {
 }
 
 } // namespace variadic_templates
-} // namespace features
+} // namespace template_mp
 
 #endif

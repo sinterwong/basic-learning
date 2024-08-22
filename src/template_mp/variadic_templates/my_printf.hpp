@@ -4,7 +4,7 @@
 #include <iostream>
 #include <stdexcept>
 
-namespace features {
+namespace template_mp {
 namespace variadic_templates {
 
 inline void myPrintf(char const *s) {
@@ -32,6 +32,6 @@ void myPrintf(char const *s, T const &value, Args const &...args) {
 }
 
 } // namespace variadic_templates
-} // namespace features
+} // namespace template_mp
 
 #endif

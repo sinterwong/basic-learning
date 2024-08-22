@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-namespace features {
+namespace template_mp {
 namespace variadic_templates {
 
 inline void print() {
@@ -19,11 +19,11 @@ void print(T const &firstArg, Args const &...args) {
   print(args...);
 }
 
-template <typename ...Args> void print(Args const &...args) {
+template <typename... Args> void print(Args const &...args) {
   std::cout << "hello world" << std::endl;
 }
 
 } // namespace variadic_templates
-} // namespace features
+} // namespace template_mp
 
 #endif

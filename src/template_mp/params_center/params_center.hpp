@@ -18,7 +18,7 @@
 #ifndef _FEATURES_PARAMETERS_CENTER_HPP_
 #define _FEATURES_PARAMETERS_CENTER_HPP_
 
-namespace features {
+namespace template_mp {
 
 using namespace std::chrono_literals;
 using svector = std::vector<std::string>;
@@ -82,5 +82,5 @@ template <> inline void ModuleParameterCenter::setParams(StreamBase params) {
   std::cout << "hello" << std::endl;
 }
 
-} // namespace features
+} // namespace template_mp
 #endif // _FLOWENGINE_COMMON_CONFIG_HPP_
