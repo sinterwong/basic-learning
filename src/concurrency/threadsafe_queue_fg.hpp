@@ -4,7 +4,7 @@
 #include <condition_variable>
 #include <memory>
 #include <mutex>
-namespace concurrency {
+namespace my_concurrency {
 template <typename T> class queue {
 private:
   struct node {
@@ -242,6 +242,6 @@ public:
   }
 };
 
-} // namespace concurrency
+} // namespace my_concurrency
 
 #endif

@@ -8,7 +8,7 @@
 #include <thread>
 #include <vector>
 
-namespace concurrency {
+namespace my_concurrency {
 template <typename Iterator, typename T> struct accumulate_block {
   T operator()(Iterator first, Iterator last) {
     return std::accumulate(first, last, T());
@@ -77,6 +77,6 @@ T parallel_accumulate_exception_safe2(Iterator first, Iterator last, T init) {
   }
 }
 
-} // namespace concurrency
+} // namespace my_concurrency
 
 #endif

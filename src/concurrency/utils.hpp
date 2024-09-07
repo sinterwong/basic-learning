@@ -5,7 +5,7 @@
 #include <thread>
 #include <vector>
 
-namespace concurrency {
+namespace my_concurrency {
 
 class join_threads {
   std::vector<std::thread> &threads;
@@ -54,6 +54,6 @@ struct barrier {
   }
 };
 
-} // namespace concurrency
+} // namespace my_concurrency
 
 #endif

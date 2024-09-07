@@ -10,7 +10,7 @@
 #include <shared_mutex>
 #include <utility>
 
-namespace concurrency {
+namespace my_concurrency {
 template <typename Key, typename Value, typename Hash = std::hash<Key>>
 class threadsafe_lookup_table {
   using bucket_value = std::pair<Key, Value>;
@@ -102,6 +102,6 @@ public:
   }
 };
 
-} // namespace concurrency
+} // namespace my_concurrency
 
 #endif

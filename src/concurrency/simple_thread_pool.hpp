@@ -17,7 +17,7 @@
 #include <functional>
 #include <thread>
 
-namespace concurrency {
+namespace my_concurrency {
 
 class simple_thread_pool {
 private:
@@ -57,6 +57,6 @@ public:
   }
 };
 
-} // namespace concurrency
+} // namespace my_concurrency
 
 #endif // _CONCURRENCY_SIMPLE_THREAD_POOL_HPP

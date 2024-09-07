@@ -15,7 +15,7 @@
 int main() {
   auto time = utils::measureTime([]() {
     std::vector<int> v = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-    concurrency::parallel_partial_sum(v.begin(), v.end());
+    my_concurrency::parallel_partial_sum(v.begin(), v.end());
     for (auto i : v) {
       std::cout << i << " ";
     }

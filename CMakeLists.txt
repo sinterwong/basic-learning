@@ -9,6 +9,7 @@ BASIC_APP_EXTRACT_VERSION()
 PROJECT(BasicLearning VERSION ${BASIC_APP_VERSION} LANGUAGES CXX)
 
 OPTION(BUILD_TESTS "Build with tests" ON)
+OPTION(BUILD_WITH_CUDA "Build with tests" OFF)
 
 MESSAGE(INFO "--------------------------------")
 MESSAGE(STATUS "Build BasicLearning: ${BASIC_APP_VERSION}")
@@ -19,15 +20,11 @@ MESSAGE(STATUS "CMAKE_INSTALL_PREFIX: ${CMAKE_INSTALL_PREFIX}")
 INCLUDE(cmake/conan.cmake)
 conan_config_install()
 
-IF(CONAN_TOOLCHAIN_PATH)
-    INCLUDE(${CONAN_TOOLCHAIN_PATH})
-ELSE()
-    MESSAGE(FATAL_ERROR "Conan toolchain must be set.")
-ENDIF()
+INCLUDE(${CMAKE_BINARY_DIR}/generators/conan_toolchain.cmake)
 
 # Set default build to debug
 IF(NOT CMAKE_BUILD_TYPE)
-    SET(CMAKE_BUILD_TYPE "Debug" CACHE STRING "Choose Release or Debug" FORCE)
+    SET(CMAKE_BUILD_TYPE "RelWithDebInfo" CACHE STRING "Choose Release, Debug, RelWithDebInfo or MinSizeRel" FORCE)
 ENDIF()
 
 IF(NOT TARGET_OS)

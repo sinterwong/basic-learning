@@ -17,7 +17,7 @@
 #include <iterator>
 #include <numeric>
 #include <vector>
-namespace concurrency {
+namespace my_concurrency {
 
 template <typename Iterator>
 void parallel_partial_sum(Iterator first, Iterator last) {
@@ -151,5 +151,5 @@ void parallel_partial_sum_2(Iterator first, Iterator last) {
   }
 }
 
-} // namespace concurrency
+} // namespace my_concurrency
 #endif

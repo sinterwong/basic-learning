@@ -19,7 +19,7 @@
 #include <thread>
 #include <vector>
 
-namespace concurrency {
+namespace my_concurrency {
 template <typename Iterator, typename MatchType>
 Iterator parallel_for_find(Iterator first, Iterator last, MatchType match) {
   struct find_element {
@@ -112,4 +112,4 @@ Iterator parallel_for_find_async(Iterator first, Iterator last,
   std::atomic<bool> done(false);
   return parallel_for_find_async_impl(first, last, match, done);
 }
-} // namespace concurrency
+} // namespace my_concurrency

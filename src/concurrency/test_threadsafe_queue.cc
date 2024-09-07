@@ -7,7 +7,7 @@
 #include <thread>
 #include <vector>
 
-using namespace concurrency;
+using namespace my_concurrency;
 
 int main() {
 
