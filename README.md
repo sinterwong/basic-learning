@@ -1,40 +1,65 @@
 # basic-learning
 
 ## 项目介绍
-主要为了便捷地进行cpp的学习，项目中将会包含语法、数据结构、设计模式、并发等代码的练习与实现。
 
-## 主要项目结构
-- src: 代码实现（包含单元测试，只要文件以.cc结尾就可以被编译成可执行程序并存储到build/${arch}/同名目录）
-- cmake: 环境构建相关文件，包含第三方库加载等cmake文件。
-- scripts: 脚本文件
-- platform: 交叉编译环境构建相关cmake文件
-- tests: 测试代码
+本项目旨在提供一个便捷的 C++ 学习环境，涵盖语法、数据结构、设计模式、并发等方面的代码练习与实现。
 
-## 项目构建
-- 本地构建
-```shell
-mkdir build && cd build
-cmake ..
-make
+## 特性
+
+- 模块化设计，方便学习和使用不同主题的代码示例。
+- 使用 Conan 进行依赖管理，简化构建过程。
+- 支持交叉编译，方便在不同平台上进行开发和测试。
+- 集成单元测试和性能分析工具，帮助提高代码质量和效率。
+
+## 开发环境
+
+- **操作系统:** Linux, Windows
+- **编译器:** GCC 11+（即将适配MSVC v143）
+- **构建工具:** CMake 3.15+
+- **包管理器:** Conan 2.3.0+
+- **IDE:** VSCode
+
+## 项目结构
+
 ```
-- 交叉编译构建（参考scripts中的build_x3.sh）
-```shell
-mkdir build && cd build
-cmake -DCMAKE_TOOLCHAIN_FILE=../platform/toolchain/arm-linux-gnueabihf.cmake ..
-make
+basic-learning/
+├── src/
+│   ├── module1/
+│   │   └── main.cc
+│   └── module2/
+│       └── main.cc
+├── cmake/ 
+├── scripts/
+├── platform/
+├── tests/ 
+├── build/
+└── README.md
 ```
 
-## 项目运行
-```shell
-./build/${arch}/${module}/executable
+## 构建与运行
+
+### 使用 Conan 构建
+
+1.  安装 Conan: 可以使用 Miniconda 安装 Conan，并参考配置 `settings.json` 文件。
+2.  使用 CMake 工具构建项目: 项目配置好后，可直接使用 VSCode 的 CMake Tools 插件进行构建。
+
+### 手动管理依赖（Optional）
+
+1.  将手动编译安装的依赖库软链接到以下目录:  
+    `/repo/3rdparty/target/${TARGET_OS}_${TARGET_ARCH}`  
+    例如: `/repo/3rdparty/target/Linux_x86_64/opencv`
+2.  在 `/repo/load_3rdparty.cmake` 文件中管理依赖库的加载。
+
+### 运行程序
+
+构建完成后，可执行文件位于 `build/${arch}/${module}` 目录下，例如:
+
+```bash
+./build/x86_64/module1/module1
 ```
 
-## TODO
-- [ ] gtest单元测试
-- [ ] gperftools性能分析
+## 未来计划
+
+- [ ]  gtest 单元测试框架
 
 
-## 参考
-- [CMakeCppProjectTemplate](https://github.com/yicm/CMakeCppProjectTemplate)
-- [C++并发编程实战](https://book.douban.com/subject/35653912/)
-- [Effective Modern C++](https://book.douban.com/subject/25923597/)
