@@ -2,14 +2,18 @@
   "cmake.installPrefix": "${workspaceFolder}/build",
   "cmake.configureSettings": {
     "CMAKE_BUILD_TYPE": "${buildType}",
-    "CONAN_TOOLCHAIN_PATH": "${workspaceFolder}/build/generators/conan_toolchain.cmake"
+    // "CMAKE_TOOLCHAIN_FILE": "${workspaceFolder}/platforms/linux/aarch64.x3.cmake",
   },
+  // "cmake.generator": "Visual Studio 17 2022",
   "cmake.generator": "Ninja",
+  // "cmake.generator": "Unix Makefiles",
   "cmake.exportCompileCommandsFile": true,
   "cmake.environment": {
+    // "PATH": "C:/Users/Sinter/miniconda3/Scripts;C:/Users/Sinter/miniconda3;${env:PATH}"
     "PATH": "${env:PATH}:/home/sinter/softwares/miniconda3/bin"
   },
   "cmake.configureArgs": [
+    "-DCMAKE_POLICY_DEFAULT_CMP0091=NEW"
   ],
   "cmake.options.statusBarVisibility": "compact",
   "cmake.buildDirectory": "${workspaceFolder}/build",

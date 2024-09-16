@@ -29,6 +29,7 @@ int main(int argc, char *argv[]) {
   // 读取图像
   std::vector<cv::Mat> images;
   readImages(FLAGS_image_root, images);
+  // readImages("/path/image_root", images);
 
   // 创建 Taskflow
   tf::Taskflow taskflow;

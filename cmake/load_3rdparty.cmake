@@ -1,4 +1,4 @@
-# Specialized libraries can be compiled separately, soft-linked to the 3RDPARTY_DIR, and then handled independently.
+# Specialized libraries can be compiled separately, softinked to the 3RDPARTY_DIR, and then handled independently.
 SET(3RDPARTY_ROOT ${PROJECT_SOURCE_DIR}/3rdparty)
 SET(3RDPARTY_DIR ${PROJECT_SOURCE_DIR}/3rdparty/target/${TARGET_OS}_${TARGET_ARCH})
 MESSAGE(STATUS "3RDPARTY_DIR: ${3RDPARTY_DIR}")
@@ -13,8 +13,6 @@ MACRO(LOAD_GFLAGS)
     # LIST(APPEND CMAKE_PREFIX_PATH ${GFLAGS_HOME}/lib/cmake)
     # SET(GFLAGS_LIB_DIR ${GFLAGS_HOME}/lib)
     FIND_PACKAGE(gflags REQUIRED)
-    SET(GFLAGS_LIB_DIR ${gflags_LIB_DIRS_RELEASE})
-    SET(GFLAGS_LIBS ${gflags_LIBS_RELEASE})
 ENDMACRO()
 
 MACRO(LOAD_TASKFLOW)
@@ -34,34 +32,37 @@ MACRO(LOAD_CURL)
 ENDMACRO()
 
 MACRO(LOAD_OPENCV)
-    SET(OPENCV_HOME ${3RDPARTY_DIR}/opencv)
-    SET(OPENCV_LIB_DIR ${OPENCV_HOME}/lib)
-    LIST(APPEND CMAKE_PREFIX_PATH ${OPENCV_HOME}/lib/cmake)
-    FIND_PACKAGE(OpenCV REQUIRED COMPONENTS core imgcodecs imgproc highgui video videoio)
-
+    # SET(OPENCV_HOME ${3RDPARTY_DIR}/opencv)
+    # SET(OPENCV_LIB_DIR ${OPENCV_HOME}/lib)
+    # LIST(APPEND CMAKE_PREFIX_PATH ${OPENCV_HOME}/lib/cmake)
+    # FIND_PACKAGE(OpenCV REQUIRED COMPONENTS core imgcodecs imgproc highgui video videoio)
+    
+    FIND_PACKAGE(OpenCV REQUIRED)
     IF(OpenCV_INCLUDE_DIRS)
         MESSAGE(STATUS "Opencv library status:")
         MESSAGE(STATUS "    include path: ${OpenCV_INCLUDE_DIRS}")
+        MESSAGE(STATUS "    opencv version: ${OpenCV_VERSION}")
         MESSAGE(STATUS "    libraries: ${OpenCV_LIBS}")
-    ELSE()
+        ELSE()
         MESSAGE(FATAL_ERROR "OpenCV not found!")
     ENDIF()
 ENDMACRO()
 
 MACRO(LOAD_ONNXRUNTIME)
-    FIND_FILE(ONNXRUNTIME_INCLUDE_DIR include ${3RDPARTY_DIR}/onnxruntime NO_DEFAULT_PATH)
-    FIND_FILE(ONNXRUNTIME_LIBRARY_DIR lib ${3RDPARTY_DIR}/onnxruntime NO_DEFAULT_PATH)
-    SET(ONNXRUNTIME_LIBS
-        onnxruntime
-    )
+    # FIND_FILE(ONNXRUNTIME_INCLUDE_DIR include ${3RDPARTY_DIR}/onnxruntime NO_DEFAULT_PATH)
+    # FIND_FILE(ONNXRUNTIME_LIBRARY_DIR lib ${3RDPARTY_DIR}/onnxruntime NO_DEFAULT_PATH)
+    # SET(ONNXRUNTIME_LIBS
+    #     onnxruntime
+    # )
+    # IF(ONNXRUNTIME_INCLUDE_DIR)
+    #     MESSAGE(STATUS "ONNXRUNTIME_INCLUDE_DIR : ${ONNXRUNTIME_INCLUDE_DIR}")
+    #     MESSAGE(STATUS "ONNXRUNTIME_LIBRARY_DIR : ${ONNXRUNTIME_LIBRARY_DIR}")
+    #     MESSAGE(STATUS "ONNXRUNTIME_LIBS : ${ONNXRUNTIME_LIBS}")
+    # ELSE()
+    #     MESSAGE(FATAL_ERROR "ONNXRUNTIME_LIBS not found!")
+    # ENDIF()
 
-    IF(ONNXRUNTIME_INCLUDE_DIR)
-        MESSAGE(STATUS "ONNXRUNTIME_INCLUDE_DIR : ${ONNXRUNTIME_INCLUDE_DIR}")
-        MESSAGE(STATUS "ONNXRUNTIME_LIBRARY_DIR : ${ONNXRUNTIME_LIBRARY_DIR}")
-        MESSAGE(STATUS "ONNXRUNTIME_LIBS : ${ONNXRUNTIME_LIBS}")
-    ELSE()
-        MESSAGE(FATAL_ERROR "ONNXRUNTIME_LIBS not found!")
-    ENDIF()
+    FIND_PACKAGE(onnxruntime REQUIRED)
 ENDMACRO()
 
 MACRO(LOAD_X3)

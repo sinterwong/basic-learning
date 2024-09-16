@@ -11,7 +11,7 @@
 #include <thread>
 #include <vector>
 
-namespace concurrency {
+namespace my_concurrency {
 template <typename T> struct quick_sorter {
 
   // 分治数据段
@@ -108,6 +108,6 @@ template <typename T> std::list<T> parallel_quick_sort(std::list<T> input) {
   return s.do_sort(input);
 }
 
-} // namespace concurrency
+} // namespace my_concurrency
 
 #endif

@@ -41,10 +41,19 @@ function(conan_config_install)
         endif()
     endif()
 
+    # Determine the build type
+    if(NOT CMAKE_BUILD_TYPE)
+        set(CMAKE_BUILD_TYPE "Debug" CACHE STRING "Choose the type of build." FORCE)
+    endif()
+    message(STATUS "Current build type: ${CMAKE_BUILD_TYPE}")
+
     # Run Conan install
     message(STATUS "Running Conan install...")
     execute_process(
-        COMMAND ${CONAN_EXECUTABLE} install ${CMAKE_SOURCE_DIR} -b missing
+        COMMAND ${CONAN_EXECUTABLE} install ${CMAKE_SOURCE_DIR} 
+                -s build_type=Release 
+                -s:h build_type=${CMAKE_BUILD_TYPE} 
+                -b missing
         RESULT_VARIABLE CONAN_INSTALL_RESULT
         OUTPUT_VARIABLE CONAN_INSTALL_OUTPUT
         ERROR_VARIABLE CONAN_INSTALL_ERROR

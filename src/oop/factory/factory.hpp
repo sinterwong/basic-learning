@@ -17,9 +17,15 @@
 
 namespace oop::factory {
 #ifndef BasicLearningModuleRegister
+#ifdef __VA_OPT__
 #define BasicLearningModuleRegister(X, ...)                                    \
-  __attribute__((used)) static int __type##X = ObjFactory::regCreateObjFunc(   \
+  static int __type##X = ObjFactory::regCreateObjFunc(   \
       #X, (void *)(&CreateObjHelper<X __VA_OPT__(, ) __VA_ARGS__>::create));
+#else // Support MSVC
+#define BasicLearningModuleRegister(X, ...)                                    \
+  static int __type##X = ObjFactory::regCreateObjFunc(   \
+      #X, (void *)(&CreateObjHelper<X, ##__VA_ARGS__>::create));
+#endif
 #endif
 
 template <typename YourClass, typename... ArgType> struct CreateObjHelper {

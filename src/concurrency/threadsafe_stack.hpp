@@ -6,7 +6,7 @@
 #include <stack>
 #include <utility>
 
-namespace concurrency {
+namespace my_concurrency {
 struct empty_stack : std::exception {
   const char *what() const throw();
 };
@@ -54,6 +54,6 @@ public:
     return data.empty();
   }
 };
-} // namespace concurrency
+} // namespace my_concurrency
 
 #endif

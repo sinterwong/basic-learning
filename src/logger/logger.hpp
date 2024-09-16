@@ -65,9 +65,16 @@ void BasicLearningLoggerOut(const int level, const char *filename,
     fprintf(stderr, "Failed to get logger, Please init logger firstly.\n");
     return; // Add this to prevent potential null pointer dereference
   }
+#ifdef _MSC_VER
+  // MSVC
+  logger_ptr->info("{}, {}, {}", filename, line, SPDLOG_FUNCTION);
+  logger_ptr->log(static_cast<spdlog::level::level_enum>(level), "Message: ");
+#else
+  // GCC
   logger_ptr->log(spdlog::source_loc{filename, line, SPDLOG_FUNCTION},
                   static_cast<spdlog::level::level_enum>(level),
                   std::forward<T>(args)...);
+#endif
 }
 
 #endif

@@ -18,6 +18,6 @@ FOREACH(sourcefile ${APP_SOURCES})
     STRING(REPLACE ".cc" "" testname ${sourcefilewithoutpath})
     ADD_EXECUTABLE( ${testname} ${sourcefile})
     TARGET_INCLUDE_DIRECTORIES(${testname} PRIVATE ${PROJECT_INCLUDE_DIR} ${spdlog_INCLUDE_DIR})
-    TARGET_LINK_LIBRARIES(${testname} PRIVATE pthread module_logger)
+    TARGET_LINK_LIBRARIES(${testname} PRIVATE module_logger)
 
 ENDFOREACH(sourcefile ${APP_SOURCES})

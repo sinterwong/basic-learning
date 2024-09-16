@@ -3,7 +3,7 @@
 
 #include <memory>
 #include <mutex>
-namespace concurrency {
+namespace my_concurrency {
 template <typename T> class threadsafe_list {
   struct node {
     std::mutex m;
@@ -85,6 +85,6 @@ public:
     }
   }
 };
-} // namespace concurrency
+} // namespace my_concurrency
 
 #endif

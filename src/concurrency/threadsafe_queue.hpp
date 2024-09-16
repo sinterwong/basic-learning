@@ -6,7 +6,7 @@
 #include <mutex>
 #include <queue>
 
-namespace concurrency {
+namespace my_concurrency {
 template <typename T> class threadsafe_queue {
 private:
   // 在进行pop时make_shared有可能会抛出异常，导致push后notify的线程没有完成工作也不会去通知其他的线程
@@ -68,6 +68,6 @@ public:
     return data_queue.empty();
   }
 };
-} // namespace concurrency
+} // namespace my_concurrency
 
 #endif

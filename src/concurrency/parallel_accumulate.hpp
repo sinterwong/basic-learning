@@ -5,7 +5,7 @@
 #include <numeric>
 #include <thread>
 #include <vector>
-namespace concurrency {
+namespace my_concurrency {
 template <typename Iterator, typename T> struct accumulate_block {
   void operator()(Iterator first, Iterator last, T &result) {
     result = std::accumulate(first, last, result);
@@ -41,6 +41,6 @@ T parallel_accumulate(Iterator first, Iterator last, T init) {
   }
   return std::accumulate(results.begin(), results.end(), init);
 }
-} // namespace concurrency
+} // namespace my_concurrency
 
 #endif

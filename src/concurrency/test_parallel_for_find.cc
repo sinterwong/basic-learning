@@ -19,7 +19,7 @@ int main(int argc, char const *argv[]) {
   std::generate(v.begin(), v.end(), []() { return rand() % 1000; });
   std::for_each_n(v.begin(), 10, [](auto &p) { std::cout << p << std::endl; });
   auto time = utils::measureTime([&]() {
-    auto it = concurrency::parallel_for_find(v.begin(), v.end(), 50);
+    auto it = my_concurrency::parallel_for_find(v.begin(), v.end(), 50);
     if (it == v.end()) {
       std::cout << "not found" << std::endl;
       return;
@@ -30,7 +30,7 @@ int main(int argc, char const *argv[]) {
             << std::endl;
 
   auto time2 = utils::measureTime([&]() {
-    auto it = concurrency::parallel_for_find_async(v.begin(), v.end(), 50);
+    auto it = my_concurrency::parallel_for_find_async(v.begin(), v.end(), 50);
     if (it == v.end()) {
       std::cout << "not found" << std::endl;
       return;

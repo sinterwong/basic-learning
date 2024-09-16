@@ -8,7 +8,7 @@
 #include <iterator>
 #include <thread>
 
-namespace concurrency {
+namespace my_concurrency {
 
 template <typename Iterator, typename Func>
 void parallel_for_each(Iterator first, Iterator last, Func func) {
@@ -74,6 +74,6 @@ void parallel_for_each_async(Iterator first, Iterator last, Func func) {
     future.get();
   }
 }
-} // namespace concurrency
+} // namespace my_concurrency
 
 #endif

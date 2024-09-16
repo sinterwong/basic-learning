@@ -5,7 +5,7 @@
 #include <future>
 #include <list>
 
-namespace concurrency {
+namespace my_concurrency {
 template <typename T> std::list<T> sequential_quick_sort(std::list<T> input) {
   if (input.empty()) {
     return input;
@@ -51,6 +51,6 @@ std::list<T> async_parallel_quick_sort(std::list<T> input) {
   result.splice(result.begin(), new_lower.get());
   return result;
 }
-} // namespace concurrency
+} // namespace my_concurrency
 
 #endif
