@@ -27,6 +27,24 @@ public:
 
   size_t size() const { return values.size(); }
 
+  T norm() const {
+    return std::sqrt(
+        std::inner_product(values.begin(), values.end(), values.begin(), 0.0));
+  }
+
+  Vector<T> normlize() const {
+    if (norm() == 0)
+      throw std::runtime_error("Vector's norm is zero");
+    return *this / norm();
+  }
+
+  T dot(Vector<T> const &other) const {
+    return std::inner_product(values.begin(), values.end(),
+                              other.values.begin(), 0.0);
+  }
+
+  void add_element(T const &value) { values.push_back(value); }
+
   T &operator[](int index) { return values[index]; }
 
   const T &operator[](int index) const { return values[index]; }
@@ -50,6 +68,20 @@ public:
     std::transform(values.begin(), values.end(), other.begin(),
                    std::back_inserter(result),
                    [](T const &v1, T const &v2) { return v1 - v2; });
+    return Vector<T>(result);
+  }
+
+  Vector<T> operator+(T const &k) const {
+    std::vector<T> result;
+    std::transform(values.begin(), values.end(), std::back_inserter(result),
+                   [&k](T const &val) { return val + k; });
+    return Vector<T>(result);
+  }
+
+  Vector<T> operator-(T const &k) const {
+    std::vector<T> result;
+    std::transform(values.begin(), values.end(), std::back_inserter(result),
+                   [&k](T const &val) { return val - k; });
     return Vector<T>(result);
   }
 
@@ -81,22 +113,6 @@ public:
       throw std::runtime_error("Vectors must have the same size");
     }
     return std::equal(values.begin(), values.end(), other.values.begin());
-  }
-
-  T norm() const {
-    return std::sqrt(
-        std::inner_product(values.begin(), values.end(), values.begin(), 0.0));
-  }
-
-  Vector<T> normlize() const {
-    if (norm() == 0)
-      throw std::runtime_error("Vector's norm is zero");
-    return *this / norm();
-  }
-
-  T dot(Vector<T> const &other) const {
-    return std::inner_product(values.begin(), values.end(),
-                              other.values.begin(), 0.0);
   }
 
   typename std::vector<T>::iterator begin() { return values.begin(); }

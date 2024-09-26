@@ -8,6 +8,8 @@ namespace linear_algebra {
 
 template <typename T> class Matrix {
 public:
+  Matrix() = default;
+
   Matrix(std::vector<Vector<T>> values) : values(values) {}
 
   Matrix(std::vector<std::vector<T>> values)
@@ -21,6 +23,8 @@ public:
   }
 
   size_t size() const { return shape().first * shape().second; }
+
+  bool empty() const { return values.empty(); }
 
   size_t rows() const { return shape().first; }
 
@@ -78,11 +82,66 @@ public:
     if (cols() != rows()) {
       throw std::runtime_error("Matrix must be square");
     }
+    if (n < 0) {
+      throw std::runtime_error("Power must be non-negative");
+    }
     Matrix<T> result = *this;
     for (int i = 1; i < n; i++) {
       result = result.dot(*this);
     }
     return result;
+  }
+
+  void add_row(Vector<T> const &vec) {
+    if (!empty() && vec.size() != cols()) {
+      throw std::runtime_error("Vector's size must be equal to matrix's col"
+                               "size");
+    }
+    values.push_back(vec);
+  }
+
+  void add_col(Vector<T> const &vec) {
+    if (empty()) {
+      for (int i = 0; i < vec.size(); i++) {
+        add_row(Vector<T>({vec[i]}));
+      }
+    } else {
+      if (vec.size() != rows()) {
+        throw std::runtime_error("Vector's size must be equal to matrix's row"
+                                 "size");
+      }
+      for (int i = 0; i < rows(); i++) {
+        values[i].add_element(vec[i]);
+      }
+    }
+  }
+
+  void add_col(Matrix<T> const &other) {
+    if (empty()) {
+      values = other.values;
+      return;
+    }
+    if (rows() != other.rows()) {
+      throw std::runtime_error("Matrix's row size must be equal to other"
+                               "matrix's row size");
+    }
+    for (int i = 0; i < other.cols(); i++) {
+      add_col(other.col_vector(i));
+    }
+  }
+
+  void add_row(Matrix<T> const &other) {
+    if (empty()) {
+      values = other.values;
+      return;
+    }
+    if (cols() != other.cols()) {
+      throw std::runtime_error("Matrix's col size must be equal to other"
+                               "matrix's col size");
+    }
+    for (int i = 0; i < other.rows(); i++) {
+      add_row(other.row_vector(i));
+    }
   }
 
   Vector<T> &operator[](int index) { return values[index]; }

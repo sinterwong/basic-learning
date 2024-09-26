@@ -76,6 +76,9 @@ TEST(MatricTest, ZeroMat) {
 TEST(MatricTest, UnitMat) {
   Matrix<int> expected({{1, 0, 0}, {0, 1, 0}, {0, 0, 1}});
   ASSERT_EQ(Matrix<int>::unit(3), expected);
+
+  Matrix<int> A({{1, 2, 3}, {4, 5, 6}});
+  ASSERT_EQ(A, A.dot(Matrix<int>::unit(3)));
 }
 
 TEST(MatricTest, DotVec) {
@@ -98,6 +101,10 @@ TEST(MatricTest, Transpose) {
   Matrix<int> m({{1, 2, 3}, {4, 5, 6}});
   Matrix<int> expected({{1, 4}, {2, 5}, {3, 6}});
   ASSERT_EQ(m.transpose(), expected);
+
+  Matrix<int> A({{1, 2, 3}, {4, 5, 6}});
+  Matrix<int> B({{1, 4}, {2, 5}, {3, 6}});
+  ASSERT_EQ((A.dot(B)).transpose(), B.transpose().dot(A.transpose()));
 }
 
 TEST(MatricTest, Power) {
