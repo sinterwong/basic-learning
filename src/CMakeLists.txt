@@ -8,6 +8,7 @@ ADD_SUBDIRECTORY(template_mp)
 ADD_SUBDIRECTORY(rule_applicator)
 ADD_SUBDIRECTORY(concurrency)
 ADD_SUBDIRECTORY(algo_and_ds)
+ADD_SUBDIRECTORY(linear_algebra)
 ADD_SUBDIRECTORY(use_taskflow)
 
 IF(BUILD_WITH_CUDA)

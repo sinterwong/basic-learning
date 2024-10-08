@@ -18,7 +18,7 @@ class BasicLearnConan(ConanFile):
 
     def configure(self):
         self.settings.compiler.cppstd = "20"
-        
+
         if self.settings.os == "Windows" and self.settings.compiler == "msvc":
             self.settings.compiler.runtime = "dynamic"
         else:
@@ -37,6 +37,7 @@ class BasicLearnConan(ConanFile):
             req.settings.build_type = "Release"
 
     def requirements(self):
+        self.requires("gtest/1.15.0")
         self.requires("gflags/2.2.2")
         self.requires("spdlog/1.14.1")
         self.requires("taskflow/3.7.0")
@@ -51,4 +52,5 @@ class BasicLearnConan(ConanFile):
         self.folders.generators = "build/generators"
 
     def package_info(self):
-        self.cpp_info.set_property("cmake_build_modules", [f"{self.cpp.build.bindirs[0]}/conan_toolchain.cmake"])
+        self.cpp_info.set_property("cmake_build_modules", [
+                                   f"{self.cpp.build.bindirs[0]}/conan_toolchain.cmake"])
