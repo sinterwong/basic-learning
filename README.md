@@ -1,25 +1,45 @@
 # basic-learning
 
-## Introctuction
+<p align="center">
+  <img src="assets/logo.png" alt="basic-learning Logo" width="300"> <br/>
+</p>
 
-本项目旨在提供一个便捷的 C++ 学习环境，涵盖语法、数据结构、设计模式、并发等方面的代码练习与实现。
+<p align="center">
+  一个便捷的 C++ 学习环境，涵盖语法、数据结构、设计模式、并发等方面的内容。
+</p>
 
-## Feature
+---
+[English](README_EN.md) | [简体中文](README.md)
+---
 
-- 模块化设计，方便学习和使用不同主题的代码示例。
-- 使用 Conan 进行依赖管理，简化构建过程。
-- 支持交叉编译，方便在不同平台上进行开发和测试。
-- 集成单元测试和性能分析工具，帮助提高代码质量和效率。
+## 功能 ✨
 
-## Enveronment
+- **模块化设计:** 方便学习和使用不同主题的代码示例。
+- **依赖管理:** 使用 Conan 简化构建过程。
+- **交叉编译支持:** 方便在不同平台上进行开发和测试。
+- **质量保证:** 集成单元测试和性能分析工具。
 
-- **操作系统:** Linux, Windows
-- **编译器:** GCC 11+（即将适配MSVC v143）
-- **构建工具:** CMake 3.15+
-- **包管理器:** Conan 2.3.0+
-- **IDE:** VSCode
 
-## Struct
+## 项目构建 🚀
+
+### 使用 Conan 构建
+
+1. **安装 Conan:** 推荐使用 Miniconda 并配置 `settings.json` 文件。
+2. **使用 CMake 构建:** 使用 VSCode 的 CMake Tools 插件进行无缝构建。
+
+
+### 手动管理依赖（Optional）
+
+1. **链接库:** 将手动编译的库文件软链接到 `/repo/3rdparty/target/${TARGET_OS}_${TARGET_ARCH}`  (例如 `/repo/3rdparty/target/Linux_x86_64/opencv`)。
+2. **管理依赖:** 使用 `/repo/load_3rdparty.cmake` 文件管理依赖库的加载。
+
+
+### 运行程序 🏃
+
+构建完成后，可执行文件位于 `build/${arch}/${module}` 目录下 (例如 `./build/x86_64/module1/module1`)。
+
+
+## 项目结构 🏗️
 
 ```
 basic-learning/
@@ -28,37 +48,31 @@ basic-learning/
 │   │   └── main.cc
 │   └── module2/
 │       └── main.cc
-├── cmake/ 
+├── cmake/
 ├── scripts/
 ├── platform/
-├── tests/ 
+├── tests/
 ├── build/
 └── README.md
 ```
 
-## Build and Run
 
-### 使用 Conan 构建
+## Env 🛠️
 
-1.  安装 Conan: 可以使用 Miniconda 安装 Conan，并参考配置 `settings.json` 文件。
-2.  使用 CMake 工具构建项目: 项目配置好后，可直接使用 VSCode 的 CMake Tools 插件进行构建。
+- **操作系统:** Linux, Windows
+- **编译器:** GCC 11+ (即将支持 MSVC v143)
+- **构建系统:** CMake 3.15+
+- **包管理器:** Conan 2.3.0+
+- **IDE:** VSCode
 
-### 手动管理依赖（Optional）
 
-1.  将手动编译安装的依赖库软链接到以下目录:  
-    `/repo/3rdparty/target/${TARGET_OS}_${TARGET_ARCH}`  
-    例如: `/repo/3rdparty/target/Linux_x86_64/opencv`
-2.  在 `/repo/load_3rdparty.cmake` 文件中管理依赖库的加载。
+## TODO 🗺️
 
-### Run program
+- [x] 支持 MSVC
+- [ ] 构建 CI 流水线
 
-构建完成后，可执行文件位于 `build/${arch}/${module}` 目录下，例如:
+---
 
-```bash
-./build/x86_64/module1/module1
-```
-
-## TODO
-
-- [ ] Support msvc
-- [ ] Build CI pipeline
+<p align="center">
+  Happy coding! 😊
+</p>
