@@ -12,6 +12,7 @@
 #include <vector>
 
 namespace my_concurrency {
+// FIXME:
 template <typename T> struct quick_sorter {
 
   // 分治数据段
