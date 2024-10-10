@@ -7,6 +7,8 @@ ADD_LIBRARY(module_logger ${CURRENT_DIR_SRCS})
 TARGET_INCLUDE_DIRECTORIES(module_logger PUBLIC ${spdlog_INCLUDE_DIR})
 TARGET_LINK_LIBRARIES(module_logger PUBLIC spdlog::spdlog)
 
+INSTALL(TARGETS module_logger DESTINATION lib)
+
 FILE(MAKE_DIRECTORY ${PROJECT_INCLUDE_DIR}/logger)
 FILE(GLOB_RECURSE CURRENT_DIR_HEAD ${CMAKE_CURRENT_SOURCE_DIR}/*.hpp ${CMAKE_CURRENT_SOURCE_DIR}/*.h)
 FOREACH(include ${CURRENT_DIR_HEAD})
@@ -23,4 +25,6 @@ FOREACH(sourcefile ${APP_SOURCES})
     STRING(REPLACE ".cc" "" testname ${sourcefilewithoutpath})
     ADD_EXECUTABLE( ${testname} ${sourcefile})
     TARGET_LINK_LIBRARIES(${testname} PRIVATE module_logger)
+
+    INSTALL(TARGETS ${testname} DESTINATION bin/logger)
 ENDFOREACH(sourcefile ${APP_SOURCES})

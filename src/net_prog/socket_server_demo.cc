@@ -14,7 +14,7 @@ int main(int argc, char **argv) {
   int n; // state code
 
   // First call to socket() function
-  sockfd = socket(AF_INET, SOCK_STREAM, 0);
+  sockfd = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 
   if (sockfd < 0) {
     perror("ERROR opening socket");

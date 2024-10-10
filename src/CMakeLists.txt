@@ -17,7 +17,7 @@ ENDIF()
 
 IF(TARGET_OS STREQUAL Linux)
   ADD_SUBDIRECTORY(point_cloud)
-  ADD_SUBDIRECTORY(mysocket)
+  ADD_SUBDIRECTORY(net_prog)
   ADD_SUBDIRECTORY(dynamic_load)
 ENDIF()
 
