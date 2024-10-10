@@ -1,6 +1,7 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.10)
 
 LOAD_SPDLOG()
+LOAD_GTEST()
 
 FILE(GLOB_RECURSE CURRENT_DIR_HEAD ${CMAKE_CURRENT_SOURCE_DIR}/*.hpp ${CMAKE_CURRENT_SOURCE_DIR}/*.h)
 FILE(MAKE_DIRECTORY ${PROJECT_INCLUDE_DIR}/concurrency)
@@ -17,8 +18,7 @@ FOREACH(sourcefile ${APP_SOURCES})
     STRING(REGEX MATCH "[^/]+$" sourcefilewithoutpath ${sourcefile})
     STRING(REPLACE ".cc" "" testname ${sourcefilewithoutpath})
     ADD_EXECUTABLE( ${testname} ${sourcefile})
-    TARGET_INCLUDE_DIRECTORIES(${testname} PRIVATE ${PROJECT_INCLUDE_DIR} ${spdlog_INCLUDE_DIR})
-    TARGET_LINK_LIBRARIES(${testname} PRIVATE module_logger)
-    
+    TARGET_INCLUDE_DIRECTORIES(${testname} PRIVATE ${PROJECT_INCLUDE_DIR} ${CMAKE_INCLUDE_PATH})
+    TARGET_LINK_LIBRARIES(${testname} PRIVATE module_logger gtest::gtest)
     INSTALL(TARGETS ${testname} DESTINATION bin/concurrency)
 ENDFOREACH(sourcefile ${APP_SOURCES})
