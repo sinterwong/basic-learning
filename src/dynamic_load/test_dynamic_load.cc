@@ -15,9 +15,7 @@
 int main(int argc, char **argv, char **envp) {
 
   // load the library and get a handle.
-  void *handle = dlopen("/home/wangxt/workspace/projects/basic-learning/src/"
-                        "dynamic_load/libmyadd.so",
-                        RTLD_LAZY);
+  void *handle = dlopen("install/lib/dynamic_load/libmyadd.so", RTLD_LAZY);
   if (!handle) {
     const char *error = dlerror();
     if (error) {

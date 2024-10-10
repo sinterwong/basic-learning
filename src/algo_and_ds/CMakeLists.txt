@@ -16,4 +16,6 @@ FOREACH(sourcefile ${APP_SOURCES})
     STRING(REPLACE ".cc" "" testname ${sourcefilewithoutpath})
     ADD_EXECUTABLE( ${testname} ${sourcefile})
     TARGET_INCLUDE_DIRECTORIES(${testname} PRIVATE ${PROJECT_INCLUDE_DIR}/algo_and_ds)
+
+    INSTALL(TARGETS ${testname} DESTINATION bin/algo_and_ds)
 ENDFOREACH(sourcefile ${APP_SOURCES})

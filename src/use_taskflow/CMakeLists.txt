@@ -6,11 +6,6 @@ LOAD_CURL()
 LOAD_ONNXRUNTIME()
 LOAD_OPENCV()
 
-LINK_DIRECTORIES(
-    ${ONNXRUNTIME_LIBRARY_DIR}
-    ${GFLAGS_LIB_DIR}
-)
-
 FILE(GLOB_RECURSE CURRENT_DIR_HEAD ${CMAKE_CURRENT_SOURCE_DIR}/*.hpp ${CMAKE_CURRENT_SOURCE_DIR}/*.h)
 FILE(MAKE_DIRECTORY ${PROJECT_INCLUDE_DIR}/use_taskflow)
 FOREACH(include ${CURRENT_DIR_HEAD})
@@ -30,4 +25,5 @@ FOREACH(sourcefile ${APP_SOURCES})
     TARGET_INCLUDE_DIRECTORIES(${testname} PRIVATE ${Taskflow_INCLUDE_DIR} ${OpenCV_INCLUDE_DIRS} ${onnxruntime_INCLUDE_DIR} ${CURL_INCLUDE_DIR} ${gflags_INCLUDE_DIR})
     TARGET_LINK_LIBRARIES(${testname} PRIVATE onnxruntime::onnxruntime opencv::opencv Taskflow::Taskflow CURL::libcurl gflags::gflags)
 
+    INSTALL(TARGETS ${testname} DESTINATION bin/use_taskflow)
 ENDFOREACH(sourcefile ${APP_SOURCES})

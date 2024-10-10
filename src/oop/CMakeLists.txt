@@ -16,4 +16,6 @@ FOREACH(sourcefile ${APP_SOURCES})
     STRING(REGEX MATCH "[^/]+$" sourcefilewithoutpath ${sourcefile})
     STRING(REPLACE ".cc" "" testname ${sourcefilewithoutpath})
     ADD_EXECUTABLE( ${testname} ${sourcefile})
+
+    INSTALL(TARGETS ${testname} DESTINATION bin/oop)
 ENDFOREACH(sourcefile ${APP_SOURCES})

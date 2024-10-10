@@ -25,4 +25,6 @@ FOREACH(sourcefile ${APP_SOURCES})
     ADD_EXECUTABLE( ${testname} ${sourcefile})
     TARGET_INCLUDE_DIRECTORIES(${testname} PRIVATE ${PROJECT_INCLUDE_DIR} ${CMAKE_INCLUDE_PATH})
     TARGET_LINK_LIBRARIES(${testname} PRIVATE opencv::opencv gtest::gtest gflags::gflags)
+
+    INSTALL(TARGETS ${testname} DESTINATION bin/linear_algebra)
 ENDFOREACH(sourcefile ${APP_SOURCES})

@@ -19,5 +19,6 @@ FOREACH(sourcefile ${APP_SOURCES})
     ADD_EXECUTABLE( ${testname} ${sourcefile})
     TARGET_INCLUDE_DIRECTORIES(${testname} PRIVATE ${PROJECT_INCLUDE_DIR} ${spdlog_INCLUDE_DIR})
     TARGET_LINK_LIBRARIES(${testname} PRIVATE module_logger)
-
+    
+    INSTALL(TARGETS ${testname} DESTINATION bin/concurrency)
 ENDFOREACH(sourcefile ${APP_SOURCES})

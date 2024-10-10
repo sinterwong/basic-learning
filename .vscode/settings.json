@@ -3,6 +3,7 @@
   "cmake.configureSettings": {
     "CMAKE_BUILD_TYPE": "${buildType}",
     // "CMAKE_TOOLCHAIN_FILE": "${workspaceFolder}/platforms/linux/aarch64.x3.cmake",
+    "CMAKE_INSTALL_PREFIX": "${workspaceFolder}/install",
   },
   // "cmake.generator": "Visual Studio 17 2022",
   "cmake.generator": "Ninja",
