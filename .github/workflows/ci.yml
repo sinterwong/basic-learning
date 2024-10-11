@@ -17,6 +17,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Print environment information
+        run: |
+          env
+          lsb_release -a
+          uname -a
+
       - name: Install dependencies
         run: apt-get update && apt-get install -y build-essential cmake ninja-build pkg-config
 
