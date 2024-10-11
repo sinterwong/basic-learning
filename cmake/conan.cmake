@@ -52,8 +52,10 @@ function(conan_config_install)
     execute_process(
         COMMAND ${CONAN_EXECUTABLE} install ${CMAKE_SOURCE_DIR} 
                 -s build_type=Release 
+                -s compiler.cppstd=gnu20
                 -s:h build_type=${CMAKE_BUILD_TYPE} 
                 -b missing
+                -c tools.system.package_manager:mode=install
         RESULT_VARIABLE CONAN_INSTALL_RESULT
         OUTPUT_VARIABLE CONAN_INSTALL_OUTPUT
         ERROR_VARIABLE CONAN_INSTALL_ERROR
