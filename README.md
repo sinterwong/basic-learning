@@ -69,7 +69,7 @@ basic-learning/
 ## TODO 🗺️
 
 - [x] 支持 MSVC
-- [ ] 构建 CI 流水线
+- [x] 构建 CI 流水线
 
 ---
 

@@ -70,7 +70,7 @@ basic-learning/
 ## Roadmap 🗺️
 
 - [x] Support MSVC
-- [ ] Build CI pipeline
+- [x] Build CI pipeline
 
 ---
 
