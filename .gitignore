@@ -30,5 +30,6 @@ cmake-build-debug-remote-host/
 tests/data
 .vscode/launch.json
 .cache
+.vscode/launch.json
 
 CMakeUserPresets.json

@@ -38,6 +38,28 @@ inline Iter binary_search(Iter begin, Iter end, T target) {
 
   return end; // Target not found
 }
+
+template <typename T, typename Iter>
+inline Iter binary_search_recursion(Iter first, Iter last, T target) {
+  if (first == last) {
+    return last;
+  }
+
+  // 在[l...r)范围中寻找结果
+  Iter l = first;
+  Iter r = last;
+
+  Iter mid = l + (r - l) / 2;
+
+  if (*mid == target) {
+    return mid;
+  } else if (*mid < target) {
+    mid = binary_search_recursion(mid + 1, r, target);
+  } else {
+    mid = binary_search_recursion(l, mid, target);
+  }
+  return mid;
+}
 } // namespace algo_and_ds::algo
 
 #endif
