@@ -11,26 +11,39 @@
 
 #include "binary_search.hpp"
 #include "quick_sort.hpp"
+#include <gtest/gtest.h>
 #include <vector>
 
 using namespace algo_and_ds;
 
-int main() {
-
-  int n = 100000;
-  std::vector<int> arr;
-  arr.resize(n);
-  sort::generateRandomArray(arr.begin(), arr.end(), 0, 100);
-
-  sort::quick_sort(arr.begin(), arr.end());
-
-  auto iter = algo::binary_search(arr.begin(), arr.end(), 10);
-
-  if (iter == arr.end()) {
-    std::cout << "Not found!" << std::endl;
-    return -1;
+class BinarySearchTest : public ::testing::Test {
+protected:
+  void SetUp() override {
+    int n = 10;
+    arr.resize(n);
+    arr = {2, 4, 5, 0, 1};
+    // sort::generateRandomArray(arr.begin(), arr.end(), 0, n);
   }
+  void TearDown() override {}
 
-  std::cout << "Ret: " << *iter << std::endl;
-  return 0;
+  std::vector<int> arr;
+};
+
+TEST_F(BinarySearchTest, Normal) {
+  sort::quick_sort(arr.begin(), arr.end());
+  auto iter = algo::binary_search(arr.begin(), arr.end(), 5);
+
+  ASSERT_EQ(*iter, 5);
+}
+
+TEST_F(BinarySearchTest, Recursion) {
+  sort::quick_sort(arr.begin(), arr.end());
+  auto iter = algo::binary_search_recursion(arr.begin(), arr.end(), 5);
+
+  ASSERT_EQ(*iter, 5);
+}
+
+int main(int argc, char **argv) {
+  ::testing::InitGoogleTest(&argc, argv);
+  return RUN_ALL_TESTS();
 }

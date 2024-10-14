@@ -1,27 +1,27 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.10)
 PROJECT(Tests)
 
-LOAD_SPDLOG()
 LOAD_GFLAGS()
+LOAD_GTEST()
 
 INCLUDE_DIRECTORIES(
     ${PROJECT_INCLUDE_DIR}
-)
-
-LINK_DIRECTORIES(
-    ${GFLAGS_LIB_DIR}
+    ${CMAKE_INCLUDE_PATH}
 )
 
 LINK_LIBRARIES(
-    ${GFLAGS_LIBS}
+    gflags::gflags
+    gtest::gtest
 )
 
 FILE(MAKE_DIRECTORY ${PROJECT_OUTPUT_DIR}/bin/tests)
 SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_OUTPUT_DIR}/bin/tests)
-FILE(GLOB_RECURSE APP_SOURCES *.cpp)
+FILE(GLOB_RECURSE APP_SOURCES *.cc)
 MESSAGE(STATUS "APP SOURCES: ${APP_SOURCES}")
 FOREACH(sourcefile ${APP_SOURCES})
     STRING(REGEX MATCH "[^/]+$" sourcefilewithoutpath ${sourcefile})
     STRING(REPLACE ".cpp" "" testname ${sourcefilewithoutpath})
     ADD_EXECUTABLE( ${testname} ${sourcefile})
+
+    INSTALL(TARGETS ${testname} DESTINATION tests)
 ENDFOREACH(sourcefile ${APP_SOURCES})

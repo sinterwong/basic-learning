@@ -1,5 +1,7 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.10)
 
+LOAD_GTEST()
+
 FILE(GLOB_RECURSE CURRENT_DIR_HEAD ${CMAKE_CURRENT_SOURCE_DIR}/*.hpp ${CMAKE_CURRENT_SOURCE_DIR}/*.h)
 FILE(MAKE_DIRECTORY ${PROJECT_INCLUDE_DIR}/algo_and_ds)
 FOREACH(include ${CURRENT_DIR_HEAD})
@@ -15,7 +17,8 @@ FOREACH(sourcefile ${APP_SOURCES})
     STRING(REGEX MATCH "[^/]+$" sourcefilewithoutpath ${sourcefile})
     STRING(REPLACE ".cc" "" testname ${sourcefilewithoutpath})
     ADD_EXECUTABLE( ${testname} ${sourcefile})
-    TARGET_INCLUDE_DIRECTORIES(${testname} PRIVATE ${PROJECT_INCLUDE_DIR}/algo_and_ds)
+    TARGET_INCLUDE_DIRECTORIES(${testname} PRIVATE ${PROJECT_INCLUDE_DIR}/algo_and_ds ${CMAKE_INCLUDE_PATH})
+    TARGET_LINK_LIBRARIES(${testname} PRIVATE gtest::gtest)
 
     INSTALL(TARGETS ${testname} DESTINATION bin/algo_and_ds)
 ENDFOREACH(sourcefile ${APP_SOURCES})
