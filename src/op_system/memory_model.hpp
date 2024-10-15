@@ -9,33 +9,33 @@
  *
  */
 
+#ifndef __OP_SYSTEM_MEMORY_MODEL_HPP_
+#define __OP_SYSTEM_MEMORY_MODEL_HPP_
+
 #include <algorithm>
 #include <cstddef>
 #include <cstdint>
 #include <cstring>
-#include <iostream>
 #include <memory>
-#include <ostream>
 #include <unordered_map>
 #include <vector>
 
-namespace algo_and_ds::practices {
+namespace op_system::mem {
 
-// 内存块的大小
+// memory block size
 constexpr size_t BLOCK_SIZE = 4096;
 
-// 定义内存页结构
+// memory page
 struct MemoryBlock {
   std::vector<uint8_t> data;
 
-  // 初始化内存为0
+  // init to zero
   MemoryBlock() : data(BLOCK_SIZE, 0x0) {}
 };
 
-// 内存模型
 class MyMemoryModel {
 private:
-  // 简易的内存页表
+  // memory page table
   std::unordered_map<uint64_t, std::shared_ptr<MemoryBlock>> memory;
 
 public:
@@ -102,29 +102,5 @@ public:
     }
   }
 };
-} // namespace algo_and_ds::practices
-
-int main() {
-  using algo_and_ds::practices::MyMemoryModel;
-  MyMemoryModel memoryModel;
-
-  // 测试数据和地址
-  const uint64_t testAddr = 0x12345678;
-  const uint32_t testDataLen = 5;
-  uint8_t testData[testDataLen] = {1, 2, 3, 4, 5};
-
-  // 写入测试数据到内存模型
-  memoryModel.write(testData, testAddr, testDataLen);
-
-  // 从内存模型读取数据
-  uint8_t readData[testDataLen] = {0}; // 用于存储读取数据的缓冲区
-  memoryModel.read(readData, testAddr, testDataLen);
-
-  // 比较读取的数据与原始数据是否相同
-  if (std::memcmp(testData, readData, testDataLen) == 0) {
-    std::cout << "Test passed!" << std::endl;
-  } else {
-    std::cout << "Test failed!" << std::endl;
-  }
-  return 0;
-}
+} // namespace op_system::mem
+#endif

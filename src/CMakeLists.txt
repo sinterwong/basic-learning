@@ -19,6 +19,7 @@ IF(TARGET_OS STREQUAL Linux)
   ADD_SUBDIRECTORY(point_cloud)
   ADD_SUBDIRECTORY(net_prog)
   ADD_SUBDIRECTORY(dynamic_load)
+  ADD_SUBDIRECTORY(op_system)
 ENDIF()
 
 # transfer all headers to the include directory 
