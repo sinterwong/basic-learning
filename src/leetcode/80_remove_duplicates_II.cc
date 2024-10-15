@@ -46,7 +46,7 @@ public:
   }
 };
 
-TEST(RemoveElementTest, Normal) {
+TEST(RemoveDuplicatesIITest, Normal) {
   vector<int> nums = {1, 1, 1, 2, 2, 3};
   int k = Solution().removeDuplicates(nums);
   ASSERT_EQ(k, 5);

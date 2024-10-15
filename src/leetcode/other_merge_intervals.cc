@@ -42,7 +42,7 @@ public:
   }
 };
 
-TEST(RemoveElementTest, Normal) {
+TEST(MergeIntervalsTest, Normal) {
   vector<vector<int>> intervals = {{0, 1}, {2, 3}, {1, 3}, {5, 6}, {6, 8}};
   auto ret = Solution().mergeIntervals(intervals);
   ASSERT_EQ(ret.size(), 2);
