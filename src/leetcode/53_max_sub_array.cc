@@ -98,7 +98,7 @@ public:
   }
 };
 
-TEST(RemoveElementTest, Normal) {
+TEST(MaxSubArrayTest, Normal) {
   vector<int> nums = {-2, 1, -3, 4, -1, 2, 1, -5, 4};
   int k = Solution().maxSubArray(nums);
   ASSERT_EQ(k, 6);
