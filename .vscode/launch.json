@@ -5,7 +5,7 @@
       "name": "C/C++: g++ build and debug active file",
       "type": "cppdbg",
       "request": "launch",
-      "program": "${workspaceFolder}/build/x86_64/bin/leetcode/80_remove_duplicates_II",
+      "program": "${workspaceFolder}/build/x86_64/bin/leetcode/88_merge_sorted_array",
       "args": [
         //  "--config_path=/home/wangxt/workspace/projects/basic/conf/app/config.json",
       ],
