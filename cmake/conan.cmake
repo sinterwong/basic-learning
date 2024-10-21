@@ -47,6 +47,13 @@ function(conan_config_install)
     endif()
     message(STATUS "Current build type: ${CMAKE_BUILD_TYPE}")
 
+    # Set Conan user home
+    if(DEFINED ENV{CONAN_HOME})
+        message(STATUS "CONAN_HOME defined: $ENV{CONAN_HOME}")
+    else()
+        message(STATUS "CONAN_HOME not defined, using default.")
+    endif()
+
     # Run Conan install
     message(STATUS "Running Conan install...")
     execute_process(

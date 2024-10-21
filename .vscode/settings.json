@@ -11,7 +11,8 @@
   "cmake.exportCompileCommandsFile": true,
   "cmake.environment": {
     // "PATH": "C:/Users/Sinter/miniconda3/Scripts;C:/Users/Sinter/miniconda3;${env:PATH}"
-    "PATH": "${env:PATH}:/home/sinter/softwares/miniconda3/bin"
+    "PATH": "${env:PATH}:/home/sinter/softwares/miniconda3/bin",
+    // "CONAN_HOME": "${workspaceFolder}/build/.conan2"
   },
   "cmake.configureArgs": [
     "-DCMAKE_POLICY_DEFAULT_CMP0091=NEW"

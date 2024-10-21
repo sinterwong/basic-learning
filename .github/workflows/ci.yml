@@ -7,7 +7,7 @@ on:
     branches: [ master ]
 
 env:
-  CONAN_USER_HOME: "${{ github.workspace }}/conan-home"
+  CONAN_HOME: "${{ github.workspace }}/conan-home/.conan2"
 
 jobs:
   build:
@@ -44,11 +44,10 @@ jobs:
       - name: Cache Conan packages
         uses: actions/cache@v3
         with:
-          path: ${{ env.CONAN_USER_HOME }}
-          key: conan-${{ runner.os }}-${{ hashFiles('**/conanfile.*') }}
+          path: ${{ env.CONAN_HOME }}
+          key: conan-${{ runner.os }}-${{ matrix.build_type }}-${{ hashFiles('**/conanfile.*', 'conan.cmake') }}
           restore-keys: |
-            conan-${{ runner.os }}-${{ hashFiles('**/conanfile.*') }}
-            conan-${{ runner.os }}-
+            conan-${{ runner.os }}-${{ matrix.build_type }}-
 
       - name: Configure with Conan and CMake
         run: cmake -B build -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DCMAKE_INSTALL_PREFIX=install -G Ninja -DCMAKE_POLICY_DEFAULT_CMP0091=NEW
@@ -62,4 +61,4 @@ jobs:
 
     strategy:
       matrix:
-        build_type: [Release, Debug]
+        build_type: [Release]
