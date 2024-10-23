@@ -29,10 +29,10 @@ namespace algo_and_ds::utils {
  * @tparam Args
  * @param func
  * @param args
- * @return long long
+ * @return int64_t
  */
 template <typename F, typename... Args>
-inline long long measureTime(F func, Args &&...args) {
+inline int64_t measureTime(F func, Args &&...args) {
   auto start = std::chrono::high_resolution_clock::now();
   func(std::forward<Args>(args)...);
   auto stop = std::chrono::high_resolution_clock::now();

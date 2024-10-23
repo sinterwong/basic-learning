@@ -30,20 +30,22 @@ public:
 
     sort(nums.begin(), nums.end());
 
-    unordered_map<long long, vector<pair<int, int>>> twoSumMap;
-    for (int i = 0; i < n; ++i) {
+    // 计算并存储后两位的和
+    unordered_map<int64_t, vector<pair<int, int>>> twoSumMap;
+    for (int i = 2; i < n - 1; ++i) {
       for (int j = i + 1; j < n; ++j) {
-        twoSumMap[(long long)nums[i] + nums[j]].push_back({i, j});
+        twoSumMap[(int64_t)nums[i] + nums[j]].push_back({i, j});
       }
     }
 
-    for (int i = 0; i < n; ++i) {
+    // 计算前两位的和
+    for (int i = 0; i < n - 3; ++i) {
       if (i > 0 && nums[i] == nums[i - 1])
         continue;
-      for (int j = i + 1; j < n; ++j) {
+      for (int j = i + 1; j < n - 2; ++j) {
         if (j > i + 1 && nums[j] == nums[j - 1])
           continue;
-        long long complement = (long long)target - nums[i] - nums[j];
+        int64_t complement = (int64_t)target - nums[i] - nums[j];
         if (twoSumMap.count(complement)) {
           for (auto &p : twoSumMap[complement]) {
             int k = p.first;
@@ -56,10 +58,7 @@ public:
         }
       }
     }
-
-    sort(result.begin(), result.end());
     result.erase(unique(result.begin(), result.end()), result.end());
-
     return result;
   }
 };
@@ -75,6 +74,19 @@ TEST(FourSumTest, Normal) {
   target = 8;
   ret = Solution().fourSum(nums, target);
   ASSERT_EQ(ret, vector<vector<int>>({{2, 2, 2, 2}}));
+
+  nums = {-3, -2, -1, 0, 0, 1, 2, 3};
+  target = 0;
+  ret = Solution().fourSum(nums, target);
+  // [[-3,-2,2,3],[-3,-1,1,3],[-3,0,0,3],[-3,0,1,2],[-2,-1,0,3],[-2,-1,1,2],[-2,0,0,2],[-1,0,0,1]]
+  ASSERT_EQ(ret, vector<vector<int>>({{-3, -2, 2, 3},
+                                      {-3, -1, 1, 3},
+                                      {-3, 0, 0, 3},
+                                      {-3, 0, 1, 2},
+                                      {-2, -1, 0, 3},
+                                      {-2, -1, 1, 2},
+                                      {-2, 0, 0, 2},
+                                      {-1, 0, 0, 1}}));
 }
 
 int main(int argc, char **argv) {
