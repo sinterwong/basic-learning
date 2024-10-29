@@ -24,7 +24,9 @@ public:
 
     while (cur && cur->next) {
       if (cur->val == cur->next->val) {
+        auto delNode = cur->next;
         cur->next = cur->next->next;
+        delete delNode;
       } else {
         cur = cur->next;
       }
@@ -39,27 +41,21 @@ TEST(RemoveDuplicatesTest, Normal) {
   printLinkedList(head);
   ListNode *newHead = s.deleteDuplicates(head);
   printLinkedList(newHead);
-  ASSERT_EQ(newHead->val, 1);
-  ASSERT_EQ(newHead->next->val, 2);
-  ASSERT_EQ(newHead->next->next->val, 3);
-  ASSERT_EQ(newHead->next->next->next, nullptr);
+  ASSERT_TRUE(compareTwoLinks(newHead, createLinkList({1, 2, 3})));
   deleteLinkList(newHead);
 
   head = createLinkList({1, 1, 2});
   printLinkedList(head);
   newHead = s.deleteDuplicates(head);
   printLinkedList(newHead);
-  ASSERT_EQ(newHead->val, 1);
-  ASSERT_EQ(newHead->next->val, 2);
-  ASSERT_EQ(newHead->next->next, nullptr);
+  ASSERT_TRUE(compareTwoLinks(newHead, createLinkList({1, 2})));
   deleteLinkList(newHead);
 
   head = createLinkList({1, 1, 1});
   printLinkedList(head);
   newHead = s.deleteDuplicates(head);
   printLinkedList(newHead);
-  ASSERT_EQ(newHead->val, 1);
-  ASSERT_EQ(newHead->next, nullptr);
+  ASSERT_TRUE(compareTwoLinks(newHead, createLinkList({1})));
   deleteLinkList(newHead);
 }
 
