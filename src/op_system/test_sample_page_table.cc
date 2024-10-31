@@ -10,7 +10,7 @@ protected:
   void TearDown() override {}
 };
 
-TEST_F(SamplePageTableTest, Normal) {
+TEST_F(SamplePageTableTest, OneStage) {
   virtual_mem::SamplePageTable page_table;
 
   // 0x0000F000(vaddr pfn) -> 0x00100(paddr pfn)
