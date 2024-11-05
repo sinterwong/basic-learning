@@ -47,12 +47,10 @@ TEST(ReverseLinkedListIITest, Normal) {
   printLinkedList(head);
   ListNode *reversedHead = s.reverseBetween(head, 2, 5);
   printLinkedList(reversedHead);
-  ASSERT_EQ(reversedHead->val, 1);
-  ASSERT_EQ(reversedHead->next->val, 5);
-  ASSERT_EQ(reversedHead->next->next->val, 4);
-  ASSERT_EQ(reversedHead->next->next->next->val, 3);
-  ASSERT_EQ(reversedHead->next->next->next->next->val, 2);
-  ASSERT_EQ(reversedHead->next->next->next->next->next->val, 6);
+
+  ASSERT_TRUE(
+      compareTwoLinks(reversedHead, createLinkList({1, 5, 4, 3, 2, 6})));
+
   deleteLinkList(reversedHead);
 }
 

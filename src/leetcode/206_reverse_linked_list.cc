@@ -9,17 +9,11 @@
  * @copyright Copyright (c) 2024
  *
  */
+#include "linked_list_helper.hpp"
 #include <gtest/gtest.h>
 
 using namespace std;
-
-struct ListNode {
-  int val;
-  ListNode *next;
-  ListNode() : val(0), next(nullptr) {}
-  ListNode(int x) : val(x), next(nullptr) {}
-  ListNode(int x, ListNode *next) : val(x), next(next) {}
-};
+using namespace leetcode;
 
 class Solution {
 public:
@@ -43,11 +37,10 @@ TEST(ReverseLinkedListTest, Normal) {
       1, new ListNode(
              2, new ListNode(3, new ListNode(4, new ListNode(5, nullptr)))));
   ListNode *reversedHead = s.reverseList(head);
-  ASSERT_EQ(reversedHead->val, 5);
-  ASSERT_EQ(reversedHead->next->val, 4);
-  ASSERT_EQ(reversedHead->next->next->val, 3);
-  ASSERT_EQ(reversedHead->next->next->next->val, 2);
-  ASSERT_EQ(reversedHead->next->next->next->next->val, 1);
+
+  ASSERT_TRUE(
+      compareTwoLinks(reversedHead, leetcode::createLinkList({5, 4, 3, 2, 1})));
+  deleteLinkList(reversedHead);
 }
 
 int main(int argc, char **argv) {
