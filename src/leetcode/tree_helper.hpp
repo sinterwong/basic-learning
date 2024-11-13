@@ -22,23 +22,23 @@ inline TreeNode *createTree(const vector<string> &values) {
   if (values.empty())
     return nullptr;
 
-  TreeNode *root = new TreeNode(stoi(values[0]));
-  queue<TreeNode *> q;
+  std::queue<TreeNode *> q;
+  TreeNode *root = new TreeNode(std::stoi(values[0]));
   q.push(root);
 
-  for (int i = 1; i < values.size(); i += 2) {
+  for (size_t i = 1; i < values.size(); i += 2) {
     TreeNode *current = q.front();
     q.pop();
 
     // 处理左子节点
     if (i < values.size() && values[i] != "null") {
-      current->left = new TreeNode(stoi(values[i]));
+      current->left = new TreeNode(std::stoi(values[i]));
       q.push(current->left);
     }
 
     // 处理右子节点
     if (i + 1 < values.size() && values[i + 1] != "null") {
-      current->right = new TreeNode(stoi(values[i + 1]));
+      current->right = new TreeNode(std::stoi(values[i + 1]));
       q.push(current->right);
     }
   }
