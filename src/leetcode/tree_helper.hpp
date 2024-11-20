@@ -54,27 +54,121 @@ inline void deleteTree(TreeNode *root) {
   delete root;
 }
 
+// inline void printTree(TreeNode *root) {
+//   if (root == nullptr) {
+//     cout << "#" << endl;
+//     return;
+//   }
+
+//   queue<TreeNode *> q;
+//   q.push(root);
+
+//   while (!q.empty()) {
+//     int levelSize = q.size();
+//     for (int i = 0; i < levelSize; ++i) {
+//       TreeNode *node = q.front();
+//       q.pop();
+
+//       if (node == nullptr) {
+//         cout << "# ";
+//       } else {
+//         cout << node->val << " ";
+//         q.push(node->left);
+//         q.push(node->right);
+//       }
+//     }
+//     cout << endl;
+//   }
+//   cout << endl;
+// }
+
 inline void printTree(TreeNode *root) {
+  cout << "----------------------------" << endl;
   if (root == nullptr) {
+    cout << " " << endl;
     return;
   }
+
+  // compute the hight of the tree
+  int height = 0;
   queue<TreeNode *> q;
   q.push(root);
-  while (!q.empty()) {
+  {
+    queue<TreeNode *> temp = q;
+    while (!temp.empty()) {
+      int levelSize = temp.size();
+      bool hasNode = false;
+
+      for (int i = 0; i < levelSize; ++i) {
+        TreeNode *node = temp.front();
+        temp.pop();
+
+        if (node != nullptr) {
+          hasNode = true;
+          temp.push(node->left);
+          temp.push(node->right);
+        } else {
+          temp.push(nullptr);
+          temp.push(nullptr);
+        }
+      }
+
+      if (!hasNode)
+        break;
+      height++;
+    }
+  }
+
+  int level = 0;
+  while (!q.empty() && level < height) {
     int levelSize = q.size();
+    int maxWidth = (1 << height) * 2;
+    int nodeSpacing = (maxWidth / levelSize);
+    string line;
+
     for (int i = 0; i < levelSize; ++i) {
       TreeNode *node = q.front();
       q.pop();
-      cout << node->val << " ";
-      if (node->left) {
-        q.push(node->left);
+
+      int position = i * nodeSpacing + nodeSpacing / 2;
+
+      while (line.length() < position) {
+        line += " ";
       }
-      if (node->right) {
+
+      if (node == nullptr) {
+        line += " ";
+        q.push(nullptr);
+        q.push(nullptr);
+      } else {
+        string nodeStr = to_string(node->val);
+        line += nodeStr;
+        q.push(node->left);
         q.push(node->right);
       }
     }
-    cout << endl;
+
+    cout << line << endl;
+    level++;
   }
+  cout << "----------------------------" << endl;
+}
+
+inline bool compareTwoTrees(TreeNode *t1, TreeNode *t2) {
+  if (t1 == nullptr && t2 == nullptr) {
+    return true;
+  }
+
+  if (t1 == nullptr || t2 == nullptr) {
+    return false;
+  }
+
+  if (t1->val != t2->val) {
+    return false;
+  }
+
+  return compareTwoTrees(t1->left, t2->left) &&
+         compareTwoTrees(t1->right, t2->right);
 }
 } // namespace leetcode
 #endif
