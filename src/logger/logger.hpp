@@ -24,17 +24,17 @@
 #define _OFF 6
 
 #define BASIC_LOGGER_TRACE(...)                                                \
-  BasicLearningLoggerOut(_TRACE, __FILE__, __LINE__, ##__VA_ARGS__)
+  SPDLOG_LOGGER_TRACE(spdlog::get(BASIC_LOGGER_NAME), __VA_ARGS__)
 #define BASIC_LOGGER_DEBUG(...)                                                \
-  BasicLearningLoggerOut(_DEBUG, __FILE__, __LINE__, ##__VA_ARGS__)
+  SPDLOG_LOGGER_DEBUG(spdlog::get(BASIC_LOGGER_NAME), __VA_ARGS__)
 #define BASIC_LOGGER_INFO(...)                                                 \
-  BasicLearningLoggerOut(_INFO, __FILE__, __LINE__, ##__VA_ARGS__)
+  SPDLOG_LOGGER_INFO(spdlog::get(BASIC_LOGGER_NAME), __VA_ARGS__)
 #define BASIC_LOGGER_WARN(...)                                                 \
-  BasicLearningLoggerOut(_WARN, __FILE__, __LINE__, ##__VA_ARGS__)
+  SPDLOG_LOGGER_WARN(spdlog::get(BASIC_LOGGER_NAME), __VA_ARGS__)
 #define BASIC_LOGGER_ERROR(...)                                                \
-  BasicLearningLoggerOut(_ERROR, __FILE__, __LINE__, ##__VA_ARGS__)
+  SPDLOG_LOGGER_ERROR(spdlog::get(BASIC_LOGGER_NAME), __VA_ARGS__)
 #define BASIC_LOGGER_CRITICAL(...)                                             \
-  BasicLearningLoggerOut(_CRITI, __FILE__, __LINE__, ##__VA_ARGS__)
+  SPDLOG_LOGGER_CRITICAL(spdlog::get(BASIC_LOGGER_NAME), __VA_ARGS__)
 
 #ifdef __cplusplus
 extern "C" {
@@ -55,26 +55,4 @@ void BasicLearningLoggerDrop();
 #ifdef __cplusplus
 }
 #endif
-
-template <typename... T>
-void BasicLearningLoggerOut(const int level, const char *filename,
-                            const int line, T &&...args) {
-  // Note: sdplog::get is a thread safe function
-  std::shared_ptr<spdlog::logger> logger_ptr = spdlog::get(BASIC_LOGGER_NAME);
-  if (!logger_ptr) {
-    fprintf(stderr, "Failed to get logger, Please init logger firstly.\n");
-    return; // Add this to prevent potential null pointer dereference
-  }
-#ifdef _MSC_VER
-  // MSVC
-  logger_ptr->info("{}, {}, {}", filename, line, SPDLOG_FUNCTION);
-  logger_ptr->log(static_cast<spdlog::level::level_enum>(level), "Message: ");
-#else
-  // GCC
-  logger_ptr->log(spdlog::source_loc{filename, line, SPDLOG_FUNCTION},
-                  static_cast<spdlog::level::level_enum>(level),
-                  std::forward<T>(args)...);
-#endif
-}
-
 #endif

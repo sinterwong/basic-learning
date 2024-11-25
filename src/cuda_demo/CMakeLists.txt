@@ -39,7 +39,7 @@ FOREACH(sourcefile ${APP_SOURCES})
     TARGET_COMPILE_OPTIONS(${testname} PRIVATE 
         $<$<COMPILE_LANGUAGE:CUDA>:
             ${CUDA_ARCH};
-            -std=c++17;
+            -std=c++20;
             -rdc=true;
             -Xcompiler;
             -pthread

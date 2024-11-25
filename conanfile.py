@@ -27,7 +27,7 @@ class BasicLearnConan(ConanFile):
         if self.options.shared:
             del self.options.fPIC
 
-        self.options["spdlog"].use_std_fmt = True
+        # self.options["spdlog"].use_std_fmt = True
         self.options["gflags"].nothreads = True
         self.options["onnxruntime"].with_cuda = False
         self.options["opencv"].shared = True
