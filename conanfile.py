@@ -30,7 +30,7 @@ class BasicLearnConan(ConanFile):
         self.options["spdlog"].use_std_fmt = True
         self.options["gflags"].nothreads = True
         self.options["onnxruntime"].with_cuda = False
-        self.options["opencv"].shared = True
+        self.options["opencv"].shared = False
 
         # Set build_type to Release for all dependencies
         for req in self.requires.values():
@@ -46,6 +46,9 @@ class BasicLearnConan(ConanFile):
         self.requires("onnxruntime/1.18.1")
         self.requires("pcl/1.13.1")
         self.requires("opencv/4.10.0")
+
+        self.requires("libsndfile/1.2.2")
+        self.requires("kissfft/131.1.0")
 
     def layout(self):
         self.folders.build = "build"

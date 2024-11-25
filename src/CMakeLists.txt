@@ -12,6 +12,8 @@ ADD_SUBDIRECTORY(linear_algebra)
 ADD_SUBDIRECTORY(use_taskflow)
 ADD_SUBDIRECTORY(leetcode)
 
+ADD_SUBDIRECTORY(lip_sync)
+
 IF(BUILD_WITH_CUDA)
   ADD_SUBDIRECTORY(cuda_demo)
 ENDIF()
