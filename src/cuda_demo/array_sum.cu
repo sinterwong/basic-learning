@@ -4,14 +4,14 @@
 #include <iostream>
 #include <numeric>
 
+namespace cuda_demo {
 #define threadsPerBlock 256
-
 __global__ void arraySum(const float *a, float *ret) {
   int tid = blockIdx.x * blockDim.x + threadIdx.x;
   int block_id = blockIdx.x;
   int block_tid = threadIdx.x;
-  __shared__ float
-      sData[threadsPerBlock]; // 申请共享数据内存（每个block中的线程共享）
+  // 申请共享数据内存（每个block中的线程共享）
+  __shared__ float sData[threadsPerBlock];
   sData[block_tid] = a[tid];
   __syncthreads();
   for (int i = threadsPerBlock / 2; i > 0; i /= 2) {
@@ -24,6 +24,8 @@ __global__ void arraySum(const float *a, float *ret) {
     ret[block_id] = sData[0];
   }
 }
+
+} // namespace cuda_demo
 
 int main(int argc, char **argv) {
 
@@ -52,7 +54,7 @@ int main(int argc, char **argv) {
 
   cudaMemcpy(d_data, data.begin(), size, cudaMemcpyHostToDevice);
 
-  arraySum<<<blockPerGrid, threadsPerBlock>>>(d_data, d_ret);
+  cuda_demo::arraySum<<<blockPerGrid, threadsPerBlock>>>(d_data, d_ret);
   cudaMemcpy(ret.begin(), d_ret, blockPerGrid * sizeof(float),
              cudaMemcpyDeviceToHost);
 

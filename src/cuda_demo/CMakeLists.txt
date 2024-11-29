@@ -1,10 +1,13 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.10)
 
 LOAD_CUDA()
+LOAD_GTEST()
 
 INCLUDE_DIRECTORIES(
     ${PROJECT_INCLUDE_DIR}
     ${CMAKE_CUDA_TOOLKIT_INCLUDE_DIRECTORIES}
+    ${PROJECT_INCLUDE_DIR} 
+    ${CMAKE_INCLUDE_PATH}
 )
 
 LINK_DIRECTORIES(
@@ -16,6 +19,7 @@ LINK_LIBRARIES(
     ${CUDA_cublas_LIBRARY}
     ${CUDA_LIBRARIES}
     ${CUDA_cusparse_LIBRARY}
+    gtest::gtest
 )
 
 SET(CUDA_ARCH "-arch=sm_87")
@@ -48,6 +52,5 @@ FOREACH(sourcefile ${APP_SOURCES})
             -lmpi
         >
     )
-
     INSTALL(TARGETS ${testname} DESTINATION bin/cuda_demo)
 ENDFOREACH(sourcefile ${APP_SOURCES})
