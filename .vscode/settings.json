@@ -16,7 +16,6 @@
   },
   "cmake.configureArgs": [
     "-DCMAKE_POLICY_DEFAULT_CMP0091=NEW",
-    "-DBUILD_WITH_CUDA=OFF",
   ],
   "cmake.options.statusBarVisibility": "compact",
   "cmake.buildDirectory": "${workspaceFolder}/build",

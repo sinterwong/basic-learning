@@ -13,7 +13,7 @@ SET(CROSS_COMPILATION_ARCHITECTURE aarch64)
 SET(CMAKE_C_COMPILER       ${TOOLCHAIN_ROOTDIR}/bin/aarch64-linux-gnu-gcc)
 SET(CMAKE_CXX_COMPILER     ${TOOLCHAIN_ROOTDIR}/bin/aarch64-linux-gnu-g++)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++20")
 set(CMAKE_CXX_FLAGS_DEBUG " -Wall -Werror -g -O0 ")
 set(CMAKE_C_FLAGS_DEBUG " -Wall -Werror -g -O0 ")
 set(CMAKE_CXX_FLAGS_RELEASE " -Wall -Werror -O3 ")

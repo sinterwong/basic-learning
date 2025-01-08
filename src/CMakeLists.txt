@@ -1,27 +1,10 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.10)
 
 # submodule
+ADD_SUBDIRECTORY(common)
 ADD_SUBDIRECTORY(logger)
 ADD_SUBDIRECTORY(utils)
-ADD_SUBDIRECTORY(oop)
-ADD_SUBDIRECTORY(template_mp)
-ADD_SUBDIRECTORY(rule_applicator)
-ADD_SUBDIRECTORY(concurrency)
-ADD_SUBDIRECTORY(algo_and_ds)
-ADD_SUBDIRECTORY(linear_algebra)
-ADD_SUBDIRECTORY(use_taskflow)
-ADD_SUBDIRECTORY(leetcode)
 
-IF(BUILD_WITH_CUDA)
-  ADD_SUBDIRECTORY(cuda_demo)
-ENDIF()
-
-IF(TARGET_OS STREQUAL Linux)
-  ADD_SUBDIRECTORY(point_cloud)
-  ADD_SUBDIRECTORY(net_prog)
-  ADD_SUBDIRECTORY(dynamic_load)
-  ADD_SUBDIRECTORY(op_system)
-ENDIF()
 
 # transfer all headers to the include directory 
 FILE(MAKE_DIRECTORY ${PROJECT_INCLUDE_DIR})
