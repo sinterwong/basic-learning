@@ -5,6 +5,13 @@ ADD_SUBDIRECTORY(common)
 ADD_SUBDIRECTORY(logger)
 ADD_SUBDIRECTORY(utils)
 
+IF(TARGET_OS STREQUAL Linux)
+  ADD_SUBDIRECTORY(net_prog)
+  ADD_SUBDIRECTORY(dynamic_load)
+  ADD_SUBDIRECTORY(op_system)
+ELSE()
+  MESSAGE(FATAL_ERROR "Currently this module only supports Linux systems.")
+ENDIF()
 
 # transfer all headers to the include directory 
 FILE(MAKE_DIRECTORY ${PROJECT_INCLUDE_DIR})
