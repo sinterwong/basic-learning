@@ -6,10 +6,12 @@ LOAD_GTEST()
 
 SET(DEPENDENCY_INCLUDES
     ${PROJECT_INCLUDE_DIR}
+    ${PROJECT_INCLUDE_DIR}/template_mp
     ${CMAKE_INCLUDE_PATH}
 )
 
 SET(DEPENDENCY_LIBS
+    template_mp
     gflags::gflags
     gtest::gtest
     module_logger
