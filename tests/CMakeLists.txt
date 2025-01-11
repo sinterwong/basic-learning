@@ -3,13 +3,16 @@ PROJECT(Tests)
 
 LOAD_GFLAGS()
 LOAD_GTEST()
+LOAD_OPENCV()
 
 SET(DEPENDENCY_INCLUDES
     ${PROJECT_INCLUDE_DIR}
+    ${PROJECT_INCLUDE_DIR}/linear_algebra
     ${CMAKE_INCLUDE_PATH}
 )
 
 SET(DEPENDENCY_LIBS
+    opencv::opencv
     gflags::gflags
     gtest::gtest
     module_logger
