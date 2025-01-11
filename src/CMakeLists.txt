@@ -6,6 +6,7 @@ ADD_SUBDIRECTORY(logger)
 ADD_SUBDIRECTORY(utils)
 
 ADD_SUBDIRECTORY(algo_and_ds)
+ADD_SUBDIRECTORY(leetcode)
 
 
 # transfer all headers to the include directory 
