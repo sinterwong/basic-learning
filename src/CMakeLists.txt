@@ -5,6 +5,9 @@ ADD_SUBDIRECTORY(common)
 ADD_SUBDIRECTORY(logger)
 ADD_SUBDIRECTORY(utils)
 
+IF(BUILD_WITH_CUDA)
+    ADD_SUBDIRECTORY(cuda_op)
+ENDIF()
 
 # transfer all headers to the include directory 
 FILE(MAKE_DIRECTORY ${PROJECT_INCLUDE_DIR})

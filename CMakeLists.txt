@@ -9,7 +9,7 @@ BASIC_APP_EXTRACT_VERSION()
 PROJECT(BasicLearning VERSION ${BASIC_APP_VERSION} LANGUAGES CXX)
 
 OPTION(BUILD_TESTS "Build with tests" ON)
-OPTION(BUILD_WITH_CUDA "Build with tests" OFF)
+OPTION(BUILD_WITH_CUDA "Build with tests" ON)
 
 MESSAGE(INFO "--------------------------------")
 MESSAGE(STATUS "Build BasicLearning: ${BASIC_APP_VERSION}")
