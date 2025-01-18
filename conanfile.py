@@ -30,6 +30,8 @@ class BasicLearnConan(ConanFile):
         self.options["spdlog"].use_std_fmt = True
         self.options["gflags"].nothreads = True
 
+        self.options["opencv"].shared = True
+
         # Set build_type to Release for all dependencies
         for req in self.requires.values():
             req.settings.build_type = "Release"
@@ -38,6 +40,8 @@ class BasicLearnConan(ConanFile):
         self.requires("gtest/1.15.0")
         self.requires("gflags/2.2.2")
         self.requires("spdlog/1.14.1")
+
+        self.requires("opencv/4.10.0")
 
     def layout(self):
         self.folders.build = "build"
