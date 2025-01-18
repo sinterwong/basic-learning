@@ -11,6 +11,10 @@ PROJECT(BasicLearning VERSION ${BASIC_APP_VERSION} LANGUAGES CXX)
 OPTION(BUILD_TESTS "Build with tests" ON)
 OPTION(BUILD_WITH_CUDA "Build with tests" OFF)
 
+# infer engine
+OPTION(ENABLE_NCNN "Enable ncnn" OFF)
+OPTION(ENABLE_ORT "Enable onnxruntime" OFF)
+
 MESSAGE(INFO "--------------------------------")
 MESSAGE(STATUS "Build BasicLearning: ${BASIC_APP_VERSION}")
 MESSAGE(STATUS "Build with tests: ${BUILD_TESTS}")

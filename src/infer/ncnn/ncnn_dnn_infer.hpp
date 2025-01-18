@@ -12,38 +12,37 @@
 #ifndef __NCNN_INFERENCE_HPP_
 #define __NCNN_INFERENCE_HPP_
 
-#include "infer_types.hpp"
+#include "infer.hpp"
 #include <memory>
 #include <ncnn/net.h>
 
-namespace infer::dnn {
-class AlgoInference {
+namespace infer::dnn::ncnn_infer {
+class AlgoInference : public Inference {
 public:
   AlgoInference(const AlgoParamBase &param)
       : params(std::make_unique<AlgoParamBase>(param)) {}
 
-  ~AlgoInference() {}
+  virtual ~AlgoInference() {}
 
-  virtual InferErrorCode initialize();
+  virtual InferErrorCode initialize() override;
 
-  virtual InferErrorCode infer(AlgoInput &input, AlgoOutput &output) = 0;
+  virtual InferErrorCode infer(AlgoInput &input,
+                               ModelOutput &modelOutput) override;
 
-  virtual const ModelInfo &getModelInfo();
+  virtual const ModelInfo &getModelInfo() override;
 
-  virtual InferErrorCode terminate();
+  virtual InferErrorCode terminate() override;
 
-  virtual void prettyPrintModelInfos();
+protected:
+  virtual std::vector<std::pair<std::string, ncnn::Mat>>
+  preprocess(AlgoInput &input) const = 0;
 
 protected:
   std::unique_ptr<AlgoParamBase> params;
   std::vector<std::string> inputNames;
   std::vector<std::string> outputNames;
-  std::shared_ptr<ModelInfo> modelInfo;
 
-  // infer engine TODO: How to decouple?
   ncnn::Net net;
-  std::vector<ncnn::Mat> inputTensors;
-  std::vector<ncnn::Mat> outputTensors;
 };
-} // namespace infer::dnn
+} // namespace infer::dnn::ncnn_infer
 #endif

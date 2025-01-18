@@ -9,10 +9,10 @@
  *
  */
 
-#ifndef __WAV_LIP_MANAGER_HPP__
-#define __WAV_LIP_MANAGER_HPP__
+#ifndef __INFERENCE_SAFE_WRAPPER_HPP__
+#define __INFERENCE_SAFE_WRAPPER_HPP__
 
-#include "dnn_infer.hpp"
+#include "infer.hpp"
 #include "infer_types.hpp"
 #include <atomic>
 #include <memory>
@@ -33,7 +33,7 @@ public:
 
   void release() { busy.store(false); }
 
-  dnn::AlgoInference *get() { return model.get(); }
+  dnn::Inference *get() { return model.get(); }
 
 private:
   std::unique_ptr<AlgoClass> model;

@@ -60,6 +60,7 @@ struct ModelInfo {
   std::vector<OutputInfo> outputs;
 };
 
+// Algo input
 class AlgoInput {
 public:
   using Params = std::variant<std::monostate, FrameInput>;
@@ -79,6 +80,13 @@ private:
   Params params_;
 };
 
+// Model output(after infering, before postprocess)
+struct ModelOutput {
+  std::vector<std::vector<float>> outputs;
+  std::vector<std::vector<int>> outputShapes;
+};
+
+// Algo output
 struct BBox {
   cv::Rect rect;
   float score;
@@ -132,7 +140,7 @@ struct PreprocessArg {
   std::vector<float> normVals;
 };
 
-struct RTMDetParam : public AlgoParamBase {
+struct FrameInferParam : public AlgoParamBase {
   InputShape inputShape;
   PreprocessArg preprocessArg;
 };
