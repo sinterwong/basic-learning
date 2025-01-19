@@ -8,6 +8,9 @@
  * @copyright Copyright (c) 2025
  *
  */
+#ifndef __INFERENCE_VISION_HPP_
+#define __INFERENCE_VISION_HPP_
+
 #include "infer_types.hpp"
 
 namespace infer::dnn::vision {
@@ -17,8 +20,9 @@ public:
 
   virtual ~Vision(){};
 
-  virtual bool processOutput(const ModelOutput &, AlgoOutput &) const = 0;
-
-protected:
+  virtual bool processOutput(const ModelOutput &, const FramePreprocessArg &,
+                             AlgoOutput &) = 0;
 };
 } // namespace infer::dnn::vision
+
+#endif

@@ -9,7 +9,7 @@
  *
  */
 
-#include "ort_dnn_infer.hpp"
+#include "dnn_infer.hpp"
 #include "logger/logger.hpp"
 #include <onnxruntime_cxx_api.h>
 
@@ -17,7 +17,7 @@
 #include <codecvt>
 #endif
 
-namespace infer::dnn::ort_infer {
+namespace infer::dnn {
 InferErrorCode AlgoInference::initialize() {
   try {
     // create environment
@@ -50,7 +50,7 @@ InferErrorCode AlgoInference::initialize() {
     Ort::AllocatorWithDefaultOptions allocator;
     size_t numInputNodes = session->GetInputCount();
     inputNames.resize(numInputNodes);
-    inputShape.resize(numInputNodes);
+    inputShapes.resize(numInputNodes);
 
     for (size_t i = 0; i < numInputNodes; i++) {
       // get input name
@@ -60,7 +60,7 @@ InferErrorCode AlgoInference::initialize() {
       // get input shape
       auto typeInfo = session->GetInputTypeInfo(i);
       auto tensorInfo = typeInfo.GetTensorTypeAndShapeInfo();
-      inputShape[i] = tensorInfo.GetShape();
+      inputShapes[i] = tensorInfo.GetShape();
     }
 
     // get output info
@@ -94,7 +94,7 @@ InferErrorCode AlgoInference::infer(AlgoInput &input,
                                     ModelOutput &modelOutput) {
 
   try {
-    auto inputs = preprocess(input);
+    auto inputsDatas = preprocess(input);
 
     std::vector<const char *> inputNamesPtr;
     std::vector<const char *> outputNamesPtr;
@@ -104,6 +104,14 @@ InferErrorCode AlgoInference::infer(AlgoInput &input,
     }
     for (const auto &name : outputNames) {
       outputNamesPtr.push_back(name.c_str());
+    }
+
+    std::vector<Ort::Value> inputs;
+    for (int i = 0; i < inputsDatas.size(); ++i) {
+      // create tensor
+      inputs.emplace_back(Ort::Value::CreateTensor<float>(
+          *memoryInfo, inputsDatas[i].data(), inputsDatas[i].size(),
+          inputShapes[i].data(), inputShapes[i].size()));
     }
 
     auto outputs = session->Run(Ort::RunOptions{nullptr}, inputNamesPtr.data(),
@@ -141,7 +149,7 @@ InferErrorCode AlgoInference::terminate() {
     memoryInfo.reset();
 
     inputNames.clear();
-    inputShape.clear();
+    inputShapes.clear();
     outputNames.clear();
     outputShapes.clear();
 
@@ -194,4 +202,4 @@ const ModelInfo &AlgoInference::getModelInfo() {
   }
   return *modelInfo;
 }
-}; // namespace infer::dnn::ort_infer
+}; // namespace infer::dnn

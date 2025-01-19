@@ -9,11 +9,11 @@
  *
  */
 
-#include "ncnn_dnn_infer.hpp"
+#include "dnn_infer.hpp"
 #include "infer_types.hpp"
 #include "logger/logger.hpp"
 
-namespace infer::dnn::ncnn_infer {
+namespace infer::dnn {
 InferErrorCode AlgoInference::initialize() {
   if (net.load_param(params->paramPath.c_str()) != 0) {
     LOGGER_ERROR("Failed to load param: {}", params->paramPath);
@@ -109,4 +109,4 @@ InferErrorCode AlgoInference::terminate() {
     return InferErrorCode::TERMINATE_FAILED;
   }
 }
-}; // namespace infer::dnn::ncnn_infer
+}; // namespace infer::dnn

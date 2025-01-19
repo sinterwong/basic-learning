@@ -15,11 +15,11 @@
 #include <memory>
 #include <onnxruntime_cxx_api.h>
 
-namespace infer::dnn::ort_infer {
+namespace infer::dnn {
 class AlgoInference : public Inference {
 public:
-  AlgoInference(const AlgoParamBase &params)
-      : params(std::make_unique<AlgoParamBase>(params)) {}
+  AlgoInference(const InferParamBase &params)
+      : params(std::make_unique<InferParamBase>(params)) {}
 
   virtual ~AlgoInference() {}
 
@@ -33,14 +33,15 @@ public:
   virtual InferErrorCode terminate() override;
 
 protected:
-  virtual std::vector<Ort::Value> preprocess(AlgoInput &input) const = 0;
+  virtual std::vector<std::vector<float>>
+  preprocess(AlgoInput &input) const = 0;
 
 protected:
-  std::unique_ptr<AlgoParamBase> params;
+  std::unique_ptr<InferParamBase> params;
   std::vector<std::string> inputNames;
   std::vector<std::string> outputNames;
 
-  std::vector<std::vector<int64_t>> inputShape;
+  std::vector<std::vector<int64_t>> inputShapes;
   std::vector<std::vector<int64_t>> outputShapes;
 
   // infer engine
@@ -48,5 +49,5 @@ protected:
   std::unique_ptr<Ort::Session> session;
   std::unique_ptr<Ort::MemoryInfo> memoryInfo;
 };
-} // namespace infer::dnn::ort_infer
+} // namespace infer::dnn
 #endif

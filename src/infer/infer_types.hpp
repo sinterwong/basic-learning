@@ -39,8 +39,26 @@ enum class InferErrorCode : int32_t {
 
 enum class DeviceType { CPU = 0, GPU = 1 };
 
+struct Shape {
+  int w;
+  int h;
+};
+
+struct FramePreprocessArg {
+  cv::Rect roi;
+  std::vector<float> meanVals;
+  std::vector<float> normVals;
+  Shape originShape;
+
+  bool isEqualScale;
+  cv::Scalar pad = {0, 0, 0};
+  int topPad = 0;
+  int leftPad = 0;
+};
+
 struct FrameInput {
   cv::Mat image;
+  FramePreprocessArg args;
 };
 
 struct ModelInfo {
@@ -121,28 +139,42 @@ private:
   Params params_;
 };
 
-// Algo Params
-struct AlgoParamBase {
+// Post-process Params
+struct YoloDetParams {
+  float condThre;
+  float nmsThre;
+  Shape inputShape;
+};
+
+class AlgoPostprocParams {
+public:
+  using Params = std::variant<std::monostate, YoloDetParams>;
+
+  template <typename T> void setParams(T params) {
+    params_ = std::move(params);
+  }
+
+  template <typename Func> void visitParams(Func &&func) {
+    std::visit([&](auto &&params) { std::forward<Func>(func)(params); },
+               params_);
+  }
+
+  template <typename T> T *getParams() { return std::get_if<T>(&params_); }
+
+private:
+  Params params_;
+};
+
+// Infer Params
+struct InferParamBase {
   std::string name;
   std::string modelPath;
   std::string paramPath;
   DeviceType deviceType;
 };
 
-struct InputShape {
-  int w;
-  int h;
-  int c;
-};
-
-struct PreprocessArg {
-  std::vector<float> meanVals;
-  std::vector<float> normVals;
-};
-
-struct FrameInferParam : public AlgoParamBase {
-  InputShape inputShape;
-  PreprocessArg preprocessArg;
+struct FrameInferParam : public InferParamBase {
+  Shape inputShape;
 };
 } // namespace infer
 #endif

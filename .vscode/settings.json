@@ -16,8 +16,7 @@
   },
   "cmake.configureArgs": [
     "-DCMAKE_POLICY_DEFAULT_CMP0091=NEW",
-    "-DENABLE_NCNN=ON",
-    "-DENABLE_ORT=ON",
+    "-DINFER_ENGINE=ORT"
   ],
   "cmake.options.statusBarVisibility": "compact",
   "cmake.buildDirectory": "${workspaceFolder}/build",

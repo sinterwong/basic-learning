@@ -3,7 +3,6 @@
 *.mp4
 *.bak
 *.log
-*.onnx
 *.engine
 *.pt
 *.pth

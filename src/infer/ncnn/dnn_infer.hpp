@@ -16,11 +16,11 @@
 #include <memory>
 #include <ncnn/net.h>
 
-namespace infer::dnn::ncnn_infer {
+namespace infer::dnn {
 class AlgoInference : public Inference {
 public:
-  AlgoInference(const AlgoParamBase &param)
-      : params(std::make_unique<AlgoParamBase>(param)) {}
+  AlgoInference(const InferParamBase &param)
+      : params(std::make_unique<InferParamBase>(param)) {}
 
   virtual ~AlgoInference() {}
 
@@ -38,11 +38,11 @@ protected:
   preprocess(AlgoInput &input) const = 0;
 
 protected:
-  std::unique_ptr<AlgoParamBase> params;
+  std::unique_ptr<InferParamBase> params;
   std::vector<std::string> inputNames;
   std::vector<std::string> outputNames;
 
   ncnn::Net net;
 };
-} // namespace infer::dnn::ncnn_infer
+} // namespace infer::dnn
 #endif

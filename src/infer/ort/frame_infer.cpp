@@ -1,0 +1,101 @@
+/**
+ * @file dnn_infer.cpp
+ * @author Sinter Wong (sintercver@gmail.com)
+ * @brief
+ * @version 0.1
+ * @date 2025-01-17
+ *
+ * @copyright Copyright (c) 2025
+ *
+ */
+
+#include "frame_infer.hpp"
+#include "infer_types.hpp"
+#include "logger/logger.hpp"
+
+namespace infer::dnn {
+
+std::vector<std::vector<float>>
+FrameInference::preprocess(AlgoInput &input) const {
+
+  std::vector<std::vector<float>> ret;
+  // Get input parameters
+  auto *frameInput = input.getParams<FrameInput>();
+  if (!frameInput) {
+    LOGGER_ERROR("Invalid input parameters");
+    throw std::runtime_error("Invalid input parameters");
+  }
+
+  if (inputNames.size() != 1) {
+    LOGGER_ERROR("Input node number is not 1");
+    throw std::runtime_error("Input node number is not 1");
+  }
+
+  const auto &inputShape = inputShapes.at(0);
+
+  int inputWidth = inputShape.at(inputShape.size() - 1);
+  int inputHeight = inputShape.at(inputShape.size() - 2);
+  int inputChannels = inputShape.at(inputShape.size() - 3);
+
+  const cv::Mat &image = frameInput->image;
+  auto &args = frameInput->args;
+
+  // crop roi
+  cv::Mat croppedImage;
+  if (args.roi.area() > 0) {
+    croppedImage = image(args.roi).clone();
+  } else {
+    croppedImage = image;
+  }
+
+  // resize
+  cv::Mat resizedImage;
+  if (args.isEqualScale) {
+    float scale = std::min(static_cast<float>(inputWidth) / croppedImage.cols,
+                           static_cast<float>(inputHeight) / croppedImage.rows);
+    cv::Size newSize(static_cast<int>(croppedImage.cols * scale),
+                     static_cast<int>(croppedImage.rows * scale));
+    cv::resize(croppedImage, resizedImage, newSize, 0, 0, cv::INTER_LINEAR);
+
+    args.topPad = (inputHeight - resizedImage.rows) / 2;
+    args.leftPad = (inputWidth - resizedImage.cols) / 2;
+    int bottomPad = inputHeight - resizedImage.rows - args.topPad;
+    int rightPad = inputWidth - resizedImage.cols - args.leftPad;
+    cv::copyMakeBorder(resizedImage, resizedImage, args.topPad, bottomPad,
+                       args.leftPad, rightPad, cv::BORDER_CONSTANT, args.pad);
+  } else {
+    cv::resize(croppedImage, resizedImage, cv::Size(inputWidth, inputHeight), 0,
+               0, cv::INTER_LINEAR);
+  }
+
+  // normalize
+  cv::Mat floatImage;
+  resizedImage.convertTo(floatImage, CV_32FC3);
+
+  cv::Mat normalizedImage;
+  if (!args.meanVals.empty() && !args.normVals.empty()) {
+    std::vector<cv::Mat> channels(inputChannels);
+    cv::split(floatImage, channels);
+
+    for (int i = 0; i < inputChannels; ++i) {
+      channels[i] = (channels[i] - args.meanVals[i]) / args.normVals[i];
+    }
+    cv::merge(channels, normalizedImage);
+  } else {
+    normalizedImage = floatImage;
+  }
+
+  // hwc to chw
+  std::vector<float> tensorData(inputChannels * inputHeight * inputWidth);
+  int index = 0;
+  for (int c = 0; c < inputChannels; ++c) {
+    for (int h = 0; h < inputHeight; ++h) {
+      for (int w = 0; w < inputWidth; ++w) {
+        tensorData[index++] = normalizedImage.at<cv::Vec3f>(h, w)[c];
+      }
+    }
+  }
+  return {tensorData};
+}
+
+}; // namespace infer::dnn
