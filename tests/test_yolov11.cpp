@@ -17,10 +17,10 @@ protected:
   std::string imagePath = "data/image.png";
 };
 
-TEST_F(YoloInferenceTest, TestONNXInference) {
+TEST_F(YoloInferenceTest, ONNXInference) {
   AlgoPostprocParams params;
 
-  YoloDetParams yoloParams;
+  AnchorDetParams yoloParams;
   yoloParams.condThre = 0.5f;
   yoloParams.nmsThre = 0.5f;
   yoloParams.inputShape = {640, 640};
@@ -80,14 +80,14 @@ TEST_F(YoloInferenceTest, TestONNXInference) {
     cv::putText(visImage, ss.str(), bbox.rect.tl(), cv::FONT_HERSHEY_SIMPLEX, 1,
                 cv::Scalar(0, 0, 255), 2);
   }
-  cv::imwrite("vis.png", visImage);
+  cv::imwrite("vis_onnx.png", visImage);
 
   engine->terminate();
 }
 
-TEST_F(YoloInferenceTest, InferNCNNWithWrapperTest) {
+TEST_F(YoloInferenceTest, NCNNWithWrapperTest) {
   AlgoPostprocParams params;
-  YoloDetParams yoloParams;
+  AnchorDetParams yoloParams;
   yoloParams.condThre = 0.5f;
   yoloParams.nmsThre = 0.5f;
   yoloParams.inputShape = {640, 640};
@@ -151,7 +151,7 @@ TEST_F(YoloInferenceTest, InferNCNNWithWrapperTest) {
     cv::putText(visImage, ss.str(), bbox.rect.tl(), cv::FONT_HERSHEY_SIMPLEX, 1,
                 cv::Scalar(0, 0, 255), 2);
   }
-  cv::imwrite("vis_wrapper.png", visImage);
+  cv::imwrite("vis_ncnn_wrapper.png", visImage);
 
   wrapper->get()->terminate();
 }

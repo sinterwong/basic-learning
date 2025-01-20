@@ -21,10 +21,10 @@ bool Yolov11Det::processOutput(const ModelOutput &modelOutput,
     return false;
   }
 
-  auto params = mParams.getParams<YoloDetParams>();
+  auto params = mParams.getParams<AnchorDetParams>();
   if (params == nullptr) {
-    LOGGER_ERROR("YoloDetParams params is nullptr");
-    throw std::runtime_error("YoloDetParams params is nullptr");
+    LOGGER_ERROR("AnchorDetParams params is nullptr");
+    throw std::runtime_error("AnchorDetParams params is nullptr");
   }
 
   const auto &outputShapes = modelOutput.outputShapes;
@@ -57,10 +57,10 @@ std::vector<BBox> Yolov11Det::processRawOutput(const cv::Mat &transposedOutput,
                                                int numClasses) {
   std::vector<BBox> results;
 
-  auto params = mParams.getParams<YoloDetParams>();
+  auto params = mParams.getParams<AnchorDetParams>();
   if (params == nullptr) {
-    LOGGER_ERROR("YoloDetParams params is nullptr");
-    throw std::runtime_error("YoloDetParams params is nullptr");
+    LOGGER_ERROR("AnchorDetParams params is nullptr");
+    throw std::runtime_error("AnchorDetParams params is nullptr");
   }
   Shape originShape;
   if (args.roi.area() > 0) {

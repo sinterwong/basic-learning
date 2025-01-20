@@ -21,5 +21,7 @@ std::pair<float, float> scaleRatio(Shape const &originShape,
 std::vector<BBox> NMS(const std::vector<BBox> &results, float nmsThre,
                       float confThre);
 
+Shape escaleResizeWithPad(const cv::Mat &src, cv::Mat &dst, int targetWidth,
+                          int targetHeight, const cv::Scalar &pad);
 } // namespace infer::utils
 #endif

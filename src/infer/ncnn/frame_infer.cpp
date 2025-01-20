@@ -12,6 +12,7 @@
 #include "frame_infer.hpp"
 #include "infer_types.hpp"
 #include "logger/logger.hpp"
+#include "vision_util.hpp"
 #include <opencv2/core/mat.hpp>
 
 namespace infer::dnn {
@@ -44,20 +45,11 @@ FrameInference::preprocess(AlgoInput &input) const {
   ncnn::Mat in;
   if (args.isEqualScale) {
     cv::Mat resizedImage;
-    float scale = std::min(static_cast<float>(inputWidth) / croppedImage.cols,
-                           static_cast<float>(inputHeight) / croppedImage.rows);
-    cv::Size newSize(static_cast<int>(croppedImage.cols * scale),
-                     static_cast<int>(croppedImage.rows * scale));
-    cv::resize(croppedImage, resizedImage, newSize, 0, 0, cv::INTER_LINEAR);
-
-    args.topPad = (inputHeight - resizedImage.rows) / 2;
-    args.leftPad = (inputWidth - resizedImage.cols) / 2;
-    int bottomPad = inputHeight - resizedImage.rows - args.topPad;
-    int rightPad = inputWidth - resizedImage.cols - args.leftPad;
-    cv::copyMakeBorder(resizedImage, resizedImage, args.topPad, bottomPad,
-                       args.leftPad, rightPad, cv::BORDER_CONSTANT, args.pad);
-
-    in = ncnn::Mat::from_pixels(resizedImage.data, ncnn::Mat::PIXEL_BGR,
+    auto padRet = utils::escaleResizeWithPad(
+        croppedImage, resizedImage, inputHeight, inputHeight, args.pad);
+    args.topPad = padRet.h;
+    args.leftPad = padRet.w;
+    in = ncnn::Mat::from_pixels(resizedImage.data, ncnn::Mat::PIXEL_RGB,
                                 resizedImage.cols, resizedImage.rows);
   } else {
     in = ncnn::Mat::from_pixels_resize(

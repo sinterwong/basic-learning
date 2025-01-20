@@ -140,7 +140,7 @@ private:
 };
 
 // Post-process Params
-struct YoloDetParams {
+struct AnchorDetParams {
   float condThre;
   float nmsThre;
   Shape inputShape;
@@ -148,7 +148,7 @@ struct YoloDetParams {
 
 class AlgoPostprocParams {
 public:
-  using Params = std::variant<std::monostate, YoloDetParams>;
+  using Params = std::variant<std::monostate, AnchorDetParams>;
 
   template <typename T> void setParams(T params) {
     params_ = std::move(params);

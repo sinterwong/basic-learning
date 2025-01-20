@@ -59,5 +59,23 @@ std::vector<BBox> NMS(const std::vector<BBox> &results, float nmsThre,
   return nmsResults;
 }
 
+Shape escaleResizeWithPad(const cv::Mat &src, cv::Mat &dst, int targetWidth,
+                          int targetHeight, const cv::Scalar &pad) {
+  float scale = std::min(static_cast<float>(targetWidth) / src.cols,
+                         static_cast<float>(targetHeight) / src.rows);
+  cv::Size newSize(static_cast<int>(src.cols * scale),
+                   static_cast<int>(src.rows * scale));
+  cv::resize(src, dst, newSize, 0, 0, cv::INTER_LINEAR);
+  Shape padRet;
+  padRet.h = (targetHeight - dst.rows) / 2;
+  padRet.w = (targetWidth - dst.cols) / 2;
+  int bottomPad = targetHeight - dst.rows - padRet.h;
+  int rightPad = targetWidth - dst.cols - padRet.w;
+  cv::copyMakeBorder(dst, dst, padRet.h, bottomPad, padRet.w, rightPad,
+                     cv::BORDER_CONSTANT, pad);
+
+  return padRet;
+}
+
 } // namespace infer::utils
 #endif
