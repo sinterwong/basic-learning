@@ -169,7 +169,6 @@ private:
 struct InferParamBase {
   std::string name;
   std::string modelPath;
-  std::string paramPath;
   DeviceType deviceType;
 };
 

@@ -9,8 +9,7 @@ class RTMDetInferenceTest : public ::testing::Test {
 protected:
   void SetUp() override {
     rtmParam.name = "test-rtmdet";
-    rtmParam.modelPath = "models/rtmdet.bin";
-    rtmParam.paramPath = "models/rtmdet.param";
+    rtmParam.modelPath = "models/rtmdet";
     rtmParam.inputShape = {640, 640};
     rtmParam.deviceType = DeviceType::CPU;
     engine = std::make_shared<FrameInference>(rtmParam);

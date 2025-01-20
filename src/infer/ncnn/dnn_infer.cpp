@@ -15,12 +15,12 @@
 
 namespace infer::dnn {
 InferErrorCode AlgoInference::initialize() {
-  if (net.load_param(params->paramPath.c_str()) != 0) {
-    LOGGER_ERROR("Failed to load param: {}", params->paramPath);
+  if (net.load_param((params->modelPath + ".param").c_str()) != 0) {
+    LOGGER_ERROR("Failed to load param: {}", params->modelPath + ".param");
     return InferErrorCode::INIT_MODEL_LOAD_FAILED;
   }
-  if (net.load_model(params->modelPath.c_str()) != 0) {
-    LOGGER_ERROR("Failed to load model: {}", params->modelPath.c_str());
+  if (net.load_model((params->modelPath + ".bin").c_str()) != 0) {
+    LOGGER_ERROR("Failed to load model: {}", params->modelPath + ".bin");
     return InferErrorCode::INIT_MODEL_LOAD_FAILED;
   }
 

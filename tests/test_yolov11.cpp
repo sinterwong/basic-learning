@@ -10,37 +10,33 @@ using namespace infer;
 class YoloInferenceTest : public ::testing::Test {
 protected:
   void SetUp() override {
-    YoloDetParams yoloParams;
-    yoloParams.condThre = 0.5f;
-    yoloParams.nmsThre = 0.5f;
-    yoloParams.inputShape = {640, 640};
-    params.setParams(yoloParams);
-
-    inferParam.name = "test-yolov11";
-    inferParam.modelPath = "models/yolov11n.onnx";
-    inferParam.inputShape = yoloParams.inputShape;
-    inferParam.deviceType = DeviceType::CPU;
-
-    // infer engine
-    engine = std::make_shared<FrameInference>(inferParam);
-
     // post-processor
-    yoloDet = std::make_shared<vision::Yolov11Det>(params);
   }
   void TearDown() override {}
 
   std::string imagePath = "data/image.png";
-
-  // infer engine
-  FrameInferParam inferParam;
-  std::shared_ptr<Inference> engine;
-
-  // post-processor
-  AlgoPostprocParams params;
-  std::shared_ptr<vision::Vision> yoloDet;
 };
 
-TEST_F(YoloInferenceTest, TestInference) {
+TEST_F(YoloInferenceTest, TestONNXInference) {
+  AlgoPostprocParams params;
+
+  YoloDetParams yoloParams;
+  yoloParams.condThre = 0.5f;
+  yoloParams.nmsThre = 0.5f;
+  yoloParams.inputShape = {640, 640};
+  params.setParams(yoloParams);
+
+  FrameInferParam inferParam;
+  inferParam.name = "test-yolov11";
+  inferParam.modelPath = "models/yolov11n.onnx";
+  inferParam.inputShape = yoloParams.inputShape;
+  inferParam.deviceType = DeviceType::CPU;
+  std::shared_ptr<vision::Vision> yoloDet =
+      std::make_shared<vision::Yolov11Det>(params);
+
+  // infer engine
+  std::shared_ptr<Inference> engine =
+      std::make_shared<FrameInference>(inferParam);
 
   ASSERT_NE(engine, nullptr);
   ASSERT_EQ(engine->initialize(), InferErrorCode::SUCCESS);
@@ -89,7 +85,25 @@ TEST_F(YoloInferenceTest, TestInference) {
   engine->terminate();
 }
 
-TEST_F(YoloInferenceTest, InferWrapperTest) {
+TEST_F(YoloInferenceTest, InferNCNNWithWrapperTest) {
+  AlgoPostprocParams params;
+  YoloDetParams yoloParams;
+  yoloParams.condThre = 0.5f;
+  yoloParams.nmsThre = 0.5f;
+  yoloParams.inputShape = {640, 640};
+  params.setParams(yoloParams);
+
+  FrameInferParam inferParam;
+  inferParam.name = "test-yolov11";
+  inferParam.modelPath = "models/yolov11n.ncnn";
+  inferParam.inputShape = yoloParams.inputShape;
+  inferParam.deviceType = DeviceType::CPU;
+  std::shared_ptr<vision::Vision> yoloDet =
+      std::make_shared<vision::Yolov11Det>(params);
+
+  // infer engine
+  std::shared_ptr<Inference> engine =
+      std::make_shared<FrameInference>(inferParam);
   auto wrapper =
       std::make_shared<InferSafeWrapper<FrameInference, FrameInferParam>>(
           inferParam);
