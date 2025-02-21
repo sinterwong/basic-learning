@@ -5,6 +5,7 @@ ADD_SUBDIRECTORY(common)
 ADD_SUBDIRECTORY(logger)
 ADD_SUBDIRECTORY(utils)
 
+ADD_SUBDIRECTORY(ip2region)
 
 # transfer all headers to the include directory 
 FILE(MAKE_DIRECTORY ${PROJECT_INCLUDE_DIR})
