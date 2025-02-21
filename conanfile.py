@@ -39,6 +39,11 @@ class BasicLearnConan(ConanFile):
         self.requires("gflags/2.2.2")
         self.requires("spdlog/1.14.1")
 
+        self.requires("sqlite3/3.45.0")
+        self.requires("nlohmann_json/3.11.3")
+        self.requires("rapidxml/1.13")
+        self.requires("cpp-httplib/0.16.3")
+
     def layout(self):
         self.folders.build = "build"
         self.folders.generators = "build/generators"

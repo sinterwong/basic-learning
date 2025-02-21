@@ -3,6 +3,11 @@ PROJECT(Tests)
 
 LOAD_GFLAGS()
 LOAD_GTEST()
+LOAD_LOGURU()
+LOAD_HTTPLIB()
+LOAD_RAPIDJSON()
+LOAD_SQLITE3()
+LOAD_NLOHMANN()
 
 SET(DEPENDENCY_INCLUDES
     ${PROJECT_INCLUDE_DIR}
@@ -12,6 +17,9 @@ SET(DEPENDENCY_INCLUDES
 SET(DEPENDENCY_LIBS
     gflags::gflags
     gtest::gtest
+    SQLite::SQLite3
+    httplib::httplib
+    nlohmann_json::nlohmann_json
     module_logger
 )
 
