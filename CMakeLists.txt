@@ -9,6 +9,7 @@ BASIC_APP_EXTRACT_VERSION()
 PROJECT(BasicLearning VERSION ${BASIC_APP_VERSION} LANGUAGES CXX)
 
 OPTION(BUILD_TESTS "Build with tests" ON)
+OPTION(BUILD_TOOLS "Build with tools" ON)
 OPTION(BUILD_WITH_CUDA "Build with tests" OFF)
 
 MESSAGE(INFO "--------------------------------")
@@ -75,4 +76,9 @@ ADD_SUBDIRECTORY(src)
 IF(BUILD_TESTS)
     MESSAGE(INFO "--------------------------------")
     ADD_SUBDIRECTORY(tests)
+ENDIF()
+
+IF(BUILD_TOOLS)
+    MESSAGE(INFO "--------------------------------")
+    ADD_SUBDIRECTORY(tools)
 ENDIF()
