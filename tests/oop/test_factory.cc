@@ -4,6 +4,7 @@
 #include <memory>
 #include <unordered_map>
 
+namespace test_oop::factory {
 using namespace oop::factory;
 
 class Shape {
@@ -46,3 +47,5 @@ TEST(FactoryTest, Normal) {
     std::cout << "Rectangle is null" << std::endl;
   }
 }
+
+} // namespace test_oop::factory
