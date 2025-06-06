@@ -7,7 +7,7 @@
       "request": "launch",
       "program": "${workspaceFolder}/install/tests/main",
       "args": [
-        "--gtest_filter=*.*"
+        "--gtest_filter=PWGateTest.Normal"
       ],
       "stopAtEntry": false,
       "cwd": "${workspaceFolder}/install",
