@@ -5,11 +5,11 @@ LOAD_GFLAGS()
 LOAD_GTEST()
 
 SET(DEPENDENCY_INCLUDES
-    ${PROJECT_INCLUDE_DIR}
     ${CMAKE_INCLUDE_PATH}
 )
 
 SET(DEPENDENCY_LIBS
+    basic_learning::basic_learning
     logger::logger
     gflags::gflags
     gtest::gtest
