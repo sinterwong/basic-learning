@@ -11,7 +11,12 @@
       ],
       "stopAtEntry": false,
       "cwd": "${workspaceFolder}/install",
-      "environment": [],
+      "environment": [
+        {
+          "name": "LD_LIBRARY_PATH",
+          "value": "${workspaceFolder}/build/x86_64/lib:${env:LD_LIBRARY_PATH}"
+        }
+      ],
       "externalConsole": false,
       "MIMode": "gdb",
       "miDebuggerPath": "/usr/bin/gdb",

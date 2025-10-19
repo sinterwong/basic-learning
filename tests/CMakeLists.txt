@@ -10,9 +10,9 @@ SET(DEPENDENCY_INCLUDES
 )
 
 SET(DEPENDENCY_LIBS
+    logger::logger
     gflags::gflags
     gtest::gtest
-    module_logger
 )
 
 FILE(MAKE_DIRECTORY ${PROJECT_OUTPUT_DIR}/bin/tests)

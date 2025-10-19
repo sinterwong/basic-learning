@@ -37,7 +37,7 @@ class BasicLearnConan(ConanFile):
     def requirements(self):
         self.requires("gtest/1.15.0")
         self.requires("gflags/2.2.2")
-        self.requires("spdlog/1.14.1")
+        self.requires("glog/0.7.1")
 
     def layout(self):
         self.folders.build = "build"
