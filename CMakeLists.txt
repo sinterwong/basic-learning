@@ -82,3 +82,8 @@ IF(BUILD_TOOLS)
     MESSAGE(INFO "--------------------------------")
     ADD_SUBDIRECTORY(tools)
 ENDIF()
+
+IF(BUILD_TESTS)
+    MESSAGE(INFO "--------- Install Resource --------")
+    ADD_SUBDIRECTORY(assets)
+ENDIF()
