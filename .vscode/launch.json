@@ -7,7 +7,7 @@
       "request": "launch",
       "program": "${workspaceFolder}/install/tests/main",
       "args": [
-        "--gtest_filter=DummyTest.*"
+        "--gtest_filter=GraphRepresentationTest.*"
       ],
       "stopAtEntry": false,
       "cwd": "${workspaceFolder}/install",
