@@ -9,8 +9,8 @@ SET(DEPENDENCY_INCLUDES
 )
 
 SET(DEPENDENCY_LIBS
+    logger::logger
     gflags::gflags
-    module_logger
 )
 
 MESSAGE(STATUS "APP SOURCES: ${CURRENT_DIR_SRCS}")
