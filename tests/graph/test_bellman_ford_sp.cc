@@ -22,7 +22,7 @@ protected:
   void SetUp() override {}
   void TearDown() override {}
 
-  fs::path dataDir = "data/graph";
+  fs::path dataDir = "assets/data/graph";
 };
 
 TEST_F(BellmanFordSPTest, Normal) {
