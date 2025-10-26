@@ -10,11 +10,12 @@ PROJECT(BasicLearning VERSION ${BASIC_APP_VERSION} LANGUAGES CXX)
 
 OPTION(BUILD_TESTS "Build with tests" ON)
 OPTION(BUILD_TOOLS "Build with tools" ON)
-OPTION(BUILD_WITH_CUDA "Build with tests" OFF)
+OPTION(BUILD_LEETCODE "Build with leetcode" ON)
 
 MESSAGE(INFO "--------------------------------")
 MESSAGE(STATUS "Build BasicLearning: ${BASIC_APP_VERSION}")
 MESSAGE(STATUS "Build with tests: ${BUILD_TESTS}")
+MESSAGE(STATUS "Build with leetcode: ${BUILD_LEETCODE}")
 MESSAGE(STATUS "CMAKE_INSTALL_PREFIX: ${CMAKE_INSTALL_PREFIX}")
 
 # Include conan
@@ -86,4 +87,8 @@ ENDIF()
 IF(BUILD_TESTS)
     MESSAGE(INFO "--------- Install Resource --------")
     ADD_SUBDIRECTORY(assets)
+ENDIF()
+
+IF(BUILD_LEETCODE)
+    ADD_SUBDIRECTORY(leetcode)
 ENDIF()
