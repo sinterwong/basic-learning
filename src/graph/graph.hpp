@@ -29,8 +29,6 @@ public:
   bool hasEdge(int v, int w) const;
   std::vector<int> adj(int v) const;
   int degree(int v) const;
-
-private:
   void validateVertex(int v) const;
 
 private:
